@@ -36,10 +36,13 @@ public class UserController {
 		return userService.signin(username, password);
 	}
 	@PostMapping("/create")
-	public String create(@RequestParam("email") String username, @RequestParam("pass") String password) {
+	public String create(@RequestParam("email") String username, @RequestParam("pass") String password, @RequestParam("first_name") String firstName, @RequestParam("last_name") String lastName) {
 		User user = new User();
 		user.setPassword(password);
 		user.setEmail(username);
+		user.setFirst_name(firstName);
+		user.setLast_name(lastName);
+		user.setUsername(user.getEmail());
 		return userService.signup(user);
 	}
 

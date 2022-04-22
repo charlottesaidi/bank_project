@@ -53,7 +53,7 @@ public class LoadDatabase {
         user.setEmail(email);
         user.setFirst_name(firstName);
         user.setLast_name(lastName);
-        user.setUsername(firstName + " " + lastName);
+        user.setUsername(user.getEmail());
 
         return user;
     }
