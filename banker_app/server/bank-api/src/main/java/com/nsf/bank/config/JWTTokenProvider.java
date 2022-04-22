@@ -10,6 +10,7 @@ import javax.annotation.PostConstruct;
 import javax.servlet.http.HttpServletRequest;
 
 import com.nsf.bank.service.JWTUserService;
+import com.nsf.bank.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -33,7 +34,7 @@ public class JWTTokenProvider {
 	private long tokenValidity = 360000000;
 	
 	@Autowired
-	private JWTUserService userService;
+	private UserService userService;
 	
 	@PostConstruct
 	public void init() {
