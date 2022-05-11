@@ -9,7 +9,7 @@
 <html>
 <head>
     <title>Title</title>
-    <h1>Bonjour</h1>
+    <h1>Dashboard</h1>
     <h2>${test}</h2>
 </head>
 <body>

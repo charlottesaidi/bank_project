@@ -8,8 +8,8 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Hello</title>
-    <h1>Bonjour</h1>
+    <title>Index</title>
+    <h1>Page Index</h1>
     <h2>${test}</h2>
 </head>
 <body>
