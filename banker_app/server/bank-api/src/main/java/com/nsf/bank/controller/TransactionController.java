@@ -45,22 +45,27 @@ public class TransactionController {
         return transactionRepository.getOne(id);
     }
 
+    @PostMapping("/createtest")
+    public ResponseEntity createtest(@RequestBody Transaction transaction) {
+        return ResponseEntity.ok().body(transaction.getCredit());
+    }
     @PostMapping("/create")
     public ResponseEntity create(@RequestBody Transaction transaction) {
         Account debitAccount = accountRepository.getOne(transaction.getDebit().getId());
         Account creditAccount = accountRepository.getById(transaction.getCredit().getId());
+
         try {
-            if (transaction.getDescription().equals("virement")) {
+            if (transaction.getDescription().contains("virement")) {
                 List<TransactionType> transactionTypes = new ArrayList<>();
                 transactionTypes.add(TransactionType.TRANSACTION_TYPE_TRANSFER);
                 transaction.setDescription(transactionTypes);
             }
-            if (transaction.getDescription().equals("paiement")) {
+            if (transaction.getDescription().contains("paiement")) {
                 List<TransactionType> transactionTypes = new ArrayList<>();
                 transactionTypes.add(TransactionType.TRANSACTiON_TYPE_DEBIT);
                 transaction.setDescription(transactionTypes);
             }
-            if (transaction.getDescription().equals("credit")) {
+            if (transaction.getDescription().contains("credit")) {
                 List<TransactionType> transactionTypes = new ArrayList<>();
                 transactionTypes.add(TransactionType.TRANSACTION_TYPE_CREDIT);
                 transaction.setDescription(transactionTypes);
