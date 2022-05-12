@@ -17,15 +17,17 @@ public class Transaction {
     @Column(name = "id_transaction")
     private int id;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "id_account_debit")
     private Account debit;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "id_account_credit")
     private Account credit;
 
     private float amount;
+
+    private String label;
 
     @ElementCollection(fetch =  FetchType.EAGER)
     private List<TransactionType> description;
@@ -39,12 +41,13 @@ public class Transaction {
 
     public Transaction() {}
 
-    public Transaction(int id, Account debit, Account credit, float amount, List<TransactionType> description, Date created_at, Date updated_at) {
+    public Transaction(int id, Account debit, Account credit, float amount, String label, List<TransactionType> description, Date created_at, Date updated_at) {
         super();
         this.id = id;
         this.debit = debit;
         this.credit = credit;
         this.amount = amount;
+        this.label = label;
         this.description = description;
         this.created_at = created_at;
         this.updated_at = updated_at;
@@ -80,6 +83,14 @@ public class Transaction {
 
     public void setAmount(float amount) {
         this.amount = amount;
+    }
+
+    public String getLabel() {
+        return label;
+    }
+
+    public void setLabel(String label) {
+        this.label = label;
     }
 
     public List<TransactionType> getDescription() {

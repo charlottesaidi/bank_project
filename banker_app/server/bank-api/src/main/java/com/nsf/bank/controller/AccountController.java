@@ -1,20 +1,17 @@
 package com.nsf.bank.controller;
 
-import com.nsf.bank.entity.Account;
-import com.nsf.bank.entity.AccountBalance;
-import com.nsf.bank.entity.AccountType;
-import com.nsf.bank.entity.Customer;
-import com.nsf.bank.repository.AccountRepository;
-import com.nsf.bank.repository.CustomerRepository;
-import com.nsf.bank.repository.AccountTypeRepository;
-import com.nsf.bank.repository.AccountBalanceRepository;
+import com.nsf.bank.entity.*;
+import com.nsf.bank.repository.*;
 import com.nsf.bank.service.HashidService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.lang.reflect.Array;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @RestController
 @RequestMapping("api/accounts")
@@ -32,16 +29,14 @@ public class AccountController {
     private AccountBalanceRepository accountBalanceRepository;
 
     @Autowired
+    private TransactionRepository transactionRepository;
+
+    @Autowired
     private HashidService hashidService;
 
     @RequestMapping("/")
     public ResponseEntity<List<Account>> getAll(){
         return ResponseEntity.ok().body(accountRepository.findAll());
-    }
-
-    @RequestMapping(value = "/customer/{id}", produces = "application/json")
-    public ResponseEntity<List<Account>> getCustomerAccounts(@PathVariable(value="id") Integer id) {
-        return ResponseEntity.ok().body(accountRepository.findAllByIdCustomer(id));
     }
 
     @RequestMapping(value = "/{id}", produces = "application/json")
@@ -83,5 +78,18 @@ public class AccountController {
     public ResponseEntity delete(@PathVariable(value="id") Integer id){
         accountRepository.deleteById(id);
         return ResponseEntity.ok().body("Compte supprimé");
+    }
+
+    @GetMapping("/{id}/transactions")
+    public ResponseEntity getTransactions(@PathVariable(value = "id") Integer id) {
+//      Récupérer toutes les transactions liées à ce compte (débits ET crédits de compte)
+        List<Transaction> debits = transactionRepository.findAllByIdDebit(id);
+        List<Transaction> credits = transactionRepository.findAllByIdCredit(id);
+//      Merge les deux listes de transactions en une seule
+        List<Transaction> transactions = Stream.concat(debits.stream(), credits.stream())
+                .collect(Collectors.toList());
+//      Todo: trier les transactions par période ? (mois, année...)
+
+        return ResponseEntity.ok().body(transactions);
     }
 }

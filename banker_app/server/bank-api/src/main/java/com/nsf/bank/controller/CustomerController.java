@@ -1,22 +1,15 @@
 package com.nsf.bank.controller;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.DeserializationFeature;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.nsf.bank.entity.Role;
+import com.nsf.bank.entity.*;
+import com.nsf.bank.repository.AccountRepository;
 import com.nsf.bank.repository.UserRepository;
 import com.nsf.bank.repository.CustomerRepository;
 import com.nsf.bank.repository.BankerRepository;
 import com.nsf.bank.service.HashidService;
-import com.nsf.bank.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import com.nsf.bank.entity.Customer;
-import com.nsf.bank.entity.User;
-import com.nsf.bank.entity.Banker;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,6 +27,9 @@ public class CustomerController {
     private BankerRepository bankerRepository;
 
     @Autowired
+    private AccountRepository accountRepository;
+
+    @Autowired
     private PasswordEncoder passwordEncoder;
 
     @Autowired
@@ -42,11 +38,6 @@ public class CustomerController {
     @RequestMapping("/")
     public ResponseEntity<List<Customer>> getAll(){
         return ResponseEntity.ok().body(customerRepository.findAll());
-    }
-
-    @RequestMapping(value = "/banker/{id}", produces = "application/json")
-    public ResponseEntity<List<Customer>> getBankerCustomers(@PathVariable(value="id") Integer id) {
-        return ResponseEntity.ok().body(customerRepository.findAllByIdBanker(id));
     }
 
     @RequestMapping(value = "/{id}", produces = "application/json")
@@ -89,5 +80,10 @@ public class CustomerController {
     public ResponseEntity delete(@PathVariable(value="id") Integer id){
         customerRepository.deleteById(id);
         return ResponseEntity.ok().body("Client supprimé");
+    }
+
+    @GetMapping("/{id}/accounts")
+    public ResponseEntity<List<Account>> getAccounts(@PathVariable(value="id") Integer id) {
+        return ResponseEntity.ok().body(accountRepository.findAllByIdCustomer(id));
     }
 }

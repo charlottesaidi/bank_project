@@ -2,6 +2,7 @@ package com.nsf.bank.controller;
 
 import com.nsf.bank.entity.Customer;
 import com.nsf.bank.entity.Role;
+import com.nsf.bank.repository.CustomerRepository;
 import com.nsf.bank.repository.UserRepository;
 import com.nsf.bank.repository.BankerRepository;
 import com.nsf.bank.service.HashidService;
@@ -25,6 +26,9 @@ public class BankerController {
 
     @Autowired
     private BankerRepository bankerRepository;
+
+    @Autowired
+    private CustomerRepository customerRepository;
 
     @Autowired
     private PasswordEncoder passwordEncoder;
@@ -75,5 +79,10 @@ public class BankerController {
     public ResponseEntity delete(@PathVariable(value="id") Integer id){
         bankerRepository.deleteById(id);
         return ResponseEntity.ok().body("Banquier supprimé");
+    }
+
+    @GetMapping("/{id}/customers")
+    public ResponseEntity<List<Customer>> getCustomers(@PathVariable(value="id") Integer id) {
+        return ResponseEntity.ok().body(customerRepository.findAllByIdBanker(id));
     }
 }

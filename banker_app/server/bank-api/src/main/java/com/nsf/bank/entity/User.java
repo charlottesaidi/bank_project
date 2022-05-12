@@ -201,20 +201,4 @@ public class User implements UserDetails{
 	public void setRole(List<Role> role) {
 		this.role = role;
 	}
-
-	public Customer getCustomer() {
-		return customer;
-	}
-
-	public void setCustomers(Customer customer) {
-		this.customer = customer;
-	}
-
-	public Banker getBanker() {
-		return banker;
-	}
-
-	public void setBanker(Banker banker) {
-		this.banker = banker;
-	}
 }

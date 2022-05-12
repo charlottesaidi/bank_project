@@ -4,9 +4,8 @@ import com.nsf.bank.entity.*;
 import com.nsf.bank.repository.AccountBalanceRepository;
 import com.nsf.bank.repository.TransactionRepository;
 import com.nsf.bank.repository.AccountRepository;
+import org.hibernate.HibernateException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.configurationprocessor.json.JSONException;
-import org.springframework.boot.configurationprocessor.json.JSONObject;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -30,16 +29,6 @@ public class TransactionController {
         return ResponseEntity.ok().body(transactionRepository.findAll());
     }
 
-    @RequestMapping(value = "/account/{credit}", produces = "application/json")
-    public ResponseEntity<List<Transaction>> getCreditTransaction(@PathVariable(value="credit") Integer credit) {
-        return ResponseEntity.ok().body(transactionRepository.findAllByIdCredit(credit));
-    }
-
-    @RequestMapping(value = "/account/{debit}", produces = "application/json")
-    public ResponseEntity<List<Transaction>> getDebitTransaction(@PathVariable(value="debit") Integer debit) {
-        return ResponseEntity.ok().body(transactionRepository.findAllByIdDebit(debit));
-    }
-
     @RequestMapping(value = "/{id}", produces = "application/json")
     public Transaction get(@PathVariable(value="id") Integer id){
         return transactionRepository.getOne(id);
@@ -47,25 +36,34 @@ public class TransactionController {
 
     @PostMapping("/createtest")
     public ResponseEntity createtest(@RequestBody Transaction transaction) {
-        return ResponseEntity.ok().body(transaction.getCredit());
+        Account debitAccount = accountRepository.getOne(transaction.getDebit().getId());
+        return ResponseEntity.ok().body(debitAccount.getAccount_balance());
     }
+
     @PostMapping("/create")
     public ResponseEntity create(@RequestBody Transaction transaction) {
-        Account debitAccount = accountRepository.getOne(transaction.getDebit().getId());
-        Account creditAccount = accountRepository.getById(transaction.getCredit().getId());
-
         try {
-            if (transaction.getDescription().contains("virement")) {
+            Account debitAccount = null;
+            Account creditAccount = null;
+
+            // on récupère les comptes débiteurs et/ou créditeurs
+            if(transaction.getDebit() != null) {
+                debitAccount = accountRepository.getOne(transaction.getDebit().getId());
+            }
+            if(transaction.getCredit() != null) {
+                creditAccount = accountRepository.getOne(transaction.getCredit().getId());
+            }
+
+            // selon si les comptes sont renseignés, le type de transaction change (transfert entre deux comptes internes ou transactions extérieures(achat/provision))
+            if (debitAccount != null && creditAccount != null) {
                 List<TransactionType> transactionTypes = new ArrayList<>();
                 transactionTypes.add(TransactionType.TRANSACTION_TYPE_TRANSFER);
                 transaction.setDescription(transactionTypes);
-            }
-            if (transaction.getDescription().contains("paiement")) {
+            } else if (debitAccount != null) {
                 List<TransactionType> transactionTypes = new ArrayList<>();
-                transactionTypes.add(TransactionType.TRANSACTiON_TYPE_DEBIT);
+                transactionTypes.add(TransactionType.TRANSACTION_TYPE_DEBIT);
                 transaction.setDescription(transactionTypes);
-            }
-            if (transaction.getDescription().contains("credit")) {
+            } else if (creditAccount != null) {
                 List<TransactionType> transactionTypes = new ArrayList<>();
                 transactionTypes.add(TransactionType.TRANSACTION_TYPE_CREDIT);
                 transaction.setDescription(transactionTypes);
@@ -77,14 +75,14 @@ public class TransactionController {
                 if ((debitAccount.getBalance() - transaction.getAmount()) >= debitAccount.getOverdraft()) {
                     // on met à jour le solde du compte débiteur
                     debitAccount.setBalance(debitAccount.getBalance() - transaction.getAmount());
-                    AccountBalance debitBalance = new AccountBalance();
+                    AccountBalance debitBalance = debitAccount.getAccount_balance();
                     debitBalance.setBalance(debitAccount.getBalance() - transaction.getAmount());
                     debitBalance.setAccount(debitAccount);
                     accountBalanceRepository.save(debitBalance);
 
                     // mise à jour du solde du compte crédité
                     creditAccount.setBalance(creditAccount.getBalance() + transaction.getAmount());
-                    AccountBalance creditBalance = new AccountBalance();
+                    AccountBalance creditBalance = creditAccount.getAccount_balance();
                     creditBalance.setBalance(creditAccount.getBalance() + transaction.getAmount());
                     creditBalance.setAccount(creditAccount);
                     accountBalanceRepository.save(creditBalance);
@@ -96,12 +94,12 @@ public class TransactionController {
                 }
             }
             // dans le cas d'un paiement depuis un compte
-            if (transaction.getDescription().contains(TransactionType.TRANSACTiON_TYPE_DEBIT)) {
+            if (transaction.getDescription().contains(TransactionType.TRANSACTION_TYPE_DEBIT)) {
                 // si le compte ne dépasse pas le découvert, la transaction passe
                 if ((debitAccount.getBalance() - transaction.getAmount()) >= debitAccount.getOverdraft()) {
                     // on met à jour le solde du compte
                     debitAccount.setBalance(debitAccount.getBalance() - transaction.getAmount());
-                    AccountBalance debitBalance = new AccountBalance();
+                    AccountBalance debitBalance = debitAccount.getAccount_balance();
                     debitBalance.setBalance(debitAccount.getBalance() - transaction.getAmount());
                     debitBalance.setAccount(debitAccount);
                     accountBalanceRepository.save(debitBalance);
@@ -116,7 +114,7 @@ public class TransactionController {
             if (transaction.getDescription().contains(TransactionType.TRANSACTION_TYPE_CREDIT)) {
                 // mise à jour du solde du compte crédité
                 creditAccount.setBalance(creditAccount.getBalance() + transaction.getAmount());
-                AccountBalance creditBalance = new AccountBalance();
+                AccountBalance creditBalance = creditAccount.getAccount_balance();
                 creditBalance.setBalance(creditAccount.getBalance() + transaction.getAmount());
                 creditBalance.setAccount(creditAccount);
                 accountBalanceRepository.save(creditBalance);
@@ -125,9 +123,13 @@ public class TransactionController {
                 transactionRepository.save(transaction);
             }
             return ResponseEntity.ok().body(transaction);
-        } catch(Exception e) {
+       } catch(HibernateException e) {
             return ResponseEntity.internalServerError().body(e.getMessage());
-        }
+       } catch(NullPointerException e) {
+            return ResponseEntity.internalServerError().body(e.getMessage());
+       } catch(Exception e) {
+            return ResponseEntity.internalServerError().body(e.getMessage());
+       }
     }
 
     @PutMapping("/update")

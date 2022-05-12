@@ -3,6 +3,7 @@ package com.nsf.bank.controller;
 import com.nsf.bank.entity.Account;
 import com.nsf.bank.entity.Customer;
 import com.nsf.bank.repository.UserRepository;
+import org.hibernate.HibernateException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -33,8 +34,8 @@ public class UserController {
 	}
 
 	@PostMapping("/signin")
-	public String login(@RequestParam("username") String username, @RequestParam("pass") String password) {
-		return userService.signin(username, password);
+	public String login(@RequestBody User user) {
+		return userService.signin(user.getUsername(), user.getPassword());
 	}
 
 	@PutMapping("/api/update")
@@ -42,6 +43,8 @@ public class UserController {
 		try {
 			userRepository.save(user);
 			return ResponseEntity.ok().body(user);
+		} catch(HibernateException e) {
+			return ResponseEntity.internalServerError().body(e.getMessage());
 		} catch(Exception e) {
 			return ResponseEntity.internalServerError().body(e.getMessage());
 		}

@@ -5,6 +5,7 @@ import org.springframework.data.annotation.LastModifiedDate;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
@@ -19,11 +20,11 @@ public class Account {
     @JoinColumn(name = "id_customer")
     private Customer customer;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "id_account_type")
     private AccountType account_type;
 
-    @OneToOne(orphanRemoval = true, mappedBy = "account")
+    @OneToOne(mappedBy = "account", cascade = CascadeType.ALL, orphanRemoval = true)
     private AccountBalance account_balance;
 
     private String hashid;
@@ -31,6 +32,12 @@ public class Account {
     private float balance;
 
     private float overdraft;
+
+    @OneToMany(orphanRemoval = true, mappedBy = "debit")
+    private List<Transaction> transactionDebits;
+
+    @OneToMany(orphanRemoval = true, mappedBy = "credit")
+    private List<Transaction> transactionCredits;
 
     @CreatedDate
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -41,10 +48,11 @@ public class Account {
 
     public Account() {}
 
-    public Account(int id, Customer customer, AccountType account_type, String hashid, float balance, float overdraft, Date created_at, Date updated_at) {
+    public Account(int id, Customer customer, AccountType account_type, AccountBalance account_balance, String hashid, float balance, float overdraft, Date created_at, Date updated_at) {
         super();
         this.id = id;
         this.customer = customer;
+        this.account_balance = account_balance;
         this.account_type = account_type;
         this.hashid = hashid;
         this.balance = balance;
@@ -61,10 +69,6 @@ public class Account {
         this.id = id;
     }
 
-    public Customer getCustomer() {
-        return customer;
-    }
-
     public void setCustomer(Customer customer) {
         this.customer = customer;
     }
@@ -75,6 +79,22 @@ public class Account {
 
     public void setAccount_type(AccountType account_type) {
         this.account_type = account_type;
+    }
+
+    public AccountBalance getAccount_balance() {
+        return account_balance;
+    }
+
+    public void setAccount_balance(AccountBalance account_balance) {
+        this.account_balance = account_balance;
+    }
+
+    public void setTransactionDebits(List<Transaction> transactionDebits) {
+        this.transactionDebits = transactionDebits;
+    }
+
+    public void setTransactionCredits(List<Transaction> transactionCredits) {
+        this.transactionCredits = transactionCredits;
     }
 
     public String getHashid() {
