@@ -23,13 +23,17 @@ public class Account {
     @JoinColumn(name = "id_account_type")
     private AccountType account_type;
 
-    private long hashid;
+    @OneToOne(orphanRemoval = true, mappedBy = "account")
+    private AccountBalance account_balance;
+
+    private String hashid;
 
     private float balance;
 
     private float overdraft;
 
     @CreatedDate
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Date created_at;
 
     @LastModifiedDate
@@ -37,7 +41,7 @@ public class Account {
 
     public Account() {}
 
-    public Account(int id, Customer customer, AccountType account_type, long hashid, float balance, float overdraft, Date created_at, Date updated_at) {
+    public Account(int id, Customer customer, AccountType account_type, String hashid, float balance, float overdraft, Date created_at, Date updated_at) {
         super();
         this.id = id;
         this.customer = customer;
@@ -73,11 +77,11 @@ public class Account {
         this.account_type = account_type;
     }
 
-    public long getHashid() {
+    public String getHashid() {
         return hashid;
     }
 
-    public void setHashid(long hashid) {
+    public void setHashid(String hashid) {
         this.hashid = hashid;
     }
 
@@ -94,7 +98,7 @@ public class Account {
     }
 
     public void setOverdraft(float overdraft) {
-        this.overdraft = overdraft;
+        this.overdraft = -overdraft;
     }
 
     public Date getCreated_at() {

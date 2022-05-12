@@ -18,10 +18,12 @@ dependencies {
     implementation 'mysql:mysql-connector-java:5.1.25'
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
     implementation 'org.springframework.boot:spring-boot-starter-actuator'
+    implementation 'org.springframework.boot:spring-boot-configuration-processor'
     testImplementation 'org.mockito:mockito-core:2.1.0'
     implementation 'org.springframework.boot:spring-boot-starter-security'
     implementation 'org.springframework.security:spring-security-test'
     implementation 'io.jsonwebtoken:jjwt:0.2'
+    implementation 'org.apache.commons:commons-text:1.7'
 }
 
 tasks.named('test') {

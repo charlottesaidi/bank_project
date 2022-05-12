@@ -5,6 +5,7 @@ import org.springframework.data.annotation.LastModifiedDate;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
@@ -15,7 +16,7 @@ public class Customer {
     @Column(name = "id_customer")
     private int id;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.REMOVE)
     @JoinColumn(name = "id_user")
     private User user;
 
@@ -23,13 +24,17 @@ public class Customer {
     @JoinColumn(name = "id_banker")
     private Banker banker;
 
-    private long hashid;
+    @OneToMany(orphanRemoval = true, mappedBy = "customer")
+    private List<Account> accounts;
+
+    private String hashid;
 
     private String document_type;
 
     private Date document_date;
 
     @CreatedDate
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Date created_at;
 
     @LastModifiedDate
@@ -37,7 +42,7 @@ public class Customer {
 
     public Customer() {}
 
-    public Customer(int id, User user, Banker banker, long hashid, String document_type, Date document_date, Date created_at, Date updated_at) {
+    public Customer(int id, User user, Banker banker, String hashid, String document_type, Date document_date, Date created_at, Date updated_at) {
         super();
         this.id = id;
         this.user = user;
@@ -73,11 +78,11 @@ public class Customer {
         this.banker = banker;
     }
 
-    public long getHashid() {
+    public String getHashid() {
         return hashid;
     }
 
-    public void setHashid(long hashid) {
+    public void setHashid(String hashid) {
         this.hashid = hashid;
     }
 

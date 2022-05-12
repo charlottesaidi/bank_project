@@ -41,6 +41,7 @@ public class User implements UserDetails{
 	private String address_country;
 
 	@CreatedDate
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Date created_at;
 
 	@LastModifiedDate
@@ -48,6 +49,12 @@ public class User implements UserDetails{
 
 	@ElementCollection(fetch =  FetchType.EAGER)
 	private List<Role> role;
+
+	@OneToOne(orphanRemoval = true, mappedBy = "user")
+	private Customer customer;
+
+	@OneToOne(orphanRemoval = true, mappedBy = "user")
+	private Banker banker;
 
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -194,5 +201,20 @@ public class User implements UserDetails{
 	public void setRole(List<Role> role) {
 		this.role = role;
 	}
-	
+
+	public Customer getCustomer() {
+		return customer;
+	}
+
+	public void setCustomers(Customer customer) {
+		this.customer = customer;
+	}
+
+	public Banker getBanker() {
+		return banker;
+	}
+
+	public void setBanker(Banker banker) {
+		this.banker = banker;
+	}
 }
