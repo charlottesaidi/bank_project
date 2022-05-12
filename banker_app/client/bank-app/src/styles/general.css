@@ -1,0 +1,10 @@
+:root {
+    --white: #fff;
+    --orange: #FFA31A;
+    --backgroundColor: #0b0b0c;
+}
+
+body {
+    background-color: var(--backgroundColor);
+    font-family: 'Poppins', sans-serif;
+}
