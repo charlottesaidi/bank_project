@@ -6,6 +6,7 @@ import org.springframework.data.annotation.LastModifiedDate;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
@@ -26,11 +27,11 @@ public class Transaction {
 
     private float amount;
 
-    @Column(nullable = true)
-    @Type(type="text")
-    private String description;
+    @ElementCollection(fetch =  FetchType.EAGER)
+    private List<TransactionType> description;
 
     @CreatedDate
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Date created_at;
 
     @LastModifiedDate
@@ -38,7 +39,7 @@ public class Transaction {
 
     public Transaction() {}
 
-    public Transaction(int id, Account debit, Account credit, float amount, String description, Date created_at, Date updated_at) {
+    public Transaction(int id, Account debit, Account credit, float amount, List<TransactionType> description, Date created_at, Date updated_at) {
         super();
         this.id = id;
         this.debit = debit;
@@ -81,11 +82,11 @@ public class Transaction {
         this.amount = amount;
     }
 
-    public String getDescription() {
+    public List<TransactionType> getDescription() {
         return description;
     }
 
-    public void setDescription(String description) {
+    public void setDescription(List<TransactionType> description) {
         this.description = description;
     }
 

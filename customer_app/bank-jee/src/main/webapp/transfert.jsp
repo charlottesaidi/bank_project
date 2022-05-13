@@ -9,6 +9,7 @@
 <html>
 <head>
     <title>Transfert</title>
+    <h1>Page transfert</h1>
 </head>
 <body>
 

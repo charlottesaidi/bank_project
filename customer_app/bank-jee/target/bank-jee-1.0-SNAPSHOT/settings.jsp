@@ -9,6 +9,7 @@
 <html>
 <head>
     <title>Title</title>
+    <h1>Page settings</h1>
 </head>
 <body>
 

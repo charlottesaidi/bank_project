@@ -19,6 +19,7 @@ public class AccountType {
     private int rate;
 
     @CreatedDate
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Date created_at;
 
     @LastModifiedDate

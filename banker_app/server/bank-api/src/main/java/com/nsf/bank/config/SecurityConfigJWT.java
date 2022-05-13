@@ -30,8 +30,9 @@ public class SecurityConfigJWT extends WebSecurityConfigurerAdapter {
 		.authorizeRequests()
 		.antMatchers("/users/signin").permitAll()	// public, obligatoire à définir en premier
         .antMatchers("/users/signup").permitAll()	// public, obligatoire à définir en premier
-		//.antMatchers("/auth/**").authenticated() 	// si dans l'url j'ai /auth/ je dois être authentifié pour y accéder
-		.anyRequest().permitAll();								// si dans l'url je n'ai aps auth, c'est public
+		//.antMatchers("/api/**").authenticated() 	// si dans l'url j'ai /api/ je dois être authentifié pour y accéder
+		//.antMatchers("users/api/**").authenticated()
+		.anyRequest().permitAll();	// si dans l'url je n'ai pas api, c'est public
 		
 		http.apply(new JXTTokenFilterConfiguration(jwtTokenProvider));
 	}

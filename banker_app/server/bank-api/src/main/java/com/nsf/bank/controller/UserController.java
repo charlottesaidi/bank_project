@@ -1,5 +1,6 @@
 package com.nsf.bank.controller;
 
+import com.nsf.bank.entity.Account;
 import com.nsf.bank.entity.Customer;
 import com.nsf.bank.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,15 +36,20 @@ public class UserController {
 	public String login(@RequestParam("username") String username, @RequestParam("pass") String password) {
 		return userService.signin(username, password);
 	}
-	@PostMapping("/create")
-	public String create(@RequestParam("email") String username, @RequestParam("pass") String password, @RequestParam("first_name") String firstName, @RequestParam("last_name") String lastName) {
-		User user = new User();
-		user.setPassword(password);
-		user.setEmail(username);
-		user.setFirst_name(firstName);
-		user.setLast_name(lastName);
-		user.setUsername(user.getEmail());
-		return userService.signup(user);
+
+	@PutMapping("/api/update")
+	public ResponseEntity update(@RequestBody User user){
+		try {
+			userRepository.save(user);
+			return ResponseEntity.ok().body(user);
+		} catch(Exception e) {
+			return ResponseEntity.internalServerError().body(e.getMessage());
+		}
 	}
 
+	@DeleteMapping("/api/delete/{id}")
+	public ResponseEntity delete(@PathVariable(value="id") Integer id){
+		userRepository.deleteById(id);
+		return ResponseEntity.ok().body("Utilisateur supprimé");
+	}
 }

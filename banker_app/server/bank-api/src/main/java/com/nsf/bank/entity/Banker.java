@@ -15,22 +15,26 @@ public class Banker {
     @Column(name = "id_banker")
     private int id;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.REMOVE)
     @JoinColumn(name = "id_user")
     private User user;
 
     @CreatedDate
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Date created_at;
 
     @LastModifiedDate
     private Date updated_at;
 
+    private String hashid;
+
     public Banker() {}
 
-    public Banker(int id, User user) {
+    public Banker(int id, User user, String hashid) {
         super();
         this.id = id;
         this.user = user;
+        this.hashid = hashid;
     }
 
     public int getId() {
@@ -47,6 +51,14 @@ public class Banker {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public String getHashid() {
+        return hashid;
+    }
+
+    public void setHashid(String hashid) {
+        this.hashid = hashid;
     }
 
     public Date getCreated_at() {
