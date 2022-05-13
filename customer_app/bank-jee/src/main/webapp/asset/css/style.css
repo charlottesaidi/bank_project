@@ -49,6 +49,35 @@ nav ul li a {
     letter-spacing: 3%;
 }
 
+.transfert{
+    width: 40px;
+    height: 40px;
+    background: center / contain no-repeat url("../img/transfer-icon.svg");
+    display: inline-block;
+}
+
+.settings{
+    width: 40px;
+    height: 40px;
+    background: center / contain no-repeat url(" ../img/settings-icons.svg");
+    display: inline-block;
+}
+
+.circlelogos{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+    gap: 20px;
+
+    width: 100px;
+
+    background: linear-gradient(105.29deg, rgba(255, 255, 255, 0.4) 12.19%, rgba(255, 255, 255, 0.2) 83.42%);
+    backdrop-filter: blur(40px);
+
+    border-radius: 50px;
+}
 /* MAIN */
 
 main {

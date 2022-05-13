@@ -24,4 +24,8 @@
                 <li><a href="login.jsp">Connexion</a></li>
             </ul>
         </nav>
+        <div class="circlelogos">
+            <a href="transfert.jsp" class="transfert"></a>
+            <a href="settings.jsp" class="settings"></a>
+        </div>
     </header>
