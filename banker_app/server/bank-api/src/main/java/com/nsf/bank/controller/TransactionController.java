@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @RestController
@@ -78,6 +79,7 @@ public class TransactionController {
                     AccountBalance debitBalance = debitAccount.getAccount_balance();
                     debitBalance.setBalance(debitAccount.getBalance() - transaction.getAmount());
                     debitBalance.setAccount(debitAccount);
+                    debitBalance.setUpdated_at(new Date());
                     accountBalanceRepository.save(debitBalance);
 
                     // mise à jour du solde du compte crédité
@@ -85,6 +87,7 @@ public class TransactionController {
                     AccountBalance creditBalance = creditAccount.getAccount_balance();
                     creditBalance.setBalance(creditAccount.getBalance() + transaction.getAmount());
                     creditBalance.setAccount(creditAccount);
+                    creditBalance.setUpdated_at(new Date());
                     accountBalanceRepository.save(creditBalance);
 
                     // sauvegarde la transaction
@@ -102,6 +105,7 @@ public class TransactionController {
                     AccountBalance debitBalance = debitAccount.getAccount_balance();
                     debitBalance.setBalance(debitAccount.getBalance() - transaction.getAmount());
                     debitBalance.setAccount(debitAccount);
+                    debitBalance.setUpdated_at(new Date());
                     accountBalanceRepository.save(debitBalance);
 
                     // sauvegarde la transaction
@@ -117,6 +121,7 @@ public class TransactionController {
                 AccountBalance creditBalance = creditAccount.getAccount_balance();
                 creditBalance.setBalance(creditAccount.getBalance() + transaction.getAmount());
                 creditBalance.setAccount(creditAccount);
+                creditBalance.setUpdated_at(new Date());
                 accountBalanceRepository.save(creditBalance);
 
                 // sauvegarde la transaction

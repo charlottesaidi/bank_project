@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import com.nsf.bank.entity.User;
 import com.nsf.bank.service.JWTUserService;
 
+import java.util.Date;
 import java.util.List;
 
 @RestController
@@ -34,13 +35,14 @@ public class UserController {
 	}
 
 	@PostMapping("/signin")
-	public String login(@RequestBody User user) {
-		return userService.signin(user.getUsername(), user.getPassword());
+	public ResponseEntity login(@RequestBody User user) {
+		return ResponseEntity.ok().body(userService.signin(user.getUsername(), user.getPassword()));
 	}
 
 	@PutMapping("/api/update")
 	public ResponseEntity update(@RequestBody User user){
 		try {
+			user.setUpdated_at(new Date());
 			userRepository.save(user);
 			return ResponseEntity.ok().body(user);
 		} catch(HibernateException e) {

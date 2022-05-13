@@ -41,7 +41,6 @@ public class User implements UserDetails{
 	private String address_country;
 
 	@CreatedDate
-	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Date created_at;
 
 	@LastModifiedDate
@@ -182,8 +181,11 @@ public class User implements UserDetails{
 		return created_at;
 	}
 
-	public void setCreated_at(Date created_at) {
-		this.created_at = created_at;
+	@PrePersist
+	public void setCreated_at() {
+		if(this.created_at == null) {
+			this.created_at = new Date();
+		}
 	}
 
 	public Date getUpdated_at() {

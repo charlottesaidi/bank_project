@@ -23,10 +23,10 @@ public class AppAuthProvider  implements AuthenticationManager {
 
         String username = auth.getName();
 
-        UserDetails user = userService.loadUserByUsername(username);
+        UserDetails user = userService.loadUserByUsername(username, auth.getCredentials().toString());
 
         if(user == null) {
-            throw new BadCredentialsException("Log/pass unknowed");
+            throw new BadCredentialsException("Identifiants invalides");
         }
         return new UsernamePasswordAuthenticationToken(user, null, user.getAuthorities());
     }

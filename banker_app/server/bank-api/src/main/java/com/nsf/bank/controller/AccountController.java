@@ -3,11 +3,15 @@ package com.nsf.bank.controller;
 import com.nsf.bank.entity.*;
 import com.nsf.bank.repository.*;
 import com.nsf.bank.service.HashidService;
+import org.hibernate.HibernateException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.client.HttpClientErrorException;
 
 import java.lang.reflect.Array;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -35,43 +39,77 @@ public class AccountController {
     private HashidService hashidService;
 
     @RequestMapping("/")
-    public ResponseEntity<List<Account>> getAll(){
-        return ResponseEntity.ok().body(accountRepository.findAll());
+    public ResponseEntity getAll(){
+        try {
+            List<Account> accounts = accountRepository.findAll();
+            if(accounts == null) {
+                return ResponseEntity.ok().body("Aucun compte bancaire n'a été créé pour le moment");
+            } else {
+                return ResponseEntity.ok().body(accounts);
+            }
+        } catch(Exception e) {
+            return ResponseEntity.ok().body(e.getMessage());
+        }
     }
 
     @RequestMapping(value = "/{id}", produces = "application/json")
-    public Account get(@PathVariable(value="id") Integer id){
-        return accountRepository.getOne(id);
+    public ResponseEntity get(@PathVariable(value="id") Integer id){
+        try {
+            Account account = accountRepository.getOne(id);
+            if(account == null) {
+                throw HttpClientErrorException.create(HttpStatus.NOT_FOUND, "Aucun banquier n'existe avec ce numéro", null, null, null);
+            }
+            return ResponseEntity.ok().body(account);
+        } catch(HibernateException e) {
+            return ResponseEntity.internalServerError().body(e.getMessage());
+        } catch(NullPointerException e) {
+            return ResponseEntity.internalServerError().body(e.getMessage());
+        } catch(Exception e) {
+            return ResponseEntity.internalServerError().body(e.getMessage());
+        }
     }
 
     @PostMapping("/create/{customerId}")
     public ResponseEntity create(@PathVariable(value="customerId") int customerId, @RequestBody Account account){
-        Customer customer = customerRepository.getOne(customerId);
-        if(customer != null) {
-            account.setCustomer(customer);
+        try {
+            Customer customer = customerRepository.getOne(customerId);
+            if (customer == null) {
+                throw new HibernateException("Aucun client n'a été trouvé sous ce numéro");
+            }
+            account.setHashid(hashidService.generateHashId());
+
+            AccountType existingAccountType = accountTypeRepository.findAccountTypeWithName(account.getAccount_type().getName());
+
+            if (existingAccountType != null) {
+                account.setAccount_type(existingAccountType);
+            }
+
+            accountRepository.save(account);
+
+            AccountBalance accountBalance = new AccountBalance();
+            accountBalance.setBalance(account.getBalance());
+            accountBalance.setAccount(account);
+
+            accountBalanceRepository.save(accountBalance);
+
+            return ResponseEntity.ok().body(account);
+        } catch(HibernateException e) {
+            return ResponseEntity.internalServerError().body(e.getMessage());
+        } catch(Exception e) {
+            return ResponseEntity.internalServerError().body(e.getMessage());
         }
-        account.setHashid(hashidService.generateHashId());
-
-        AccountType existingAccountType = accountTypeRepository.findAccountTypeWithName(account.getAccount_type().getName());
-
-        if(existingAccountType != null) {
-            account.setAccount_type(existingAccountType);
-        }
-
-        accountRepository.save(account);
-
-        AccountBalance accountBalance = new AccountBalance();
-        accountBalance.setBalance(account.getBalance());
-        accountBalance.setAccount(account);
-
-        accountBalanceRepository.save(accountBalance);
-
-        return ResponseEntity.ok().body(account);
     }
 
     @PutMapping("/update")
-    public Account update(@RequestBody Account account){
-        return accountRepository.save(account);
+    public ResponseEntity update(@RequestBody Account account){
+        try {
+            accountRepository.save(account);
+            return ResponseEntity.ok().body(account);
+        } catch(HibernateException e) {
+            return ResponseEntity.internalServerError().body(e.getMessage());
+        } catch(Exception e) {
+            return ResponseEntity.internalServerError().body(e.getMessage());
+        }
     }
 
     @DeleteMapping("/delete/{id}")

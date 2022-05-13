@@ -1,17 +1,22 @@
 package com.nsf.bank.controller;
 
+import com.fasterxml.jackson.databind.JsonMappingException;
 import com.nsf.bank.entity.*;
 import com.nsf.bank.repository.AccountRepository;
 import com.nsf.bank.repository.UserRepository;
 import com.nsf.bank.repository.CustomerRepository;
 import com.nsf.bank.repository.BankerRepository;
 import com.nsf.bank.service.HashidService;
+import org.hibernate.HibernateException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.client.HttpClientErrorException;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @RestController
@@ -36,22 +41,48 @@ public class CustomerController {
     private HashidService hashidService;
 
     @RequestMapping("/")
-    public ResponseEntity<List<Customer>> getAll(){
-        return ResponseEntity.ok().body(customerRepository.findAll());
+    public ResponseEntity getAll() {
+        try {
+            List<Customer> customers = customerRepository.findAll();
+            if(customers == null) {
+                return ResponseEntity.ok().body("Aucun client n'est inscrit pour le moment");
+            } else {
+                return ResponseEntity.ok().body(customers);
+            }
+        } catch(Exception e) {
+            return ResponseEntity.ok().body(e.getMessage());
+        }
     }
 
     @RequestMapping(value = "/{id}", produces = "application/json")
-    public Customer get(@PathVariable(value="id") Integer id){
-        return customerRepository.getOne(id);
+    public ResponseEntity get(@PathVariable(value="hashid") String hashid) {
+        try {
+            Customer customer = customerRepository.findCustomerByAccountNumber(hashid);
+            if(customer == null) {
+                throw HttpClientErrorException.create(HttpStatus.NOT_FOUND, "Aucun client n'existe avec ce numéro", null, null, null);
+            }
+            return ResponseEntity.ok().body(customer);
+        } catch(HibernateException e) {
+            return ResponseEntity.internalServerError().body(e.getMessage());
+        } catch(NullPointerException e) {
+            return ResponseEntity.internalServerError().body(e.getMessage());
+        } catch(Exception e) {
+            return ResponseEntity.internalServerError().body(e.getMessage());
+        }
     }
 
     @PostMapping("/create/{bankerId}")
     public ResponseEntity create(@PathVariable(value="bankerId") Integer bankerId, @RequestBody Customer customer) {
-        customer.setHashid(hashidService.generateHashId());
-        customer.setBanker(bankerRepository.getOne(bankerId));
+        try {
+            customer.setHashid(hashidService.generateHashId());
+            customer.setBanker(bankerRepository.getOne(bankerId));
 
-        User existingUser = userRepository.findUserWithEmail(customer.getUser().getEmail());
-        if(existingUser == null) {
+            User existingUser = userRepository.findUserWithEmail(customer.getUser().getEmail());
+
+            if(existingUser != null) {
+                throw new HibernateException("Un utilisateur existe déjà avec cet adresse email");
+            }
+
             User user = customer.getUser();
             user.setUsername(customer.getHashid());
             user.setPassword(passwordEncoder.encode(user.getPassword()));
@@ -66,24 +97,54 @@ public class CustomerController {
             customerRepository.save(customer);
 
             return ResponseEntity.ok().body(customer);
-        } else {
-            return ResponseEntity.ok().body("Un utilisateur client existe déjà avec cet identifiant");
+        } catch(HibernateException e) {
+            return ResponseEntity.internalServerError().body(e.getMessage());
+        } catch(Exception e) {
+            return ResponseEntity.internalServerError().body(e.getMessage());
         }
     }
 
     @PutMapping("/update")
-    public Customer update(@RequestBody Customer customer){
-        return customerRepository.save(customer);
+    public ResponseEntity update(@RequestBody Customer customer) {
+        try {
+            customer.getUser().setUpdated_at(new Date());
+            userRepository.save(customer.getUser());
+            customer.setUpdated_at(new Date());
+            customerRepository.save(customer);
+
+            return ResponseEntity.ok().body(customer);
+        } catch(HibernateException e) {
+            return ResponseEntity.internalServerError().body(e.getMessage());
+        } catch(Exception e) {
+            return ResponseEntity.internalServerError().body(e.getMessage());
+        }
     }
 
     @DeleteMapping("/delete/{id}")
     public ResponseEntity delete(@PathVariable(value="id") Integer id){
-        customerRepository.deleteById(id);
-        return ResponseEntity.ok().body("Client supprimé");
+        try {
+            customerRepository.deleteById(id);
+            return ResponseEntity.ok().body("Client supprimé");
+        } catch(HibernateException e) {
+            return ResponseEntity.internalServerError().body(e.getMessage());
+        } catch(Exception e) {
+            return ResponseEntity.internalServerError().body(e.getMessage());
+        }
     }
 
     @GetMapping("/{id}/accounts")
-    public ResponseEntity<List<Account>> getAccounts(@PathVariable(value="id") Integer id) {
-        return ResponseEntity.ok().body(accountRepository.findAllByIdCustomer(id));
+    public ResponseEntity getAccounts(@PathVariable(value="id") Integer id) {
+        try {
+            List<Account> customerAccounts = accountRepository.findAllByIdCustomer(id);
+            if(customerAccounts == null) {
+                return ResponseEntity.ok().body("Ce client ne possède aucun compte");
+            } else {
+                return ResponseEntity.ok().body(customerAccounts);
+            }
+        } catch(HibernateException e) {
+            return ResponseEntity.internalServerError().body(e.getMessage());
+        } catch(Exception e) {
+            return ResponseEntity.ok().body(e.getMessage());
+        }
     }
 }

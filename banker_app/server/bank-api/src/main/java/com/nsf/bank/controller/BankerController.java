@@ -1,20 +1,21 @@
 package com.nsf.bank.controller;
 
-import com.nsf.bank.entity.Customer;
-import com.nsf.bank.entity.Role;
+import com.nsf.bank.entity.*;
 import com.nsf.bank.repository.CustomerRepository;
 import com.nsf.bank.repository.UserRepository;
 import com.nsf.bank.repository.BankerRepository;
 import com.nsf.bank.service.HashidService;
+import org.hibernate.HibernateException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import com.nsf.bank.entity.User;
-import com.nsf.bank.entity.Banker;
+import org.springframework.web.client.HttpClientErrorException;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @RestController
@@ -37,21 +38,47 @@ public class BankerController {
     private HashidService hashidService;
 
     @RequestMapping("/")
-    public ResponseEntity<List<Banker>> getAll(){
-        return ResponseEntity.ok().body(bankerRepository.findAll());
+    public ResponseEntity getAll() {
+        try {
+            List<Banker> bankers = bankerRepository.findAll();
+            if(bankers == null) {
+                return ResponseEntity.ok().body("Aucun banquier n'a été créé pour le moment");
+            } else {
+                return ResponseEntity.ok().body(bankers);
+            }
+        } catch(Exception e) {
+            return ResponseEntity.ok().body(e.getMessage());
+        }
     }
 
-    @RequestMapping(value = "/{id}", produces = "application/json")
-    public Banker get(@PathVariable(value="id") Integer id){
-        return bankerRepository.getOne(id);
+    @RequestMapping(value = "/{hashid}", produces = "application/json")
+    public ResponseEntity get(@PathVariable(value="hashid") String hashid){
+        try {
+            Banker banker = bankerRepository.findBankerByAccountNumber(hashid);
+            if(banker == null) {
+                throw HttpClientErrorException.create(HttpStatus.NOT_FOUND, "Aucun banquier n'existe avec ce numéro", null, null, null);
+            }
+            return ResponseEntity.ok().body(banker);
+        } catch(HibernateException e) {
+            return ResponseEntity.internalServerError().body(e.getMessage());
+        } catch(NullPointerException e) {
+            return ResponseEntity.internalServerError().body(e.getMessage());
+        } catch(Exception e) {
+            return ResponseEntity.internalServerError().body(e.getMessage());
+        }
     }
 
     @PostMapping("/create")
     public ResponseEntity create(@RequestBody Banker banker){
-        banker.setHashid(hashidService.generateHashId());
+        try {
+            banker.setHashid(hashidService.generateHashId());
 
-        User existingUser = userRepository.findUserWithEmail(banker.getUser().getEmail());
-        if(existingUser == null) {
+            User existingUser = userRepository.findUserWithEmail(banker.getUser().getEmail());
+
+            if(existingUser != null) {
+                throw new HibernateException("Un utilisateur existe déjà avec cet adresse email");
+            }
+
             User user = banker.getUser();
             user.setUsername(banker.getHashid());
             user.setPassword(passwordEncoder.encode(user.getPassword()));
@@ -65,24 +92,54 @@ public class BankerController {
             bankerRepository.save(banker);
 
             return ResponseEntity.ok().body(banker);
-        } else {
-            return ResponseEntity.ok().body("Un utilisateur banquier existe déjà avec cet identifiant");
+        } catch(HibernateException e) {
+            return ResponseEntity.internalServerError().body(e.getMessage());
+        } catch(Exception e) {
+            return ResponseEntity.internalServerError().body(e.getMessage());
         }
     }
 
     @PutMapping("/update")
-    public Banker update(@RequestBody Banker banker){
-        return bankerRepository.save(banker);
+    public ResponseEntity update(@RequestBody Banker banker){
+        try {
+            banker.getUser().setUpdated_at(new Date());
+            userRepository.save(banker.getUser());
+            banker.setUpdated_at(new Date());
+            bankerRepository.save(banker);
+
+            return ResponseEntity.ok().body(banker);
+        } catch(HibernateException e) {
+            return ResponseEntity.internalServerError().body(e.getMessage());
+        } catch(Exception e) {
+            return ResponseEntity.internalServerError().body(e.getMessage());
+        }
     }
 
     @DeleteMapping("/delete/{id}")
     public ResponseEntity delete(@PathVariable(value="id") Integer id){
-        bankerRepository.deleteById(id);
-        return ResponseEntity.ok().body("Banquier supprimé");
+        try {
+            bankerRepository.deleteById(id);
+            return ResponseEntity.ok().body("Banquier supprimé");
+        } catch(HibernateException e) {
+            return ResponseEntity.internalServerError().body(e.getMessage());
+        } catch(Exception e) {
+            return ResponseEntity.internalServerError().body(e.getMessage());
+        }
     }
 
     @GetMapping("/{id}/customers")
-    public ResponseEntity<List<Customer>> getCustomers(@PathVariable(value="id") Integer id) {
-        return ResponseEntity.ok().body(customerRepository.findAllByIdBanker(id));
+    public ResponseEntity getCustomers(@PathVariable(value="id") Integer id) {
+        try {
+            List<Customer> bankerCustomers = customerRepository.findAllByIdBanker(id);
+            if(bankerCustomers == null) {
+                return ResponseEntity.ok().body("Le portefeuille client est vide");
+            } else {
+                return ResponseEntity.ok().body(bankerCustomers);
+            }
+        } catch(HibernateException e) {
+            return ResponseEntity.internalServerError().body(e.getMessage());
+        } catch(Exception e) {
+            return ResponseEntity.ok().body(e.getMessage());
+        }
     }
 }

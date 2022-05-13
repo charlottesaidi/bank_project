@@ -14,10 +14,15 @@ public class UserService  implements UserDetailsService{
     @Autowired
     private UserRepository userRepository;
 
-    @Override
+    public UserDetails loadUserByUsername(String username, String password) throws UsernameNotFoundException {
+        return userRepository.findUserWithNameAndPassword(username, password)
+                .orElseThrow(() -> new UsernameNotFoundException("Identifiants invalides"));
+    }
+
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         return userRepository.findUserWithName(username)
-                .orElseThrow(() -> new UsernameNotFoundException("user not found"));
+                .orElseThrow(() -> new UsernameNotFoundException("Identifiants invalides"));
     }
+
 
 }
