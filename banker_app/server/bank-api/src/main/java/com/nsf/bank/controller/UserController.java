@@ -42,7 +42,6 @@ public class UserController {
 	@PutMapping("/api/update")
 	public ResponseEntity update(@RequestBody User user){
 		try {
-			user.setUpdated_at(new Date());
 			userRepository.save(user);
 			return ResponseEntity.ok().body(user);
 		} catch(HibernateException e) {

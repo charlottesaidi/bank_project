@@ -73,7 +73,10 @@ public class AccountType {
         return updated_at;
     }
 
-    public void setUpdated_at(Date updated_at) {
-        this.updated_at = updated_at;
+    @PreUpdate
+    public void setUpdated_at() {
+        if(this.updated_at == null) {
+            this.updated_at = new Date();
+        }
     }
 }

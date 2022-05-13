@@ -1,5 +1,6 @@
 package com.nsf.bank.controller;
 
+import com.fasterxml.jackson.databind.JsonMappingException;
 import com.nsf.bank.entity.*;
 import com.nsf.bank.repository.AccountBalanceRepository;
 import com.nsf.bank.repository.TransactionRepository;
@@ -49,10 +50,12 @@ public class TransactionController {
 
             // on récupère les comptes débiteurs et/ou créditeurs
             if(transaction.getDebit() != null) {
-                debitAccount = accountRepository.getOne(transaction.getDebit().getId());
+                debitAccount = accountRepository.findById(transaction.getDebit().getId())
+                        .orElseThrow(() -> new JsonMappingException("Le compte bancaire à débiter n'existe pas"));
             }
             if(transaction.getCredit() != null) {
-                creditAccount = accountRepository.getOne(transaction.getCredit().getId());
+                creditAccount = accountRepository.findById(transaction.getCredit().getId())
+                        .orElseThrow(() -> new JsonMappingException("Le compte bancaire à créditer n'existe pas"));
             }
 
             // selon si les comptes sont renseignés, le type de transaction change (transfert entre deux comptes internes ou transactions extérieures(achat/provision))
@@ -79,7 +82,6 @@ public class TransactionController {
                     AccountBalance debitBalance = debitAccount.getAccount_balance();
                     debitBalance.setBalance(debitAccount.getBalance() - transaction.getAmount());
                     debitBalance.setAccount(debitAccount);
-                    debitBalance.setUpdated_at(new Date());
                     accountBalanceRepository.save(debitBalance);
 
                     // mise à jour du solde du compte crédité
@@ -87,7 +89,6 @@ public class TransactionController {
                     AccountBalance creditBalance = creditAccount.getAccount_balance();
                     creditBalance.setBalance(creditAccount.getBalance() + transaction.getAmount());
                     creditBalance.setAccount(creditAccount);
-                    creditBalance.setUpdated_at(new Date());
                     accountBalanceRepository.save(creditBalance);
 
                     // sauvegarde la transaction
@@ -105,7 +106,6 @@ public class TransactionController {
                     AccountBalance debitBalance = debitAccount.getAccount_balance();
                     debitBalance.setBalance(debitAccount.getBalance() - transaction.getAmount());
                     debitBalance.setAccount(debitAccount);
-                    debitBalance.setUpdated_at(new Date());
                     accountBalanceRepository.save(debitBalance);
 
                     // sauvegarde la transaction
@@ -121,7 +121,6 @@ public class TransactionController {
                 AccountBalance creditBalance = creditAccount.getAccount_balance();
                 creditBalance.setBalance(creditAccount.getBalance() + transaction.getAmount());
                 creditBalance.setAccount(creditAccount);
-                creditBalance.setUpdated_at(new Date());
                 accountBalanceRepository.save(creditBalance);
 
                 // sauvegarde la transaction
@@ -131,6 +130,8 @@ public class TransactionController {
        } catch(HibernateException e) {
             return ResponseEntity.internalServerError().body(e.getMessage());
        } catch(NullPointerException e) {
+            return ResponseEntity.internalServerError().body(e.getMessage());
+       } catch(JsonMappingException e) {
             return ResponseEntity.internalServerError().body(e.getMessage());
        } catch(Exception e) {
             return ResponseEntity.internalServerError().body(e.getMessage());

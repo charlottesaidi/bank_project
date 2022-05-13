@@ -12,4 +12,7 @@ import org.springframework.stereotype.Repository;
 public interface AccountRepository extends JpaRepository<Account, Integer> {
     @Query("select a from Account a where a.customer.id = ?1")
     List<Account> findAllByIdCustomer(int id);
+
+    @Query("select a from Account a where a.hashid = ?1")
+    Account findAccountByAccountNumber(String hashid);
 }

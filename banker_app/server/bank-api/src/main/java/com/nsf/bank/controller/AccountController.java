@@ -1,5 +1,6 @@
 package com.nsf.bank.controller;
 
+import com.fasterxml.jackson.databind.JsonMappingException;
 import com.nsf.bank.entity.*;
 import com.nsf.bank.repository.*;
 import com.nsf.bank.service.HashidService;
@@ -7,6 +8,7 @@ import org.hibernate.HibernateException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.MissingPathVariableException;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.HttpClientErrorException;
 
@@ -52,10 +54,10 @@ public class AccountController {
         }
     }
 
-    @RequestMapping(value = "/{id}", produces = "application/json")
-    public ResponseEntity get(@PathVariable(value="id") Integer id){
+    @RequestMapping(value = "/{hashid}", produces = "application/json")
+    public ResponseEntity get(@PathVariable(value="hashid") String hashid){
         try {
-            Account account = accountRepository.getOne(id);
+            Account account = accountRepository.findAccountByAccountNumber(hashid);
             if(account == null) {
                 throw HttpClientErrorException.create(HttpStatus.NOT_FOUND, "Aucun banquier n'existe avec ce numéro", null, null, null);
             }
@@ -68,15 +70,29 @@ public class AccountController {
             return ResponseEntity.internalServerError().body(e.getMessage());
         }
     }
+    @PostMapping("/createtest/{customerId}")
+    public ResponseEntity createtest(@PathVariable(value="customerId") int customerId, @RequestBody Account account) throws JsonMappingException {
+        try {
+
+            Customer customer = customerRepository.findById(customerId)
+                    .orElseThrow(() -> new JsonMappingException("Aucun client n'a été trouvé sous ce numéro"));
+            return ResponseEntity.ok().body(customer);
+        } catch(JsonMappingException e) {
+            return ResponseEntity.ok().body(e.getMessage());
+        }
+    }
 
     @PostMapping("/create/{customerId}")
     public ResponseEntity create(@PathVariable(value="customerId") int customerId, @RequestBody Account account){
         try {
-            Customer customer = customerRepository.getOne(customerId);
-            if (customer == null) {
-                throw new HibernateException("Aucun client n'a été trouvé sous ce numéro");
-            }
+            Customer customer = customerRepository.findById(customerId)
+                    .orElseThrow(() -> new JsonMappingException("Aucun client n'a été trouvé sous ce numéro"));
+
             account.setHashid(hashidService.generateHashId());
+            account.setCustomer(customer);
+
+            String cardNumber = "**** **** **** " + account.getCard().getNumber().substring(12);
+            account.getCard().setNumber(cardNumber);
 
             AccountType existingAccountType = accountTypeRepository.findAccountTypeWithName(account.getAccount_type().getName());
 
@@ -95,6 +111,8 @@ public class AccountController {
             return ResponseEntity.ok().body(account);
         } catch(HibernateException e) {
             return ResponseEntity.internalServerError().body(e.getMessage());
+        } catch(JsonMappingException e) {
+            return ResponseEntity.ok().body(e.getMessage());
         } catch(Exception e) {
             return ResponseEntity.internalServerError().body(e.getMessage());
         }

@@ -5,19 +5,26 @@ import org.springframework.data.annotation.LastModifiedDate;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
-@Table(name = "bankers")
-public class Banker {
+@Table(name = "cards")
+public class Card {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "id_banker")
+    @Column(name = "id_account")
     private int id;
 
-    @OneToOne(cascade = CascadeType.REMOVE)
-    @JoinColumn(name = "id_user")
-    private User user;
+    private String number;
+
+    private Date validity_date;
+
+    private int cvc;
+
+    @OneToOne
+    @JoinColumn(name = "id_account")
+    private Account account;
 
     @CreatedDate
     private Date created_at;
@@ -25,15 +32,16 @@ public class Banker {
     @LastModifiedDate
     private Date updated_at;
 
-    private String hashid;
+    public Card() {}
 
-    public Banker() {}
-
-    public Banker(int id, User user, String hashid) {
-        super();
+    public Card(int id, String number, Date validity_date, int cvc, Account account, Date created_at, Date updated_at) {
         this.id = id;
-        this.user = user;
-        this.hashid = hashid;
+        this.number = number;
+        this.validity_date = validity_date;
+        this.cvc = cvc;
+        this.account = account;
+        this.created_at = created_at;
+        this.updated_at = updated_at;
     }
 
     public int getId() {
@@ -44,20 +52,28 @@ public class Banker {
         this.id = id;
     }
 
-    public User getUser() {
-        return user;
+    public String getNumber() {
+        return number;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setNumber(String number) {
+        this.number = number;
     }
 
-    public String getHashid() {
-        return hashid;
+    public Date getValidity_date() {
+        return validity_date;
     }
 
-    public void setHashid(String hashid) {
-        this.hashid = hashid;
+    public void setValidity_date(Date validity_date) {
+        this.validity_date = validity_date;
+    }
+
+    public int getCvc() {
+        return cvc;
+    }
+
+    public void setCvc(int cvc) {
+        this.cvc = cvc;
     }
 
     public Date getCreated_at() {

@@ -27,6 +27,9 @@ public class Account {
     @OneToOne(mappedBy = "account", cascade = CascadeType.ALL, orphanRemoval = true)
     private AccountBalance account_balance;
 
+    @OneToOne(mappedBy = "account", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Card card;
+
     private String hashid;
 
     private float balance;
@@ -120,6 +123,14 @@ public class Account {
         this.overdraft = -overdraft;
     }
 
+    public Card getCard() {
+        return card;
+    }
+
+    public void setCard(Card card) {
+        this.card = card;
+    }
+
     public Date getCreated_at() {
         return created_at;
     }
@@ -135,7 +146,10 @@ public class Account {
         return updated_at;
     }
 
-    public void setUpdated_at(Date updated_at) {
-        this.updated_at = updated_at;
+    @PreUpdate
+    public void setUpdated_at() {
+        if(this.updated_at == null) {
+            this.updated_at = new Date();
+        }
     }
 }

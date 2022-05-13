@@ -54,7 +54,7 @@ public class CustomerController {
         }
     }
 
-    @RequestMapping(value = "/{id}", produces = "application/json")
+    @RequestMapping(value = "/{hashid}", produces = "application/json")
     public ResponseEntity get(@PathVariable(value="hashid") String hashid) {
         try {
             Customer customer = customerRepository.findCustomerByAccountNumber(hashid);
@@ -107,9 +107,7 @@ public class CustomerController {
     @PutMapping("/update")
     public ResponseEntity update(@RequestBody Customer customer) {
         try {
-            customer.getUser().setUpdated_at(new Date());
             userRepository.save(customer.getUser());
-            customer.setUpdated_at(new Date());
             customerRepository.save(customer);
 
             return ResponseEntity.ok().body(customer);
@@ -136,7 +134,7 @@ public class CustomerController {
     public ResponseEntity getAccounts(@PathVariable(value="id") Integer id) {
         try {
             List<Account> customerAccounts = accountRepository.findAllByIdCustomer(id);
-            if(customerAccounts == null) {
+            if(customerAccounts.isEmpty()) {
                 return ResponseEntity.ok().body("Ce client ne possède aucun compte");
             } else {
                 return ResponseEntity.ok().body(customerAccounts);

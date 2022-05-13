@@ -1,5 +1,6 @@
 package com.nsf.bank.controller;
 
+import com.fasterxml.jackson.databind.JsonMappingException;
 import com.nsf.bank.entity.*;
 import com.nsf.bank.repository.CustomerRepository;
 import com.nsf.bank.repository.UserRepository;
@@ -52,7 +53,7 @@ public class BankerController {
     }
 
     @RequestMapping(value = "/{hashid}", produces = "application/json")
-    public ResponseEntity get(@PathVariable(value="hashid") String hashid){
+    public ResponseEntity get(@PathVariable(value="hashid") String hashid) throws JsonMappingException {
         try {
             Banker banker = bankerRepository.findBankerByAccountNumber(hashid);
             if(banker == null) {
@@ -102,9 +103,7 @@ public class BankerController {
     @PutMapping("/update")
     public ResponseEntity update(@RequestBody Banker banker){
         try {
-            banker.getUser().setUpdated_at(new Date());
             userRepository.save(banker.getUser());
-            banker.setUpdated_at(new Date());
             bankerRepository.save(banker);
 
             return ResponseEntity.ok().body(banker);
@@ -131,7 +130,7 @@ public class BankerController {
     public ResponseEntity getCustomers(@PathVariable(value="id") Integer id) {
         try {
             List<Customer> bankerCustomers = customerRepository.findAllByIdBanker(id);
-            if(bankerCustomers == null) {
+            if(bankerCustomers.isEmpty()) {
                 return ResponseEntity.ok().body("Le portefeuille client est vide");
             } else {
                 return ResponseEntity.ok().body(bankerCustomers);
