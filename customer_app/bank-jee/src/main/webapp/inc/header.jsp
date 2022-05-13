@@ -9,11 +9,19 @@
 <html>
 <head>
     <title>BankMe</title>
+<%--    reset css--%>
+    <link rel="stylesheet" href="asset/css/reset.css">
+<%--    style css--%>
+    <link rel="stylesheet" href="asset/css/style.css">
 </head>
 <body>
     <%--navigation--%>
-    <div>
-        <a href="index.jsp">Accueil</a>
-        <a href="login.jsp">Login</a>
-        <a href="settings.jsp">Paramètres</a>
-    </div>
+    <header>
+        <a href="index.jsp" class="logo"></a>
+        <nav>
+            <ul>
+                <li><a href="dashboard.jsp">Accueil</a></li>
+                <li><a href="login.jsp">Connexion</a></li>
+            </ul>
+        </nav>
+    </header>
