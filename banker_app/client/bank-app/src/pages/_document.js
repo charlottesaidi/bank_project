@@ -4,7 +4,7 @@ export default function Document() {
   return (
     <Html>
       <Head>
-          <meta charSet="utf-8" />
+          <meta charset="utf-8" />
           <meta name="theme-color" content="#000000" />
           {/* <link rel="shortcut icon" href="/img/brand/favicon.ico" /> */}
           {/* <link
