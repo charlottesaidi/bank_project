@@ -20,11 +20,16 @@ public class DashboardServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        request.getSession().setAttribute("test","test");
-        request.getSession().setAttribute("array",DaoFactory.getCustomerDao().getAll());
-        request.getSession().setAttribute("user",DaoFactory.getCustomerDao().get(4));
-        System.out.println(DaoFactory.getCustomerDao().get(4));
-//        System.out.println("test");
+        if (request.getSession().getAttribute("user") != null) {
+            response.sendRedirect(request.getContextPath()+"/dashboard.jsp");
+        }
+        else {
+            response.sendRedirect(request.getContextPath()+"/login.jsp");
+        }
+
+    }
+    @Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.sendRedirect(request.getContextPath()+"/dashboard.jsp");
     }
 }

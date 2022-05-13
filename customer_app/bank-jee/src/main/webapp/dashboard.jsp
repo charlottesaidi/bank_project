@@ -12,12 +12,15 @@
     <title>Title</title>
     <h1>Dashboard</h1>
     <h2>${test}</h2>
-    <c:forEach items="${array}" var="c">
-        <tr>
-            <td>${c.hashid}</td>
-        </tr>
-    </c:forEach>
-    <p>${user.hashid}</p>
+<%--    <c:forEach items="${array}" var="c">--%>
+<%--        <tr>--%>
+<%--            <td>${c.hashid}</td>--%>
+<%--        </tr>--%>
+<%--    </c:forEach>--%>
+<%--    <p>${user.hashid}</p>--%>
+    <c:if test="${ !empty user[0].username }">
+        <p>Vous êtes ${ user[0].username } !</p>
+    </c:if>
 </head>
 <body>
 
