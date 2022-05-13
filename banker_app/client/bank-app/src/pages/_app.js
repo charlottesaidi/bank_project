@@ -2,7 +2,7 @@ import React from "react";
 import "@styles/reset.css";
 import "@styles/globals.css";
 import "@styles/general.css";
-import Layout from "@components/Layout";
+// import Layout from "@components/Layout";
 import Head from "next/head";
 
 export default function MyApp({ Component, pageProps }) {
@@ -12,6 +12,8 @@ export default function MyApp({ Component, pageProps }) {
   //     console.log(mod);
   //   });
   // }, []);
+
+  const Layout = Component.layout || (({ children }) => <>{children}</>);
   return (
     <>
       <Head>
