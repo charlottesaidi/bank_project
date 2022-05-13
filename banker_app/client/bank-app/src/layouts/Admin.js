@@ -17,7 +17,7 @@ export default function Admin({ children }) {
         <HeaderStats />
         <div className="px-4 md:px-10 mx-auto w-full -m-24">
           {children}
-          <FooterAdmin />
+          {/* <FooterAdmin /> */}
         </div>
       </div>
     </>

@@ -18,7 +18,7 @@ export default function Auth({ children }) {
             }}
           ></div>
           {children}
-          <FooterSmall absolute />
+          {/* <FooterSmall absolute /> */}
         </section>
       </main>
     </>
