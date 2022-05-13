@@ -84,7 +84,7 @@ export default function Sidebar() {
             <hr className="my-4 md:min-w-full" />
             {/* Heading */}
             <h6 className="md:min-w-full text-blueGray-500 text-xs uppercase font-bold block pt-1 pb-4 no-underline">
-              Admin Layout Pages
+              Administration
             </h6>
             {/* Navigation */}
 
@@ -108,7 +108,7 @@ export default function Sidebar() {
                           : "text-blueGray-300")
                       }
                     ></i>{" "}
-                    Dashboard
+                    Tableau de bord
                   </a>
                 </Link>
               </li>
@@ -132,7 +132,7 @@ export default function Sidebar() {
                           : "text-blueGray-300")
                       }
                     ></i>{" "}
-                    Settings
+                    Paramètres
                   </a>
                 </Link>
               </li>
@@ -150,13 +150,13 @@ export default function Sidebar() {
                   >
                     <i
                       className={
-                        "fas fa-table mr-2 text-sm " +
+                        "fas fa-users mr-2 text-sm " +
                         (router.pathname.indexOf("/admin/tables") !== -1
                           ? "opacity-75"
                           : "text-blueGray-300")
                       }
                     ></i>{" "}
-                    Tables
+                    Clients
                   </a>
                 </Link>
               </li>
