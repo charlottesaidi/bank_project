@@ -1,9 +1,6 @@
 package com.nsf.bank.controller;
 
-import com.nsf.bank.entity.Account;
-import com.nsf.bank.entity.Customer;
 import com.nsf.bank.repository.UserRepository;
-import org.hibernate.HibernateException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -11,7 +8,6 @@ import org.springframework.web.bind.annotation.*;
 import com.nsf.bank.entity.User;
 import com.nsf.bank.service.JWTUserService;
 
-import java.util.Date;
 import java.util.List;
 
 @RestController
@@ -30,8 +26,9 @@ public class UserController {
 	}
 
 	@RequestMapping(value = "/{id}", produces = "application/json")
-	public User get(@PathVariable(value="id") Integer id){
-		return userRepository.getOne(id);
+	public ResponseEntity get(@PathVariable(value="id") Integer id) {
+		User user = userRepository.getOne(id);
+		return ResponseEntity.ok().body(user);
 	}
 
 	@PostMapping("/signin")
@@ -41,14 +38,8 @@ public class UserController {
 
 	@PutMapping("/api/update")
 	public ResponseEntity update(@RequestBody User user){
-		try {
-			userRepository.save(user);
-			return ResponseEntity.ok().body(user);
-		} catch(HibernateException e) {
-			return ResponseEntity.internalServerError().body(e.getMessage());
-		} catch(Exception e) {
-			return ResponseEntity.internalServerError().body(e.getMessage());
-		}
+		userRepository.save(user);
+		return ResponseEntity.ok().body(user);
 	}
 
 	@DeleteMapping("/api/delete/{id}")

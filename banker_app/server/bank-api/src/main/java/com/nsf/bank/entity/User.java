@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.List;
 
 import javax.persistence.*;
+import javax.validation.constraints.*;
 
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
@@ -12,7 +13,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 @Entity
-@Table(name = "users")
+@Table(name = "users", uniqueConstraints = { @UniqueConstraint(columnNames = "email") })
 public class User implements UserDetails{
 	
 	@Id
@@ -20,12 +21,14 @@ public class User implements UserDetails{
 	@Column(name = "id_user")
 	private int id;
 
+	@Column(unique = true)
 	private String email;
-	
+
 	private String username;
 	
 	private String password;
 
+	@NotBlank
 	private String first_name;
 
 	private String last_name;

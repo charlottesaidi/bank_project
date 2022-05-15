@@ -7,11 +7,11 @@ import com.nsf.bank.repository.TransactionRepository;
 import com.nsf.bank.repository.AccountRepository;
 import org.hibernate.HibernateException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 @RestController
@@ -27,35 +27,32 @@ public class TransactionController {
     private AccountBalanceRepository accountBalanceRepository;
 
     @RequestMapping("/")
-    public ResponseEntity<List<Transaction>> getAll(){
-        return ResponseEntity.ok().body(transactionRepository.findAll());
+    public ResponseEntity getAll(){
+        List<Transaction> transactions = transactionRepository.findAll();
+        if(transactions.isEmpty()) {
+            return ResponseEntity.ok().body("Aucune transaction");
+        } else {
+            return ResponseEntity.ok().body(transactions);
+        }
     }
 
     @RequestMapping(value = "/{id}", produces = "application/json")
-    public Transaction get(@PathVariable(value="id") Integer id){
-        return transactionRepository.getOne(id);
-    }
-
-    @PostMapping("/createtest")
-    public ResponseEntity createtest(@RequestBody Transaction transaction) {
-        Account debitAccount = accountRepository.getOne(transaction.getDebit().getId());
-        return ResponseEntity.ok().body(debitAccount.getAccount_balance());
+    public ResponseEntity get(@PathVariable(value="id") Integer id){
+        Transaction transaction = transactionRepository.getOne(id);
+        return ResponseEntity.ok().body(transaction);
     }
 
     @PostMapping("/create")
     public ResponseEntity create(@RequestBody Transaction transaction) {
-        try {
             Account debitAccount = null;
             Account creditAccount = null;
 
             // on récupère les comptes débiteurs et/ou créditeurs
             if(transaction.getDebit() != null) {
-                debitAccount = accountRepository.findById(transaction.getDebit().getId())
-                        .orElseThrow(() -> new JsonMappingException("Le compte bancaire à débiter n'existe pas"));
+                debitAccount = accountRepository.getOne(transaction.getDebit().getId());
             }
             if(transaction.getCredit() != null) {
-                creditAccount = accountRepository.findById(transaction.getCredit().getId())
-                        .orElseThrow(() -> new JsonMappingException("Le compte bancaire à créditer n'existe pas"));
+                creditAccount = accountRepository.getOne(transaction.getCredit().getId());
             }
 
             // selon si les comptes sont renseignés, le type de transaction change (transfert entre deux comptes internes ou transactions extérieures(achat/provision))
@@ -127,25 +124,59 @@ public class TransactionController {
                 transactionRepository.save(transaction);
             }
             return ResponseEntity.ok().body(transaction);
-       } catch(HibernateException e) {
-            return ResponseEntity.internalServerError().body(e.getMessage());
-       } catch(NullPointerException e) {
-            return ResponseEntity.internalServerError().body(e.getMessage());
-       } catch(JsonMappingException e) {
-            return ResponseEntity.internalServerError().body(e.getMessage());
-       } catch(Exception e) {
-            return ResponseEntity.internalServerError().body(e.getMessage());
-       }
-    }
-
-    @PutMapping("/update")
-    public Transaction update(@RequestBody Transaction transaction){
-        return transactionRepository.save(transaction);
     }
 
     @DeleteMapping("/delete/{id}")
-    public ResponseEntity<Transaction> delete(@PathVariable(value="id") Integer id){
+    public ResponseEntity delete(@PathVariable(value="id") Integer id){
+        // On récupère la transaction
+        Transaction transaction = transactionRepository.getOne(id);
+        Account debitAccount = null;
+        Account creditAccount = null;
+
+        // on récupère les comptes débiteur et/ou créditeur correspondants
+        if(transaction.getDebit() != null) {
+            debitAccount = accountRepository.getOne(transaction.getDebit().getId());
+        }
+        if(transaction.getCredit() != null) {
+            creditAccount = accountRepository.getOne(transaction.getCredit().getId());
+        }
+
+        // dans le cas d'un virement entre deux comptes
+        if (transaction.getDescription().contains(TransactionType.TRANSACTION_TYPE_TRANSFER)) {
+            // on recrédite le compte débiteur
+            debitAccount.setBalance(debitAccount.getBalance() + transaction.getAmount());
+            AccountBalance debitBalance = debitAccount.getAccount_balance();
+            debitBalance.setBalance(debitAccount.getBalance() + transaction.getAmount());
+            debitBalance.setAccount(debitAccount);
+            accountBalanceRepository.save(debitBalance);
+
+            // on annule le crédit de l'autre compte et reset le solde
+            creditAccount.setBalance(creditAccount.getBalance() - transaction.getAmount());
+            AccountBalance creditBalance = creditAccount.getAccount_balance();
+            creditBalance.setBalance(creditAccount.getBalance() - transaction.getAmount());
+            creditBalance.setAccount(creditAccount);
+            accountBalanceRepository.save(creditBalance);
+        }
+        // dans le cas d'un paiement depuis un compte
+        if (transaction.getDescription().contains(TransactionType.TRANSACTION_TYPE_DEBIT)) {
+            // on recrédite le compte
+            debitAccount.setBalance(debitAccount.getBalance() + transaction.getAmount());
+            AccountBalance debitBalance = debitAccount.getAccount_balance();
+            debitBalance.setBalance(debitAccount.getBalance() + transaction.getAmount());
+            debitBalance.setAccount(debitAccount);
+            accountBalanceRepository.save(debitBalance);
+        }
+        // dans le cas d'un crédit du compte
+        if (transaction.getDescription().contains(TransactionType.TRANSACTION_TYPE_CREDIT)) {
+            // on annule le crédit de compte et reset le solde
+            creditAccount.setBalance(creditAccount.getBalance() - transaction.getAmount());
+            AccountBalance creditBalance = creditAccount.getAccount_balance();
+            creditBalance.setBalance(creditAccount.getBalance() - transaction.getAmount());
+            creditBalance.setAccount(creditAccount);
+            accountBalanceRepository.save(creditBalance);
+        }
+        // On finit par supprimer la transaction
         transactionRepository.deleteById(id);
-        return ResponseEntity.ok().body(null);
+        return ResponseEntity.ok().body("Transaction annulée");
     }
 }

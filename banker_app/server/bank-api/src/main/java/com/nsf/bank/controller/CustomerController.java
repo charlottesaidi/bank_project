@@ -1,6 +1,6 @@
 package com.nsf.bank.controller;
 
-import com.fasterxml.jackson.databind.JsonMappingException;
+import com.mysql.jdbc.exceptions.jdbc4.MySQLIntegrityConstraintViolationException;
 import com.nsf.bank.entity.*;
 import com.nsf.bank.repository.AccountRepository;
 import com.nsf.bank.repository.UserRepository;
@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.HttpClientErrorException;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 @RestController
@@ -42,107 +41,65 @@ public class CustomerController {
 
     @RequestMapping("/")
     public ResponseEntity getAll() {
-        try {
-            List<Customer> customers = customerRepository.findAll();
-            if(customers == null) {
-                return ResponseEntity.ok().body("Aucun client n'est inscrit pour le moment");
-            } else {
-                return ResponseEntity.ok().body(customers);
-            }
-        } catch(Exception e) {
-            return ResponseEntity.ok().body(e.getMessage());
+        List<Customer> customers = customerRepository.findAll();
+        if(customers.isEmpty()) {
+            return ResponseEntity.ok().body("Aucun client n'est inscrit pour le moment");
+        } else {
+            return ResponseEntity.ok().body(customers);
         }
     }
 
     @RequestMapping(value = "/{hashid}", produces = "application/json")
     public ResponseEntity get(@PathVariable(value="hashid") String hashid) {
-        try {
-            Customer customer = customerRepository.findCustomerByAccountNumber(hashid);
-            if(customer == null) {
-                throw HttpClientErrorException.create(HttpStatus.NOT_FOUND, "Aucun client n'existe avec ce numéro", null, null, null);
-            }
-            return ResponseEntity.ok().body(customer);
-        } catch(HibernateException e) {
-            return ResponseEntity.internalServerError().body(e.getMessage());
-        } catch(NullPointerException e) {
-            return ResponseEntity.internalServerError().body(e.getMessage());
-        } catch(Exception e) {
-            return ResponseEntity.internalServerError().body(e.getMessage());
+        Customer customer = customerRepository.findCustomerByAccountNumber(hashid);
+        if(customer == null) {
+            throw HttpClientErrorException.create(HttpStatus.NOT_FOUND, "Aucun client n'existe avec ce numéro", null, null, null);
         }
+        return ResponseEntity.ok().body(customer);
     }
 
     @PostMapping("/create/{bankerId}")
-    public ResponseEntity create(@PathVariable(value="bankerId") Integer bankerId, @RequestBody Customer customer) {
-        try {
-            customer.setHashid(hashidService.generateHashId());
-            customer.setBanker(bankerRepository.getOne(bankerId));
+    public ResponseEntity create(@PathVariable(value="bankerId") Integer bankerId, @RequestBody Customer customer) throws MySQLIntegrityConstraintViolationException {
+        customer.setHashid(hashidService.generateHashId());
+        customer.setBanker(bankerRepository.getOne(bankerId));
 
-            User existingUser = userRepository.findUserWithEmail(customer.getUser().getEmail());
+        User user = customer.getUser();
+        user.setUsername(customer.getHashid());
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
 
-            if(existingUser != null) {
-                throw new HibernateException("Un utilisateur existe déjà avec cet adresse email");
-            }
+        List<Role> roles = new ArrayList<>();
+        roles.add(Role.ROLE_USER);
+        user.setRole(roles);
 
-            User user = customer.getUser();
-            user.setUsername(customer.getHashid());
-            user.setPassword(passwordEncoder.encode(user.getPassword()));
+        userRepository.save(user);
+        customer.setUser(user);
 
-            List<Role> roles = new ArrayList<>();
-            roles.add(Role.ROLE_USER);
-            user.setRole(roles);
+        customerRepository.save(customer);
 
-            userRepository.save(user);
-            customer.setUser(user);
-
-            customerRepository.save(customer);
-
-            return ResponseEntity.ok().body(customer);
-        } catch(HibernateException e) {
-            return ResponseEntity.internalServerError().body(e.getMessage());
-        } catch(Exception e) {
-            return ResponseEntity.internalServerError().body(e.getMessage());
-        }
+        return ResponseEntity.ok().body(customer);
     }
 
     @PutMapping("/update")
     public ResponseEntity update(@RequestBody Customer customer) {
-        try {
-            userRepository.save(customer.getUser());
-            customerRepository.save(customer);
+        userRepository.save(customer.getUser());
+        customerRepository.save(customer);
 
-            return ResponseEntity.ok().body(customer);
-        } catch(HibernateException e) {
-            return ResponseEntity.internalServerError().body(e.getMessage());
-        } catch(Exception e) {
-            return ResponseEntity.internalServerError().body(e.getMessage());
-        }
+        return ResponseEntity.ok().body(customer);
     }
 
     @DeleteMapping("/delete/{id}")
     public ResponseEntity delete(@PathVariable(value="id") Integer id){
-        try {
-            customerRepository.deleteById(id);
-            return ResponseEntity.ok().body("Client supprimé");
-        } catch(HibernateException e) {
-            return ResponseEntity.internalServerError().body(e.getMessage());
-        } catch(Exception e) {
-            return ResponseEntity.internalServerError().body(e.getMessage());
-        }
+        customerRepository.deleteById(id);
+        return ResponseEntity.ok().body("Client supprimé");
     }
 
     @GetMapping("/{id}/accounts")
     public ResponseEntity getAccounts(@PathVariable(value="id") Integer id) {
-        try {
-            List<Account> customerAccounts = accountRepository.findAllByIdCustomer(id);
-            if(customerAccounts.isEmpty()) {
-                return ResponseEntity.ok().body("Ce client ne possède aucun compte");
-            } else {
-                return ResponseEntity.ok().body(customerAccounts);
-            }
-        } catch(HibernateException e) {
-            return ResponseEntity.internalServerError().body(e.getMessage());
-        } catch(Exception e) {
-            return ResponseEntity.ok().body(e.getMessage());
+        List<Account> customerAccounts = accountRepository.findAllByIdCustomer(id);
+        if(customerAccounts.isEmpty()) {
+            return ResponseEntity.ok().body("Ce client ne possède aucun compte");
+        } else {
+            return ResponseEntity.ok().body(customerAccounts);
         }
     }
 }
