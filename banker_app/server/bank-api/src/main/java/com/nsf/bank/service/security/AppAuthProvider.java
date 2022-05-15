@@ -10,11 +10,15 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import com.nsf.bank.service.UserService;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 public class AppAuthProvider  implements AuthenticationManager {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     @Override
     public Authentication authenticate(Authentication authentification) throws AuthenticationException{
@@ -22,12 +26,14 @@ public class AppAuthProvider  implements AuthenticationManager {
         UsernamePasswordAuthenticationToken auth = (UsernamePasswordAuthenticationToken) authentification;
 
         String username = auth.getName();
+        String providedPassword = auth.getCredentials().toString();
 
-        UserDetails user = userService.loadUserByUsername(username, auth.getCredentials().toString());
+        UserDetails user = userService.loadUserByUsername(username);
 
-        if(user == null) {
+        if(!passwordEncoder.matches(providedPassword, user.getPassword())) {
             throw new BadCredentialsException("Identifiants invalides");
         }
+
         return new UsernamePasswordAuthenticationToken(user, null, user.getAuthorities());
     }
 }

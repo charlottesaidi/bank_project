@@ -24,7 +24,7 @@ public class JWTTokenFilter extends OncePerRequestFilter {
 	protected void doFilterInternal(HttpServletRequest req, HttpServletResponse res, FilterChain filter) throws ServletException, IOException{
 		String token = provider.resolveToken(req);	
 		try {
-				if(token != null&& provider.validatToken(token)) {
+				if(token != null && provider.validatToken(token)) {
 					Authentication auth = provider.getAuthentication(token);
 					SecurityContextHolder.getContext().setAuthentication(auth);
 				}

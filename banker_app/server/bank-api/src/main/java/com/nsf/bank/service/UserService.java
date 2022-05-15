@@ -14,14 +14,9 @@ public class UserService  implements UserDetailsService{
     @Autowired
     private UserRepository userRepository;
 
-    public UserDetails loadUserByUsername(String username, String password) throws UsernameNotFoundException {
-        return userRepository.findUserWithNameAndPassword(username, password)
-                .orElseThrow(() -> new UsernameNotFoundException("Identifiants invalides"));
-    }
-
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         return userRepository.findUserWithName(username)
-                .orElseThrow(() -> new UsernameNotFoundException("Identifiants invalides"));
+                .orElseThrow(() -> new UsernameNotFoundException("Cet utilisateur n'existe pas"));
     }
 
 
