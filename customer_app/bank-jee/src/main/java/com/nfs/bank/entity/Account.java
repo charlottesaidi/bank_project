@@ -22,7 +22,7 @@ public class Account {
     @JoinColumn(name = "id_account_type")
     private AccountType account_type;
 
-    private long hashid;
+    private String hashid;
 
     private float balance;
 
@@ -34,7 +34,7 @@ public class Account {
 
     public Account() {}
 
-    public Account(int id, Customer customer, AccountType account_type, long hashid, float balance, float overdraft, Date created_at, Date updated_at) {
+    public Account(int id, Customer customer, AccountType account_type, String hashid, float balance, float overdraft, Date created_at, Date updated_at) {
         super();
         this.id = id;
         this.customer = customer;
@@ -70,11 +70,11 @@ public class Account {
         this.account_type = account_type;
     }
 
-    public long getHashid() {
+    public String getHashid() {
         return hashid;
     }
 
-    public void setHashid(long hashid) {
+    public void setHashid(String hashid) {
         this.hashid = hashid;
     }
 

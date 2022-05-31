@@ -5,39 +5,29 @@
   Time: 10:48
   To change this template use File | Settings | File Templates.
 --%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ include file="inc/header.jsp"%>
 
-    <h1>Page Login</h1>
-    <%--    Formulaire--%>
-    <form action="">
-        <%--        Nom--%>
+    <h1>Connexion</h1>
+
+    <%--Formulaire--%>
+    <form method="post" action="login">
+        <%--Identifiant--%>
         <div>
-            <label for="name"> Nom :</label>
-            <input type="text" id="name" placeholder="Votre Nom">
+            <input type="text" name="identifiant" placeholder="Identifiant">
+            <c:if test="${ !empty errors[0] }">
+                <p>${ errors[0] }</p>
+            </c:if>
+        <%--Mot de passe--%>
+        <div>
+            <input type="password" name="password" placeholder="Votre Mot de passe">
+            <c:if test="${ !empty errors[1] }">
+                <p>${ errors[1] }</p>
+            </c:if>
         </div>
-        <%--        Prénom--%>
+        <%--Boutton envoyer--%>
         <div>
-            <label for="lastname"> Prénom :</label>
-            <input type="text" id="lastname" placeholder="Votre Prénom">
-        </div>
-        <%--        Adresse mail--%>
-        <div>
-            <label for="mail">Adresse mail</label>
-            <input type="email" id="mail" placeholder="ex: abcd@mail.com">
-        </div>
-        <%--        Mot de passe--%>
-        <div>
-            <label for="password">Votre Mot de passe</label>
-            <input type="password" id="password" placeholder="Votre Mot de passe">
-        </div>
-        <%--        Confirmation de mot de passe--%>
-        <div>
-            <label for="passwordconfirm">Confirmez votre mot de passe </label>
-            <input type="password" id="passwordconfirm" placeholder="Confirmez votre Mot de passe">
-        </div>
-        <%--        Boutton envoyer--%>
-        <div>
-            <button type="submit">S'inscrire</button>
+            <button name="submitted" type="submit">Se connecter</button>
         </div>
     </form>
