@@ -13,6 +13,7 @@ import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
@@ -45,6 +46,12 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
     protected ResponseEntity<Object> handleEntityNotFound(EntityNotFoundException e) {
         String error = "La requête n'a renvoyé aucun résultat";
         return buildResponseEntity(new ApiError(HttpStatus.NOT_FOUND, error, e));
+    }
+
+    @ExceptionHandler(HttpClientErrorException.class)
+    protected ResponseEntity<Object> handleHttpClientErrorException(HttpClientErrorException e) {
+        String error = e.getMessage();
+        return buildResponseEntity(new ApiError(HttpStatus.BAD_REQUEST, error, e));
     }
 
     @ExceptionHandler(MySQLIntegrityConstraintViolationException.class)

@@ -51,7 +51,7 @@ public class AccountController {
     public ResponseEntity get(@PathVariable(value="hashid") String hashid){
         Account account = accountRepository.findAccountByAccountNumber(hashid);
         if(account == null) {
-            throw HttpClientErrorException.create(HttpStatus.NOT_FOUND, "Aucun banquier n'existe avec ce numéro", null, null, null);
+            throw HttpClientErrorException.create(HttpStatus.NOT_FOUND, "Aucun compte n'existe avec ce numéro", null, null, null);
         }
         return ResponseEntity.ok().body(account);
     }
