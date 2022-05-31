@@ -1,6 +1,5 @@
 package com.nfs.bank.entity;
 
-
 import javax.persistence.*;
 import java.util.Date;
 
@@ -21,7 +20,7 @@ public class Customer {
     @JoinColumn(name = "id_banker")
     private Banker banker;
 
-    private long hashid;
+    private String hashid;
 
     private String document_type;
 
@@ -33,7 +32,7 @@ public class Customer {
 
     public Customer() {}
 
-    public Customer(int id, User user, Banker banker, long hashid, String document_type, Date document_date, Date created_at, Date updated_at) {
+    public Customer(int id, User user, Banker banker, String hashid, String document_type, Date document_date, Date created_at, Date updated_at) {
         super();
         this.id = id;
         this.user = user;
@@ -69,11 +68,11 @@ public class Customer {
         this.banker = banker;
     }
 
-    public long getHashid() {
+    public String getHashid() {
         return hashid;
     }
 
-    public void setHashid(long hashid) {
+    public void setHashid(String hashid) {
         this.hashid = hashid;
     }
 
