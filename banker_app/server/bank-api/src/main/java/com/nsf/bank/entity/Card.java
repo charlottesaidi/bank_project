@@ -4,6 +4,7 @@ import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 import java.util.Date;
 import java.util.List;
 
@@ -13,18 +14,19 @@ import java.util.List;
 public class Card {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "id_account")
+    @Column(name = "id_card")
     private int id;
 
+    @OneToOne
+    @JoinColumn(name = "id_account")
+    private Account account;
+
+    @NotBlank(message="Ce champ est obligatoire")
     private String number;
 
     private Date validity_date;
 
     private int cvc;
-
-    @OneToOne
-    @JoinColumn(name = "id_account")
-    private Account account;
 
     @CreatedDate
     private Date created_at;
@@ -50,6 +52,10 @@ public class Card {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public void setAccount(Account account) {
+        this.account = account;
     }
 
     public String getNumber() {

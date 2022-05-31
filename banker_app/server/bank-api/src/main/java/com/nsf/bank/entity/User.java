@@ -22,25 +22,34 @@ public class User implements UserDetails{
 	private int id;
 
 	@Column(unique = true)
+	@NotBlank(message="L'adresse email est obligatoire")
 	private String email;
 
+	@NotBlank(message="Vous devez renseigner un numéro de client")
 	private String username;
 	
 	private String password;
 
-	@NotBlank
+	@NotBlank(message="Le prénom est obligatoire")
 	private String first_name;
 
+	@NotBlank(message="Le nom de famille est obligatoire")
 	private String last_name;
+
+	private String phone;
 
 	private Date birthdate;
 
+	@NotBlank(message="Veuillez renseigner une adresse")
 	private String address_street;
 
+	@NotBlank(message="Veuillez renseigner une commune")
 	private String address_city;
 
+	@NotBlank(message="Veuillez renseigner un code postal")
 	private String address_zipcode;
 
+	@NotBlank(message="Veuillez renseigner le pays")
 	private String address_country;
 
 	@CreatedDate
@@ -138,6 +147,14 @@ public class User implements UserDetails{
 
 	public void setLast_name(String last_name) {
 		this.last_name = last_name;
+	}
+
+	public String getPhone() {
+		return phone;
+	}
+
+	public void setPhone(String phone) {
+		this.phone = phone;
 	}
 
 	public Date getBirthdate() {

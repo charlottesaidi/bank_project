@@ -36,12 +36,6 @@ public class UserController {
 		return ResponseEntity.ok().body(userService.signin(user.getUsername(), user.getPassword()));
 	}
 
-	@PutMapping("/api/update")
-	public ResponseEntity update(@RequestBody User user){
-		userRepository.save(user);
-		return ResponseEntity.ok().body(user);
-	}
-
 	@DeleteMapping("/api/delete/{id}")
 	public ResponseEntity delete(@PathVariable(value="id") Integer id){
 		userRepository.deleteById(id);

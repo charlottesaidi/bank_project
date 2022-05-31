@@ -15,7 +15,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"username\" : \"MR5RVZIOZT\",\r\n    \"password\" : \"michel.admin@mail.fr\"\r\n}",
+							"raw": "{\r\n    \"username\" : \"2OCABO4MBM\",\r\n    \"password\" : \"azerty\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -32,27 +32,6 @@
 							"path": [
 								"users",
 								"signin"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Update",
-					"request": {
-						"method": "PUT",
-						"header": [],
-						"url": {
-							"raw": "http://localhost:8080/users/api/update",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "8080",
-							"path": [
-								"users",
-								"api",
-								"update"
 							]
 						}
 					},
@@ -84,7 +63,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/users/1",
+							"raw": "http://localhost:8080/users/852",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -92,7 +71,7 @@
 							"port": "8080",
 							"path": [
 								"users",
-								"1"
+								"852"
 							]
 						}
 					},
@@ -174,7 +153,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"user\" : {\r\n        \"email\" : \"michel.admin@mail.fr\",\r\n        \"password\" : \"michel.admin@mail.fr\",\r\n        \"first_name\" : \"Michel\",\r\n        \"last_name\" : \"Admin\",\r\n        \"address_street\" : \"2 rue de l'hopital\",\r\n        \"address_city\" : \"Rugles\",\r\n        \"address_zipcode\" : \"27500\",\r\n        \"address_country\" : \"France\"\r\n    }\r\n}",
+							"raw": "{\r\n    \"user\" : {\r\n        \"email\" : \"test.admin@mail.fr\",\r\n        \"password\" : \"test.admin@mail.fr\",\r\n        \"first_name\" : \"Test\",\r\n        \"last_name\" : \"Admin\",\r\n        \"phone\" : \"0000000000\",\r\n        \"birthdate\" : \"1990-01-01\",\r\n        \"address_street\" : \"1 rue test\",\r\n        \"address_city\" : \"Rouen\",\r\n        \"address_zipcode\" : \"76000\",\r\n        \"address_country\" : \"France\"\r\n    }\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -204,7 +183,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "",
+							"raw": "{\r\n    \"user\" : {\r\n        \"email\" : \"nouveaumail@mail.fr\",\r\n        \"last_name\" : \"nouveau nom\",\r\n        \"phone\" : \"0600000000\",\r\n        \"address_street\" : \"nouvelle adresse\",\r\n        \"address_city\" : \"Rouen\",\r\n        \"address_zipcode\" : \"76000\",\r\n        \"address_country\" : \"France\"\r\n    }\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -212,7 +191,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8080/api/bankers/update",
+							"raw": "http://localhost:8080/api/bankers/update/2",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -221,7 +200,8 @@
 							"path": [
 								"api",
 								"bankers",
-								"update"
+								"update",
+								"2"
 							]
 						}
 					},
@@ -255,7 +235,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/api/bankers/4/customers",
+							"raw": "http://localhost:8080/api/bankers/40/customers",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -264,7 +244,7 @@
 							"path": [
 								"api",
 								"bankers",
-								"4",
+								"40",
 								"customers"
 							]
 						}
@@ -279,6 +259,16 @@
 				{
 					"name": "GetAll",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIyT0NBQk80TUJNIiwiYXV0aCI6W3siYXV0aG9yaXR5IjoiUk9MRV9VU0VSIn1dLCJpYXQiOjE2NTI1NTk4MDgsImV4cCI6MTY1MjkxOTgwOH0.TuhLLdEVZoIoAcYUR_5dqfyyUlgKv0qwAJBqstpE4Kc",
+									"type": "string"
+								}
+							]
+						},
 						"method": "GET",
 						"header": [],
 						"url": {
@@ -303,7 +293,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/api/customers/4",
+							"raw": "http://localhost:8080/api/customers/FHJGK54FD",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -312,7 +302,7 @@
 							"path": [
 								"api",
 								"customers",
-								"4"
+								"FHJGK54FD"
 							]
 						}
 					},
@@ -325,7 +315,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"document_type\" : \"attestion_domicile\",\r\n    \"user\" : {\r\n        \"email\" : \"michel@mail.fr\",\r\n        \"password\" : \"michel@mail.fr\",\r\n        \"first_name\" : \"Michel\",\r\n        \"last_name\" : \"Test\",\r\n        \"address_street\" : \"677 route des barrabas\",\r\n        \"address_city\" : \"Bourgtheroulde\",\r\n        \"address_zipcode\" : \"27520\",\r\n        \"address_country\" : \"France\"\r\n    }\r\n}",
+							"raw": "{\r\n    \"document_type\" : \"attestion_domicile\",\r\n    \"user\" : {\r\n        \"email\" : \"test@mail.fr\",\r\n        \"password\" : \"azerty\",\r\n        \"first_name\" : \"Michel\",\r\n        \"last_name\" : \"Test\",\r\n        \"phone\" : \"0000000000\",\r\n        \"birthdate\" : \"1990-01-01\",\r\n        \"address_street\" : \"1 rue test\",\r\n        \"address_city\" : \"Rouen\",\r\n        \"address_zipcode\" : \"76000\",\r\n        \"address_country\" : \"France\"\r\n    }\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -333,7 +323,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8080/api/customers/create/4",
+							"raw": "http://localhost:8080/api/customers/create",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -342,8 +332,7 @@
 							"path": [
 								"api",
 								"customers",
-								"create",
-								"4"
+								"create"
 							]
 						}
 					},
@@ -355,7 +344,7 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/api/customers/delete/13",
+							"raw": "http://localhost:8080/api/customers/delete/106",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -365,7 +354,7 @@
 								"api",
 								"customers",
 								"delete",
-								"13"
+								"106"
 							]
 						}
 					},
@@ -392,6 +381,37 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "Update",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"document_type\" : \"attestion_domicile\",\r\n    \"user\" : {\r\n        \"email\" : \"nouveaumailclient@mail.fr\",\r\n        \"last_name\" : \"nouveau nom\",\r\n        \"phone\" : \"0600000000\",\r\n        \"address_street\" : \"nouvelle adresse\",\r\n        \"address_city\" : \"Rouen\",\r\n        \"address_zipcode\" : \"76000\",\r\n        \"address_country\" : \"France\"\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/customers/update/4",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"customers",
+								"update",
+								"4"
+							]
+						}
+					},
+					"response": []
 				}
 			]
 		},
@@ -405,7 +425,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"account_type\" : {\r\n        \"name\" : \"CPT_COURANT\",\r\n        \"rate\" : 1\r\n    },\r\n    \"balance\" : 1000,\r\n    \"overdraft\" : 400\r\n}",
+							"raw": "{\r\n    \"account_type\" : {\r\n        \"name\" : \"LIVRET_A\",\r\n        \"rate\" : 0.5\r\n    },\r\n    \"balance\" : 300,\r\n    \"overdraft\" : 500,\r\n    \"card\" : {\r\n        \"number\" : \"3256784555664242\",\r\n        \"validity_date\" : \"2023-05-01\",\r\n        \"cvc\" : 258\r\n    }\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -413,7 +433,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8080/api/accounts/create/4",
+							"raw": "http://localhost:8080/api/accounts/create/12",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -423,7 +443,7 @@
 								"api",
 								"accounts",
 								"create",
-								"4"
+								"12"
 							]
 						}
 					},
@@ -477,7 +497,7 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/api/accounts/delete/11",
+							"raw": "http://localhost:8080/api/accounts/delete/7",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -487,7 +507,7 @@
 								"api",
 								"accounts",
 								"delete",
-								"11"
+								"7"
 							]
 						}
 					},
@@ -500,7 +520,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"account_type\" : {\r\n        \"rate\" : 1\r\n    },\r\n    \"overdraft\": 400\r\n}",
+							"raw": "{\r\n    \"account_type\" : {\r\n        \"rate\" : 0.5\r\n    },\r\n    \"overdraft\" : 1000,\r\n    \"card\" : {\r\n        \"number\" : \"5324026655664242\",\r\n        \"validity_date\" : \"2024-06-23\",\r\n        \"cvc\" : 214\r\n    }\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -508,7 +528,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8080/api/accounts/update/14",
+							"raw": "http://localhost:8080/api/accounts/update/27",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -518,7 +538,7 @@
 								"api",
 								"accounts",
 								"update",
-								"14"
+								"27"
 							]
 						}
 					},
@@ -558,7 +578,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"debit\" : {\r\n        \"id\" : 54\r\n    },\r\n    \"credit\" : {\r\n        \"id\" : 56\r\n    },\r\n    \"amount\" : 50\r\n}",
+							"raw": "{\r\n    \"debit\" : {\r\n        \"id\" : 54\r\n    },\r\n    \"label\" : \"Renault Garage\",\r\n    \"amount\" : 1400\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -629,7 +649,7 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/api/transactions/delete/14",
+							"raw": "http://localhost:8080/api/transactions/delete/66",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -639,7 +659,136 @@
 								"api",
 								"transactions",
 								"delete",
-								"14"
+								"66"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Rate Dates",
+			"item": [
+				{
+					"name": "Create",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"start_date\" : \"2022-12-01\",\r\n    \"end_date\" : \"2022-12-29\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/rate-dates/create",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"rate-dates",
+								"create"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetAll",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/rate-dates/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"rate-dates",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetOne",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/rate-dates/13",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"rate-dates",
+								"13"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"start_date\" : \"2022-12-01\",\r\n    \"end_date\" : \"2022-12-15\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/rate-dates/update/13",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"rate-dates",
+								"update",
+								"13"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/rate-dates/13",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"rate-dates",
+								"13"
 							]
 						}
 					},

@@ -8,8 +8,6 @@ import com.nsf.bank.repository.CustomerRepository;
 import com.nsf.bank.repository.BankerRepository;
 import com.nsf.bank.repository.UserRepository;
 import com.nsf.bank.service.HashidService;
-import com.nsf.bank.service.JWTUserService;
-import com.nsf.bank.service.HashidService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,6 +16,8 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -38,13 +38,10 @@ public class LoadDatabase {
     private HashidService hashidService;
 
     @Autowired
-    private JWTUserService userService;
-
-    @Autowired
     private PasswordEncoder passwordEncoder;
 
     @Bean
-    CommandLineRunner initDatabase() {
+    CommandLineRunner initDatabase() throws ParseException {
         User customer = createUser("customer@example.fr", "customerpass", "Customer", "Test");
         Customer userCustomer = new Customer();
 
@@ -85,6 +82,7 @@ public class LoadDatabase {
             customer.setUsername(userCustomer.getHashid());
             userRepository.save(customer);
             userCustomer.setUser(customer);
+            userCustomer.setDocument_type("attestation_domicile");
             customerRepository.save(userCustomer);
             count++;
         }
@@ -103,12 +101,18 @@ public class LoadDatabase {
         };
     }
 
-    public User createUser(String email, String password, String firstName, String lastName) {
+    public User createUser(String email, String password, String firstName, String lastName) throws ParseException {
         User user = new User();
         user.setPassword(passwordEncoder.encode(password));
         user.setEmail(email);
         user.setFirst_name(firstName);
         user.setLast_name(lastName);
+        user.setBirthdate(new SimpleDateFormat("yyyy-MM-dd").parse("1990-01-01"));
+        user.setPhone("0600000000");
+        user.setAddress_street("rue test");
+        user.setAddress_zipcode("76000");
+        user.setAddress_city("Rouen");
+        user.setAddress_country("France");
 
         return user;
     }

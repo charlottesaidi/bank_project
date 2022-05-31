@@ -4,6 +4,7 @@ import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 import java.util.Date;
 
 @Entity
@@ -14,9 +15,10 @@ public class AccountType {
     @Column(name = "id_account_type")
     private int id;
 
+    @NotBlank(message="Ce champ est obligatoire")
     private String name;
 
-    private int rate;
+    private float rate;
 
     @CreatedDate
     private Date created_at;
@@ -50,11 +52,11 @@ public class AccountType {
         this.name = name;
     }
 
-    public int getRate() {
+    public float getRate() {
         return rate;
     }
 
-    public void setRate(int rate) {
+    public void setRate(float rate) {
         this.rate = rate;
     }
 

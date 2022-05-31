@@ -4,6 +4,7 @@ import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 
 import javax.persistence.*;
+import javax.validation.constraints.DecimalMin;
 import java.util.Date;
 import java.util.List;
 
@@ -24,16 +25,17 @@ public class Account {
     @JoinColumn(name = "id_account_type")
     private AccountType account_type;
 
-    @OneToOne(mappedBy = "account", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToOne(mappedBy = "account", cascade = CascadeType.ALL)
     private AccountBalance account_balance;
 
-    @OneToOne(mappedBy = "account", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToOne(orphanRemoval = true, mappedBy = "account", cascade = CascadeType.ALL)
     private Card card;
 
     private String hashid;
 
     private float balance;
 
+    @DecimalMin(value = "-2000.01", message = "Le découvert autorisé ne peut pas dépasser 2000 €")
     private float overdraft;
 
     @OneToMany(orphanRemoval = true, mappedBy = "debit")

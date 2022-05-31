@@ -5,6 +5,7 @@ import com.nsf.bank.repository.CustomerRepository;
 import com.nsf.bank.repository.UserRepository;
 import com.nsf.bank.repository.BankerRepository;
 import com.nsf.bank.service.HashidService;
+import com.nsf.bank.service.UserService;
 import org.hibernate.HibernateException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -35,6 +36,9 @@ public class BankerController {
 
     @Autowired
     private HashidService hashidService;
+
+    @Autowired
+    private UserService userService;
 
     @RequestMapping("/")
     public ResponseEntity getAll() {
@@ -74,9 +78,18 @@ public class BankerController {
         return ResponseEntity.ok().body(banker);
     }
 
-    @PutMapping("/update")
-    public ResponseEntity update(@RequestBody Banker banker){
-        userRepository.save(banker.getUser());
+    @PutMapping("/update/{id}")
+    public ResponseEntity update(@PathVariable(value="id") int id, @RequestBody Banker bankerDetails){
+        Banker banker = bankerRepository.getOne(id);
+        User userDetails = bankerDetails.getUser();
+
+        User user = userService.updateUserDetails(userDetails, banker.getUser());
+
+        if(userDetails.getPassword() != null) {
+            user.setPassword(passwordEncoder.encode(userDetails.getPassword()));
+        }
+
+        userRepository.save(user);
         bankerRepository.save(banker);
 
         return ResponseEntity.ok().body(banker);

@@ -32,6 +32,9 @@ public class AccountController {
     private TransactionRepository transactionRepository;
 
     @Autowired
+    private CardRepository cardRepository;
+
+    @Autowired
     private HashidService hashidService;
 
     @RequestMapping("/")
@@ -54,14 +57,19 @@ public class AccountController {
     }
 
     @PostMapping("/create/{customerId}")
-    public ResponseEntity create(@PathVariable(value="customerId") int customerId, @RequestBody Account account){
+    public ResponseEntity create(@PathVariable(value="customerId") int customerId, @RequestBody Account account) {
         Customer customer = customerRepository.getOne(customerId);
 
         account.setHashid(hashidService.generateHashId());
         account.setCustomer(customer);
 
-        String cardNumber = "**** **** **** " + account.getCard().getNumber().substring(12);
-        account.getCard().setNumber(cardNumber);
+        Card card = account.getCard();
+        Card existingCard = cardRepository.findBy(card.getNumber());
+
+        if(null != existingCard) {
+            return ResponseEntity.internalServerError().body("Une carte bancaire est déjà enregistrée avec ce numéro");
+        }
+        account.getCard().setNumber(card.getNumber());
 
         AccountType existingAccountType = accountTypeRepository.findAccountTypeWithName(account.getAccount_type().getName());
 
@@ -69,6 +77,7 @@ public class AccountController {
             account.setAccount_type(existingAccountType);
         }
 
+        card.setAccount(account);
         accountRepository.save(account);
 
         AccountBalance accountBalance = new AccountBalance();
@@ -80,8 +89,32 @@ public class AccountController {
         return ResponseEntity.ok().body(account);
     }
 
-    @PutMapping("/update")
-    public ResponseEntity update(@RequestBody Account account){
+    @PutMapping("/update/{id}")
+    public ResponseEntity update(@PathVariable(value="id") int id, @RequestBody Account accountDetails){
+        Account account = accountRepository.getOne(id);
+        Card card = account.getCard();
+
+        if(card != null) {
+            if(accountDetails.getCard().getNumber() != null) {
+                card.setNumber(accountDetails.getCard().getNumber());
+            }
+            if(accountDetails.getCard().getCvc() != 0) {
+                card.setCvc(accountDetails.getCard().getCvc());
+
+            }
+            if(accountDetails.getCard().getValidity_date() != null) {
+                card.setValidity_date(accountDetails.getCard().getValidity_date());
+            }
+        } else {
+            if(accountDetails.getCard() != null) {
+                Card newCard = accountDetails.getCard();
+                newCard.setAccount(account);
+            }
+        }
+
+        account.setOverdraft(accountDetails.getOverdraft());
+        account.getAccount_type().setRate(accountDetails.getAccount_type().getRate());
+
         accountRepository.save(account);
         return ResponseEntity.ok().body(account);
     }
@@ -100,7 +133,6 @@ public class AccountController {
         // Merge les deux listes de transactions en une seule
         List<Transaction> transactions = Stream.concat(debits.stream(), credits.stream())
                 .collect(Collectors.toList());
-        // Todo: trier les transactions par période ? (mois, année...)
 
         return ResponseEntity.ok().body(transactions);
     }
