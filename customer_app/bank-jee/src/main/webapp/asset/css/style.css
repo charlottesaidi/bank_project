@@ -17,7 +17,7 @@ header {
     display: flex;
     align-items: center;
     padding: 10px 80px;
-    position: fixed;
+    position: relative;
     z-index: 100;
     top: 0;
     left: 0;
@@ -30,6 +30,11 @@ header {
     margin-right: 50px;
 }
 
+.navigation {
+    display: flex;
+    justify-content: space-between;
+    width: 65%;
+}
 nav ul {
     display: flex;
     align-items: center;
@@ -46,7 +51,7 @@ nav ul li a {
     color: var(--white);
     text-transform: uppercase;
     font-size: 0.9rem;
-    letter-spacing: 3%;
+    /*letter-spacing: 3%;*/
 }
 
 .transfert{
@@ -70,14 +75,12 @@ nav ul li a {
     align-items: center;
     padding: 10px;
     gap: 20px;
-
     width: 100px;
-
     background: linear-gradient(105.29deg, rgba(255, 255, 255, 0.4) 12.19%, rgba(255, 255, 255, 0.2) 83.42%);
     backdrop-filter: blur(40px);
-
-    border-radius: 50px;
+    border-radius: 50px
 }
+
 /* MAIN */
 
 main {
@@ -86,7 +89,6 @@ main {
     overflow: hidden;
     padding: 0 80px;
 }
-
 /* Circles and Animations*/
 .circle {
     width: 400px;
@@ -262,11 +264,31 @@ main {
     opacity: 0.75;
 }
 
-
-
 .card__container {
     width: 48%;
     display: flex;
     justify-content: center;
     align-items: center;
+}
+/*header responsive Ipad*/
+@media only screen and (max-width: 975px){
+    .navigation {
+        width: 50%;
+    }
+    .home {
+        display: flex;
+        flex-flow: column;
+        height: 70%;
+        margin-top: 10%;
+    }
+    .content {
+        width: 90%;
+        margin-bottom: 10%;
+    }
+    .card__container{
+        width: 90%;
+    }
+    .card{
+        width: 400px;
+    }
 }

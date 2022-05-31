@@ -18,14 +18,16 @@
     <%--navigation--%>
     <header>
         <a href="index.jsp" class="logo"></a>
-        <nav>
-            <ul>
-                <li><a href="dashboard.jsp">Accueil</a></li>
-                <li><a href="login.jsp">Connexion</a></li>
-            </ul>
-        </nav>
-        <div class="circlelogos">
-            <a href="transfert.jsp" class="transfert"></a>
-            <a href="settings.jsp" class="settings"></a>
+        <div class="navigation">
+            <nav>
+                <ul>
+                    <li><a href="dashboard.jsp">Accueil</a></li>
+                    <li><a href="login.jsp">Connexion</a></li>
+                </ul>
+            </nav>
+            <div class="circlelogos">
+                <a href="transfert.jsp" class="transfert"></a>
+                <a href="settings.jsp" class="settings"></a>
+            </div>
         </div>
     </header>
