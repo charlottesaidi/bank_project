@@ -1,7 +1,5 @@
 package com.nsf.bank.controller;
 
-import com.nsf.bank.entity.Account;
-import com.nsf.bank.entity.Customer;
 import com.nsf.bank.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -28,23 +26,14 @@ public class UserController {
 	}
 
 	@RequestMapping(value = "/{id}", produces = "application/json")
-	public User get(@PathVariable(value="id") Integer id){
-		return userRepository.getOne(id);
+	public ResponseEntity get(@PathVariable(value="id") Integer id) {
+		User user = userRepository.getOne(id);
+		return ResponseEntity.ok().body(user);
 	}
 
 	@PostMapping("/signin")
-	public String login(@RequestParam("username") String username, @RequestParam("pass") String password) {
-		return userService.signin(username, password);
-	}
-
-	@PutMapping("/api/update")
-	public ResponseEntity update(@RequestBody User user){
-		try {
-			userRepository.save(user);
-			return ResponseEntity.ok().body(user);
-		} catch(Exception e) {
-			return ResponseEntity.internalServerError().body(e.getMessage());
-		}
+	public ResponseEntity login(@RequestBody User user) {
+		return ResponseEntity.ok().body(userService.signin(user.getUsername(), user.getPassword()));
 	}
 
 	@DeleteMapping("/api/delete/{id}")

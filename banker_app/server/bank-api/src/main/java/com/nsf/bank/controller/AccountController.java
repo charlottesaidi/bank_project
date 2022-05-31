@@ -1,20 +1,17 @@
 package com.nsf.bank.controller;
 
-import com.nsf.bank.entity.Account;
-import com.nsf.bank.entity.AccountBalance;
-import com.nsf.bank.entity.AccountType;
-import com.nsf.bank.entity.Customer;
-import com.nsf.bank.repository.AccountRepository;
-import com.nsf.bank.repository.CustomerRepository;
-import com.nsf.bank.repository.AccountTypeRepository;
-import com.nsf.bank.repository.AccountBalanceRepository;
+import com.nsf.bank.entity.*;
+import com.nsf.bank.repository.*;
 import com.nsf.bank.service.HashidService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.client.HttpClientErrorException;
 
 import java.util.List;
-import java.util.Optional;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @RestController
 @RequestMapping("api/accounts")
@@ -32,37 +29,55 @@ public class AccountController {
     private AccountBalanceRepository accountBalanceRepository;
 
     @Autowired
+    private TransactionRepository transactionRepository;
+
+    @Autowired
+    private CardRepository cardRepository;
+
+    @Autowired
     private HashidService hashidService;
 
     @RequestMapping("/")
-    public ResponseEntity<List<Account>> getAll(){
-        return ResponseEntity.ok().body(accountRepository.findAll());
+    public ResponseEntity getAll(){
+        List<Account> accounts = accountRepository.findAll();
+        if(accounts.isEmpty()) {
+            return ResponseEntity.ok().body("Aucun compte bancaire n'a été créé pour le moment");
+        } else {
+            return ResponseEntity.ok().body(accounts);
+        }
     }
 
-    @RequestMapping(value = "/customer/{id}", produces = "application/json")
-    public ResponseEntity<List<Account>> getCustomerAccounts(@PathVariable(value="id") Integer id) {
-        return ResponseEntity.ok().body(accountRepository.findAllByIdCustomer(id));
-    }
-
-    @RequestMapping(value = "/{id}", produces = "application/json")
-    public Account get(@PathVariable(value="id") Integer id){
-        return accountRepository.getOne(id);
+    @RequestMapping(value = "/{hashid}", produces = "application/json")
+    public ResponseEntity get(@PathVariable(value="hashid") String hashid){
+        Account account = accountRepository.findAccountByAccountNumber(hashid);
+        if(account == null) {
+            throw HttpClientErrorException.create(HttpStatus.NOT_FOUND, "Aucun banquier n'existe avec ce numéro", null, null, null);
+        }
+        return ResponseEntity.ok().body(account);
     }
 
     @PostMapping("/create/{customerId}")
-    public ResponseEntity create(@PathVariable(value="customerId") int customerId, @RequestBody Account account){
+    public ResponseEntity create(@PathVariable(value="customerId") int customerId, @RequestBody Account account) {
         Customer customer = customerRepository.getOne(customerId);
-        if(customer != null) {
-            account.setCustomer(customer);
-        }
+
         account.setHashid(hashidService.generateHashId());
+        account.setCustomer(customer);
+
+        Card card = account.getCard();
+        Card existingCard = cardRepository.findBy(card.getNumber());
+
+        if(null != existingCard) {
+            return ResponseEntity.internalServerError().body("Une carte bancaire est déjà enregistrée avec ce numéro");
+        }
+        account.getCard().setNumber(card.getNumber());
 
         AccountType existingAccountType = accountTypeRepository.findAccountTypeWithName(account.getAccount_type().getName());
 
-        if(existingAccountType != null) {
+        if (existingAccountType != null) {
             account.setAccount_type(existingAccountType);
         }
 
+        card.setAccount(account);
         accountRepository.save(account);
 
         AccountBalance accountBalance = new AccountBalance();
@@ -74,14 +89,51 @@ public class AccountController {
         return ResponseEntity.ok().body(account);
     }
 
-    @PutMapping("/update")
-    public Account update(@RequestBody Account account){
-        return accountRepository.save(account);
+    @PutMapping("/update/{id}")
+    public ResponseEntity update(@PathVariable(value="id") int id, @RequestBody Account accountDetails){
+        Account account = accountRepository.getOne(id);
+        Card card = account.getCard();
+
+        if(card != null) {
+            if(accountDetails.getCard().getNumber() != null) {
+                card.setNumber(accountDetails.getCard().getNumber());
+            }
+            if(accountDetails.getCard().getCvc() != 0) {
+                card.setCvc(accountDetails.getCard().getCvc());
+
+            }
+            if(accountDetails.getCard().getValidity_date() != null) {
+                card.setValidity_date(accountDetails.getCard().getValidity_date());
+            }
+        } else {
+            if(accountDetails.getCard() != null) {
+                Card newCard = accountDetails.getCard();
+                newCard.setAccount(account);
+            }
+        }
+
+        account.setOverdraft(accountDetails.getOverdraft());
+        account.getAccount_type().setRate(accountDetails.getAccount_type().getRate());
+
+        accountRepository.save(account);
+        return ResponseEntity.ok().body(account);
     }
 
     @DeleteMapping("/delete/{id}")
     public ResponseEntity delete(@PathVariable(value="id") Integer id){
         accountRepository.deleteById(id);
         return ResponseEntity.ok().body("Compte supprimé");
+    }
+
+    @GetMapping("/{id}/transactions")
+    public ResponseEntity getTransactions(@PathVariable(value = "id") Integer id) {
+        // Récupérer toutes les transactions liées à ce compte (débits ET crédits de compte)
+        List<Transaction> debits = transactionRepository.findAllByIdDebit(id);
+        List<Transaction> credits = transactionRepository.findAllByIdCredit(id);
+        // Merge les deux listes de transactions en une seule
+        List<Transaction> transactions = Stream.concat(debits.stream(), credits.stream())
+                .collect(Collectors.toList());
+
+        return ResponseEntity.ok().body(transactions);
     }
 }

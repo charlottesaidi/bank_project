@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.List;
 
 import javax.persistence.*;
+import javax.validation.constraints.*;
 
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
@@ -12,7 +13,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 @Entity
-@Table(name = "users")
+@Table(name = "users", uniqueConstraints = { @UniqueConstraint(columnNames = "email") })
 public class User implements UserDetails{
 	
 	@Id
@@ -20,28 +21,38 @@ public class User implements UserDetails{
 	@Column(name = "id_user")
 	private int id;
 
+	@Column(unique = true)
+	@NotBlank(message="L'adresse email est obligatoire")
 	private String email;
-	
+
+	@NotBlank(message="Vous devez renseigner un numéro de client")
 	private String username;
 	
 	private String password;
 
+	@NotBlank(message="Le prénom est obligatoire")
 	private String first_name;
 
+	@NotBlank(message="Le nom de famille est obligatoire")
 	private String last_name;
+
+	private String phone;
 
 	private Date birthdate;
 
+	@NotBlank(message="Veuillez renseigner une adresse")
 	private String address_street;
 
+	@NotBlank(message="Veuillez renseigner une commune")
 	private String address_city;
 
+	@NotBlank(message="Veuillez renseigner un code postal")
 	private String address_zipcode;
 
+	@NotBlank(message="Veuillez renseigner le pays")
 	private String address_country;
 
 	@CreatedDate
-	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Date created_at;
 
 	@LastModifiedDate
@@ -138,6 +149,14 @@ public class User implements UserDetails{
 		this.last_name = last_name;
 	}
 
+	public String getPhone() {
+		return phone;
+	}
+
+	public void setPhone(String phone) {
+		this.phone = phone;
+	}
+
 	public Date getBirthdate() {
 		return birthdate;
 	}
@@ -182,16 +201,22 @@ public class User implements UserDetails{
 		return created_at;
 	}
 
-	public void setCreated_at(Date created_at) {
-		this.created_at = created_at;
+	@PrePersist
+	public void setCreated_at() {
+		if(this.created_at == null) {
+			this.created_at = new Date();
+		}
 	}
 
 	public Date getUpdated_at() {
 		return updated_at;
 	}
 
-	public void setUpdated_at(Date updated_at) {
-		this.updated_at = updated_at;
+	@PreUpdate
+	public void setUpdated_at() {
+		if(this.updated_at == null) {
+			this.updated_at = new Date();
+		}
 	}
 
 	public List<Role> getRole() {
@@ -200,21 +225,5 @@ public class User implements UserDetails{
 
 	public void setRole(List<Role> role) {
 		this.role = role;
-	}
-
-	public Customer getCustomer() {
-		return customer;
-	}
-
-	public void setCustomers(Customer customer) {
-		this.customer = customer;
-	}
-
-	public Banker getBanker() {
-		return banker;
-	}
-
-	public void setBanker(Banker banker) {
-		this.banker = banker;
 	}
 }

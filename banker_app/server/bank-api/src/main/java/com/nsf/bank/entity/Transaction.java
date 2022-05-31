@@ -5,6 +5,7 @@ import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 import java.util.Date;
 import java.util.List;
 
@@ -17,21 +18,23 @@ public class Transaction {
     @Column(name = "id_transaction")
     private int id;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "id_account_debit")
     private Account debit;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "id_account_credit")
     private Account credit;
 
     private float amount;
 
+    @NotBlank(message="Ce champ est obligatoire")
+    private String label;
+
     @ElementCollection(fetch =  FetchType.EAGER)
     private List<TransactionType> description;
 
     @CreatedDate
-    @GeneratedValue(strategy = GenerationType.AUTO)
     private Date created_at;
 
     @LastModifiedDate
@@ -39,12 +42,13 @@ public class Transaction {
 
     public Transaction() {}
 
-    public Transaction(int id, Account debit, Account credit, float amount, List<TransactionType> description, Date created_at, Date updated_at) {
+    public Transaction(int id, Account debit, Account credit, float amount, String label, List<TransactionType> description, Date created_at, Date updated_at) {
         super();
         this.id = id;
         this.debit = debit;
         this.credit = credit;
         this.amount = amount;
+        this.label = label;
         this.description = description;
         this.created_at = created_at;
         this.updated_at = updated_at;
@@ -82,6 +86,14 @@ public class Transaction {
         this.amount = amount;
     }
 
+    public String getLabel() {
+        return label;
+    }
+
+    public void setLabel(String label) {
+        this.label = label;
+    }
+
     public List<TransactionType> getDescription() {
         return description;
     }
@@ -94,15 +106,21 @@ public class Transaction {
         return created_at;
     }
 
-    public void setCreated_at(Date created_at) {
-        this.created_at = created_at;
+    @PrePersist
+    public void setCreated_at() {
+        if(this.created_at == null) {
+            this.created_at = new Date();
+        }
     }
 
     public Date getUpdated_at() {
         return updated_at;
     }
 
-    public void setUpdated_at(Date updated_at) {
-        this.updated_at = updated_at;
+    @PreUpdate
+    public void setUpdated_at() {
+        if(this.updated_at == null) {
+            this.updated_at = new Date();
+        }
     }
 }

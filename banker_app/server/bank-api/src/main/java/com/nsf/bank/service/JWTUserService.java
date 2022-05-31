@@ -35,13 +35,8 @@ public class JWTUserService implements UserDetailsService {
 	  private AuthenticationManager authenticationManager;
 
 	  public String signin(String username, String password) {
-	    try {
 	      authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, password));
 	      return jwtTokenProvider.createToken(username, userRepository.findUserWithName(username).get().getRole());
-	    } catch (Exception e) {
-	      e.printStackTrace();
-	    }
-	    return "";
 	  }
 
 	  public String signup(User user) {
@@ -59,9 +54,8 @@ public class JWTUserService implements UserDetailsService {
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		User user = userRepository.findUserWithName(username)
-				.orElseThrow(() -> new UsernameNotFoundException("bad credentials"));
+				.orElseThrow(() -> new UsernameNotFoundException("Utilisateur introuvable"));
 		return new org.springframework.security.core.userdetails.User(
 				user.getUsername(), user.getPassword(), user.getRole());
 	}
-
 }

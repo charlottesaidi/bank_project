@@ -14,6 +14,7 @@ repositories {
 
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.projectlombok:lombok:1.18.20'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     implementation 'mysql:mysql-connector-java:5.1.25'
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
@@ -24,6 +25,8 @@ dependencies {
     implementation 'org.springframework.security:spring-security-test'
     implementation 'io.jsonwebtoken:jjwt:0.2'
     implementation 'org.apache.commons:commons-text:1.7'
+    implementation 'com.fasterxml.jackson.datatype:jackson-datatype-jsr310'
+    implementation 'org.hibernate:hibernate-validator:7.0.2.Final'
 }
 
 tasks.named('test') {

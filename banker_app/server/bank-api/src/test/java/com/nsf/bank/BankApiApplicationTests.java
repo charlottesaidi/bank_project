@@ -12,6 +12,7 @@ class BankApiApplicationTests {
 
     @Test
     void contextLoads() {
+        System.out.println(new Date("1991-01-01"));
     }
 
 }

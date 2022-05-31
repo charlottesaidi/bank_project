@@ -1,9 +1,11 @@
 package com.nsf.bank.entity;
 
+import org.hibernate.annotations.CreationTimestamp;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 import java.util.Date;
 import java.util.List;
 
@@ -29,12 +31,12 @@ public class Customer {
 
     private String hashid;
 
+    @NotBlank(message="Ce champ est obligatoire")
     private String document_type;
 
     private Date document_date;
 
     @CreatedDate
-    @GeneratedValue(strategy = GenerationType.AUTO)
     private Date created_at;
 
     @LastModifiedDate
@@ -106,15 +108,21 @@ public class Customer {
         return created_at;
     }
 
-    public void setCreated_at(Date created_at) {
-        this.created_at = created_at;
+    @PrePersist
+    public void setCreated_at() {
+        if(this.created_at == null) {
+            this.created_at = new Date();
+        }
     }
 
     public Date getUpdated_at() {
         return updated_at;
     }
 
-    public void setUpdated_at(Date updated_at) {
-        this.updated_at = updated_at;
+    @PreUpdate
+    public void setUpdated_at() {
+        if(this.updated_at == null) {
+            this.updated_at = new Date();
+        }
     }
 }

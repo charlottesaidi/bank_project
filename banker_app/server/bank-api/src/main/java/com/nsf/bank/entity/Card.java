@@ -6,19 +6,27 @@ import org.springframework.data.annotation.LastModifiedDate;
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import java.util.Date;
+import java.util.List;
 
 @Entity
-@Table(name = "account_types")
-public class AccountType {
+@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
+@Table(name = "cards")
+public class Card {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "id_account_type")
+    @Column(name = "id_card")
     private int id;
 
-    @NotBlank(message="Ce champ est obligatoire")
-    private String name;
+    @OneToOne
+    @JoinColumn(name = "id_account")
+    private Account account;
 
-    private float rate;
+    @NotBlank(message="Ce champ est obligatoire")
+    private String number;
+
+    private Date validity_date;
+
+    private int cvc;
 
     @CreatedDate
     private Date created_at;
@@ -26,12 +34,14 @@ public class AccountType {
     @LastModifiedDate
     private Date updated_at;
 
-    public AccountType() {}
+    public Card() {}
 
-    public AccountType(int id, String name, int rate, Date created_at, Date updated_at) {
+    public Card(int id, String number, Date validity_date, int cvc, Account account, Date created_at, Date updated_at) {
         this.id = id;
-        this.name = name;
-        this.rate = rate;
+        this.number = number;
+        this.validity_date = validity_date;
+        this.cvc = cvc;
+        this.account = account;
         this.created_at = created_at;
         this.updated_at = updated_at;
     }
@@ -44,20 +54,32 @@ public class AccountType {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public void setAccount(Account account) {
+        this.account = account;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public String getNumber() {
+        return number;
     }
 
-    public float getRate() {
-        return rate;
+    public void setNumber(String number) {
+        this.number = number;
     }
 
-    public void setRate(float rate) {
-        this.rate = rate;
+    public Date getValidity_date() {
+        return validity_date;
+    }
+
+    public void setValidity_date(Date validity_date) {
+        this.validity_date = validity_date;
+    }
+
+    public int getCvc() {
+        return cvc;
+    }
+
+    public void setCvc(int cvc) {
+        this.cvc = cvc;
     }
 
     public Date getCreated_at() {
