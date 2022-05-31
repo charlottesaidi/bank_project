@@ -25,6 +25,8 @@ public class LoginServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        HttpSession session = request.getSession();
+        session.removeAttribute("errors");
         response.sendRedirect(request.getContextPath()+"/login.jsp");
     }
     @Override
@@ -45,7 +47,7 @@ public class LoginServlet extends HttpServlet {
             response.sendRedirect(request.getContextPath()+"/login.jsp");
         }
         else {
-            var user = DaoFactory.getUserDao().checkUser("4JFD33AFKU", "$2a$12$AIDy2OmHJ6uuSr/lNUn8Re7jGoCDQMNU0PVeRnXqM47siDpwhw/I.");
+            var user = DaoFactory.getUserDao().checkUser(identifiant, "$2a$12$AIDy2OmHJ6uuSr/lNUn8Re7jGoCDQMNU0PVeRnXqM47siDpwhw/I.");
             if (user.isEmpty())
             {
                 errors[0] = "Identifiant ou mot de passe incorrect";
@@ -55,7 +57,7 @@ public class LoginServlet extends HttpServlet {
             }
             else {
                 session.setAttribute("user", user);
-                response.sendRedirect(request.getContextPath()+"/dashboard.jsp");
+                response.sendRedirect(request.getContextPath()+"/dashboard");
             }
         }
     }

@@ -21,6 +21,13 @@ public class DashboardServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         if (request.getSession().getAttribute("user") != null) {
+            var session = request.getSession();
+            var user = session.getAttribute("user");
+            var accounts = DaoFactory.getAccountDao().getAll(4);
+            var transactions = DaoFactory.getTransactionDao().getAll(1);
+            session.setAttribute("accounts", accounts);
+            session.setAttribute("transactions", transactions);
+            System.out.println(accounts);
             response.sendRedirect(request.getContextPath()+"/dashboard.jsp");
         }
         else {
