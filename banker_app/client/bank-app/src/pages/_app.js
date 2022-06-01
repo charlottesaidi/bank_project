@@ -7,7 +7,6 @@ import "@styles/general.css";
 import Head from "next/head";
 
 export default function MyApp({ Component, pageProps }) {
-
   const Layout = Component.layout || (({ children }) => <>{children}</>);
   return (
     <>
@@ -21,9 +20,9 @@ export default function MyApp({ Component, pageProps }) {
         <title>{Component.title}</title>
         <link rel="icon" href="" />
       </Head>
-      <Layout>
-        <Component {...pageProps} />
-      </Layout>
+        <Layout>
+          <Component {...pageProps} />
+        </Layout>
     </>
   );
 }
