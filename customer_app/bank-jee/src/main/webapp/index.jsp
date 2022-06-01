@@ -7,7 +7,6 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ include file="inc/header.jsp" %>
-<main>
     <section class="home">
         <div class="wrap">
             <div class="home-container">
@@ -44,6 +43,5 @@
             </div>
         </div>
     </section>
-</main>
 
 <%@ include file="inc/footer.jsp" %>

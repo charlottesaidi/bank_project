@@ -8,6 +8,7 @@
 body {
     background-color: #0b0b0c;
     font-family: 'Poppins', sans-serif;
+    color: var(--white);
 }
 
 .wrap {
@@ -28,6 +29,7 @@ header {
 .header-container {
     display: flex;
     justify-content: space-between;
+    align-items: center;
     padding: 20px 0;
 }
 
@@ -35,25 +37,21 @@ header {
     width: 150px;
     height: 50px;
     background: center / contain no-repeat url("../img/logo.svg");
-    margin-right: 50px;
 }
 
 .navigation {
     display: flex;
     justify-content: space-between;
+    align-items: center;
     gap: 50px;
 }
 
 nav ul {
     display: flex;
     align-items: center;
-    justify-content: space-between;
-    width: 100%;
-    height: 100%;
-}
-
-nav ul li {
-    margin: 0 10px;
+    flex-direction: column;
+    background-color: #0b0b0c;
+    gap: 20px;
 }
 
 nav ul li a {
@@ -87,6 +85,78 @@ nav ul li a {
     background: linear-gradient(105.29deg, rgba(255, 255, 255, 0.4) 12.19%, rgba(255, 255, 255, 0.2) 83.42%);
     backdrop-filter: blur(40px);
     border-radius: 50px
+}
+
+.nav {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    position: absolute;
+    top: 75px;
+    left: 50%;
+    transform: translateX(-50%);
+    max-height: 0;
+    width: 100%;
+    overflow: hidden;
+    transition: all .3s ease-in-out;
+    align-items: center;
+    background-color: #0b0b0c;
+    padding: 0;
+}
+
+.nav.active {
+    max-height: 1000px;
+    padding: 20px 0;
+}
+
+.burger {
+    display: block;
+    width: 30px;
+    height: 30px;
+    position: relative;
+    cursor: pointer;
+    float: right;
+}
+
+.burger span {
+    width: 100%;
+    height: 3px;
+    position: absolute;
+    background-color: var(--white);
+    top: 50%;
+    transform: translateY(-50%);
+    transition: background .4s;
+}
+
+.burger span::before,.burger span::after {
+    content: '';
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    background-color: var(--white);
+    transition: transform .4s, margin-top .4s;
+}
+
+.burger span::before {
+    margin-top: -8px;
+}
+
+.burger span::after {
+    margin-top: 8px;
+}
+
+.burger.active span {
+    background: transparent;
+}
+
+.burger.active span::before {
+    transform: rotate(-315deg);
+    margin-top: 0;
+}
+
+.burger.active span::after {
+    transform: rotate(315deg);
+    margin-top: 0;
 }
 
 /* MAIN */
@@ -207,7 +277,6 @@ nav ul li a {
     display: flex;
     align-items: center;
     height: 100vh;
-
 }
 
 .home-container {
@@ -279,6 +348,10 @@ nav ul li a {
     align-items: center;
 }
 
+.card__box {
+    width: 100%;
+}
+
 /*header responsive Ipad*/
 /*
 @media only screen and (max-width: 975px) {
@@ -306,3 +379,21 @@ nav ul li a {
         width: 400px;
     }
 }*/
+/* ------ DASHBOARD ------ */
+#dashboard {
+    padding-top: 100px;
+}
+
+/*.dashboard-container__accounts {*/
+/*    display: flex;*/
+/*    justify-content: space-between;*/
+/*    align-items: center;*/
+/*}*/
+
+.dashboard-container__accounts__box {
+    /*width: 48%;*/
+    display: flex;
+    flex-direction: column;
+    gap: 50px;
+}
+/* ------ DASHBOARD ------ */

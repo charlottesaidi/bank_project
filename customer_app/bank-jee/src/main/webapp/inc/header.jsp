@@ -8,10 +8,9 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>BankMe</title>
-    <%--    reset css--%>
     <link rel="stylesheet" href="asset/css/reset.css">
-    <%--    style css--%>
     <link rel="stylesheet" href="asset/css/style.css">
 </head>
 <body>
@@ -21,17 +20,23 @@
         <div class="header-container">
             <a href="index.jsp" class="logo"></a>
             <nav class="navigation">
-                <div>
-                    <ul>
-                        <li><a href="dashboard.jsp">Accueil</a></li>
-                        <li><a href="login.jsp">Connexion</a></li>
-                    </ul>
+                <div class="nav">
+                    <div>
+                        <ul>
+                            <li><a href="dashboard.jsp">Accueil</a></li>
+                            <li><a href="login.jsp">Connexion</a></li>
+                        </ul>
+                    </div>
+                    <div class="circlelogos">
+                        <a href="transfert.jsp" class="transfert"></a>
+                        <a href="settings.jsp" class="settings"></a>
+                    </div>
                 </div>
-                <div class="circlelogos">
-                    <a href="transfert.jsp" class="transfert"></a>
-                    <a href="settings.jsp" class="settings"></a>
+                <div class="burger">
+                    <span></span>
                 </div>
             </nav>
         </div>
     </div>
 </header>
+<main>
