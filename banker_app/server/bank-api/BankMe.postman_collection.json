@@ -269,7 +269,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/api/customers/YXX03JPVOR",
+							"raw": "http://localhost:8080/api/customers/",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -278,7 +278,7 @@
 							"path": [
 								"api",
 								"customers",
-								"YXX03JPVOR"
+								""
 							]
 						}
 					},

@@ -11,6 +11,7 @@ import com.nsf.bank.service.JWTUserService;
 import java.util.List;
 
 @RestController
+@CrossOrigin(origins = "http://localhost:3000")
 @RequestMapping("/users")
 public class UserController {
 	
