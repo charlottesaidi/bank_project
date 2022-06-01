@@ -2,7 +2,9 @@
 	"info": {
 		"_postman_id": "69f49426-3502-4bac-9cd7-7a4ea09ca587",
 		"name": "BankMe",
-		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+		"description": "#### **Authorization Token**\n\nLes routes contenant \"`api`\" dans leurs urls nécessiteront l'envoi d'un bearer token, seuls les utilisateurs connectés pourront accéder à ces routes.\n\n#### **Erreurs**\n\nLes erreurs et les exceptions renverront des objets contenant les messages d'erreur.\n\nExemples :\n\n**Erreur de connexion**\n\n``` json\n{\n    \"status\": \"BAD_REQUEST\",\n    \"timestamp\": \"31-05-2022 04:47:38\",\n    \"message\": \"Identifiants invalides\",\n    \"debugMessage\": \"Identifiants invalides\",\n    \"subErrors\": null\n}\n\n```\n\n**Une violation de contrainte**\n\n``` json\n{\n    \"status\": \"BAD_REQUEST\",\n    \"timestamp\": \"31-05-2022 04:38:24\",\n    \"message\": \"Une erreur est survenue\",\n    \"debugMessage\": null,\n    \"subErrors\": [\n        {\n            \"object\": \"User\",\n            \"field\": \"first_name\",\n            \"rejectedValue\": null,\n            \"message\": \"Le prénom est obligatoire\"\n        }\n    ]\n}\n\n```\n\n**Un client ou un banquier introuvable**\n\n``` json\n{\n    \"status\": \"BAD_REQUEST\",\n    \"timestamp\": \"31-05-2022 04:37:44\",\n    \"message\": \"404 Aucun banquier n'existe avec ce numéro\",\n    \"debugMessage\": \"404 Aucun banquier n'existe avec ce numéro\",\n    \"subErrors\": null\n}\n\n```\n\n**Objet introuvable**\n\n``` json\n{\n    \"id\": 64654\n}{\n    \"status\": \"INTERNAL_SERVER_ERROR\",\n    \"timestamp\": \"31-05-2022 04:43:50\",\n    \"message\": \"Impossible de renvoyer l'objet car il n'existe pas\",\n    \"debugMessage\": \"Could not write JSON: Unable to find com.nsf.bank.entity.Transaction with id 64654; nested exception is com.fasterxml.jackson.databind.JsonMappingException: Unable to find com.nsf.bank.entity.Transaction with id 64654 (through reference chain: com.nsf.bank.entity.Transaction$HibernateProxy$5iIZYe0v[\\\"debit\\\"])\",\n    \"subErrors\": null\n}\n\n```",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "17771184"
 	},
 	"item": [
 		{
@@ -63,7 +65,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/users/852",
+							"raw": "http://localhost:8080/users/1",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -71,7 +73,7 @@
 							"port": "8080",
 							"path": [
 								"users",
-								"852"
+								"1"
 							]
 						}
 					},
@@ -131,7 +133,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/api/bankers/2",
+							"raw": "http://localhost:8080/api/bankers/HX6HJOQQ7M",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -140,9 +142,10 @@
 							"path": [
 								"api",
 								"bankers",
-								"2"
+								"HX6HJOQQ7M"
 							]
-						}
+						},
+						"description": "Récupère un banquier avec son identifiant (`banker.hashid`)"
 					},
 					"response": []
 				},
@@ -247,7 +250,8 @@
 								"40",
 								"customers"
 							]
-						}
+						},
+						"description": "Récupère tous les clients liés à un banquier. Le paramètre d'url correspond à l'id du banquier (`banker.id`)."
 					},
 					"response": []
 				}
@@ -260,19 +264,12 @@
 					"name": "GetAll",
 					"request": {
 						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIyT0NBQk80TUJNIiwiYXV0aCI6W3siYXV0aG9yaXR5IjoiUk9MRV9VU0VSIn1dLCJpYXQiOjE2NTI1NTk4MDgsImV4cCI6MTY1MjkxOTgwOH0.TuhLLdEVZoIoAcYUR_5dqfyyUlgKv0qwAJBqstpE4Kc",
-									"type": "string"
-								}
-							]
+							"type": "noauth"
 						},
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/api/customers/",
+							"raw": "http://localhost:8080/api/customers/YXX03JPVOR",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -281,7 +278,7 @@
 							"path": [
 								"api",
 								"customers",
-								""
+								"YXX03JPVOR"
 							]
 						}
 					},
@@ -293,7 +290,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/api/customers/FHJGK54FD",
+							"raw": "http://localhost:8080/api/customers/OCR6UT9EQG",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -302,9 +299,10 @@
 							"path": [
 								"api",
 								"customers",
-								"FHJGK54FD"
+								"OCR6UT9EQG"
 							]
-						}
+						},
+						"description": "Récupère un client avec son identifiant client (`customer.hashid`)."
 					},
 					"response": []
 				},
@@ -323,7 +321,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8080/api/customers/create",
+							"raw": "http://localhost:8080/api/customers/create/2",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -332,9 +330,11 @@
 							"path": [
 								"api",
 								"customers",
-								"create"
+								"create",
+								"2"
 							]
-						}
+						},
+						"description": "Crée un client et le lie à un banquier. Le paramètre d'url correspond à l'id du banquier (`banker.id`).\n\nUn banquier enregistre son client après s'être connecté."
 					},
 					"response": []
 				},
@@ -378,7 +378,8 @@
 								"40",
 								"accounts"
 							]
-						}
+						},
+						"description": "Récupère les comptes bancaires liés à un client. Le paramètre d'url correspond à l'id du client (`customer.id`)"
 					},
 					"response": []
 				},
@@ -445,7 +446,8 @@
 								"create",
 								"12"
 							]
-						}
+						},
+						"description": "Crée un compte bancaire et le lie à un client. Le paramètre d'url correspond à l'id du client (`customer.id`)."
 					},
 					"response": []
 				},
@@ -562,7 +564,8 @@
 								"54",
 								"transactions"
 							]
-						}
+						},
+						"description": "Récupère toutes les transactions liées à un compte bancaire. Le paramètre d'url correspond à l'id du compte (`account.id`)."
 					},
 					"response": []
 				}
@@ -578,7 +581,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"debit\" : {\r\n        \"id\" : 54\r\n    },\r\n    \"label\" : \"Renault Garage\",\r\n    \"amount\" : 1400\r\n}",
+							"raw": "{\r\n    \"debit\" : {\r\n        \"id\" : 19\r\n    },\r\n    \"label\" : \"Carrefour Market\",\r\n    \"amount\" : 26.34\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -597,7 +600,8 @@
 								"transactions",
 								"create"
 							]
-						}
+						},
+						"description": "La requête json doit contenir au moins une information sur un compte bancaire. Pour lier la transaction à un ou plusieurs compte.s, on utilise l'id du compte bancaire.\n\nPour un débit de compte :\n\n``` json\n{\n    \"debit\" : 1\n}\n\n```\n\nPour un crédit de compte :\n\n``` json\n{\n    \"credit\" : 1\n}\n\n```\n\nPour un transfert entre deux comptes (un compte débité et un compte crédité) :\n\n``` json\n{\n    \"debit\" : 1,\n    \"credit\" : 2\n}\n\n```"
 					},
 					"response": []
 				},
