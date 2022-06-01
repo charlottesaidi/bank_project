@@ -1,6 +1,7 @@
 package com.nsf.bank.util;
 
 import com.mysql.jdbc.exceptions.jdbc4.MySQLIntegrityConstraintViolationException;
+import com.mysql.jdbc.exceptions.jdbc4.MySQLSyntaxErrorException;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
 import org.springframework.dao.EmptyResultDataAccessException;
@@ -70,6 +71,12 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
         apiError.setMessage("Une erreur est survenue");
         apiError.addValidationErrors(e.getConstraintViolations());
         return buildResponseEntity(apiError);
+    }
+
+    @ExceptionHandler(MySQLSyntaxErrorException.class)
+    protected ResponseEntity<Object> handleMySQLSyntaxErrorException(MySQLSyntaxErrorException e) {
+        String error = e.getMessage();
+        return buildResponseEntity(new ApiError(HttpStatus.BAD_REQUEST, error, e));
     }
 
     @ExceptionHandler(UsernameNotFoundException.class)
