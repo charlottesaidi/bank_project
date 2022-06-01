@@ -10,17 +10,25 @@ body {
     font-family: 'Poppins', sans-serif;
 }
 
+.wrap {
+    width: min(1200px, 90%);
+    margin-inline: auto;
+}
+
 /* HEADER */
 
 header {
+    position: fixed;
     width: 100%;
-    display: flex;
-    align-items: center;
-    padding: 10px 80px;
-    position: relative;
     z-index: 100;
     top: 0;
     left: 0;
+}
+
+.header-container {
+    display: flex;
+    justify-content: space-between;
+    padding: 20px 0;
 }
 
 .logo {
@@ -33,8 +41,9 @@ header {
 .navigation {
     display: flex;
     justify-content: space-between;
-    width: 65%;
+    gap: 50px;
 }
+
 nav ul {
     display: flex;
     align-items: center;
@@ -51,24 +60,23 @@ nav ul li a {
     color: var(--white);
     text-transform: uppercase;
     font-size: 0.9rem;
-    /*letter-spacing: 3%;*/
 }
 
-.transfert{
+.transfert {
     width: 40px;
     height: 40px;
     background: center / contain no-repeat url("../img/transfer-icon.svg");
     display: inline-block;
 }
 
-.settings{
+.settings {
     width: 40px;
     height: 40px;
     background: center / contain no-repeat url(" ../img/settings-icons.svg");
     display: inline-block;
 }
 
-.circlelogos{
+.circlelogos {
     display: flex;
     flex-direction: row;
     justify-content: center;
@@ -83,12 +91,6 @@ nav ul li a {
 
 /* MAIN */
 
-main {
-    min-height: 100vh;
-    position: relative;
-    overflow: hidden;
-    padding: 0 80px;
-}
 /* Circles and Animations*/
 .circle {
     width: 400px;
@@ -204,10 +206,15 @@ main {
 .home {
     display: flex;
     align-items: center;
-    justify-content: space-between;
-    width: 100%;
     height: 100vh;
+
+}
+
+.home-container {
     position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
 }
 
 .content {
@@ -216,6 +223,7 @@ main {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
+    position: relative;
 }
 
 .content__title {
@@ -262,33 +270,39 @@ main {
 .button__gray:hover {
     box-shadow: 0 200px 100px -100px rgb(255, 255, 255) inset;
     opacity: 0.75;
+    color: #000;
 }
 
 .card__container {
-    width: 48%;
     display: flex;
     justify-content: center;
     align-items: center;
 }
+
 /*header responsive Ipad*/
-@media only screen and (max-width: 975px){
+/*
+@media only screen and (max-width: 975px) {
     .navigation {
         width: 50%;
     }
+
     .home {
         display: flex;
         flex-flow: column;
         height: 70%;
         margin-top: 10%;
     }
+
     .content {
         width: 90%;
         margin-bottom: 10%;
     }
-    .card__container{
+
+    .card__container {
         width: 90%;
     }
-    .card{
+
+    .card {
         width: 400px;
     }
-}
+}*/
