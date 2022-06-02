@@ -2,6 +2,7 @@ package com.nsf.bank.controller;
 
 import com.nsf.bank.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.configurationprocessor.json.JSONException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -33,7 +34,7 @@ public class UserController {
 	}
 
 	@PostMapping("/signin")
-	public ResponseEntity login(@RequestBody User user) {
+	public ResponseEntity login(@RequestBody User user) throws JSONException {
 		return ResponseEntity.ok().body(userService.signin(user.getUsername(), user.getPassword()));
 	}
 
