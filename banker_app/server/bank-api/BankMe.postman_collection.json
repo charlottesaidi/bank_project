@@ -749,11 +749,21 @@
 				{
 					"name": "Update",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJXVFVBM01YWUUwIiwiYXV0aCI6W3siYXV0aG9yaXR5IjoiUk9MRV9VU0VSIn1dLCJpYXQiOjE2NTQxNTY4NDUsImV4cCI6MTY1NDUxNjg0NX0.6IYmfy90AE5o5dR6L3Od6aLw4C55ui83OmiAewr5IpE",
+									"type": "string"
+								}
+							]
+						},
 						"method": "PUT",
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"start_date\" : \"2022-12-01\",\r\n    \"end_date\" : \"2022-12-15\"\r\n}",
+							"raw": "{\r\n    \"start_date\" : \"2022-06-02\",\r\n    \"end_date\" : \"2022-06-07\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -761,7 +771,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8080/api/rate-dates/update/13",
+							"raw": "http://localhost:8080/api/rate-dates/update/1",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -771,7 +781,7 @@
 								"api",
 								"rate-dates",
 								"update",
-								"13"
+								"1"
 							]
 						}
 					},
@@ -793,6 +803,154 @@
 								"api",
 								"rate-dates",
 								"13"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Account Type",
+			"item": [
+				{
+					"name": "GetAll",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJXVFVBM01YWUUwIiwiYXV0aCI6W3siYXV0aG9yaXR5IjoiUk9MRV9VU0VSIn1dLCJpYXQiOjE2NTQxNTY4NDUsImV4cCI6MTY1NDUxNjg0NX0.6IYmfy90AE5o5dR6L3Od6aLw4C55ui83OmiAewr5IpE",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/account-types/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"account-types",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetOne",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJXVFVBM01YWUUwIiwiYXV0aCI6W3siYXV0aG9yaXR5IjoiUk9MRV9VU0VSIn1dLCJpYXQiOjE2NTQxNTY4NDUsImV4cCI6MTY1NDUxNjg0NX0.6IYmfy90AE5o5dR6L3Od6aLw4C55ui83OmiAewr5IpE",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/account-types/16",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"account-types",
+								"16"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJXVFVBM01YWUUwIiwiYXV0aCI6W3siYXV0aG9yaXR5IjoiUk9MRV9VU0VSIn1dLCJpYXQiOjE2NTQxNTY4NDUsImV4cCI6MTY1NDUxNjg0NX0.6IYmfy90AE5o5dR6L3Od6aLw4C55ui83OmiAewr5IpE",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\" : \"livret_a\",\r\n    \"rate\" : 0.3\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/account-types/update/16",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"account-types",
+								"update",
+								"16"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJXVFVBM01YWUUwIiwiYXV0aCI6W3siYXV0aG9yaXR5IjoiUk9MRV9VU0VSIn1dLCJpYXQiOjE2NTQxNTY4NDUsImV4cCI6MTY1NDUxNjg0NX0.6IYmfy90AE5o5dR6L3Od6aLw4C55ui83OmiAewr5IpE",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\" : \"ldd\",\r\n    \"rate\" : 0.6\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/account-types/create",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"account-types",
+								"create"
 							]
 						}
 					},

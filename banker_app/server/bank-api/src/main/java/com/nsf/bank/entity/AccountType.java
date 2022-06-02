@@ -6,6 +6,7 @@ import org.springframework.data.annotation.LastModifiedDate;
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import java.util.Date;
+import java.util.Locale;
 
 @Entity
 @Table(name = "account_types")
@@ -49,7 +50,7 @@ public class AccountType {
     }
 
     public void setName(String name) {
-        this.name = name;
+        this.name = name.toUpperCase(Locale.ROOT);
     }
 
     public float getRate() {
