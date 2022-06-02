@@ -2,6 +2,8 @@ package com.nsf.bank.service;
 
 import com.nsf.bank.entity.Role;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.configurationprocessor.json.JSONException;
+import org.springframework.boot.configurationprocessor.json.JSONObject;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -16,8 +18,7 @@ import com.nsf.bank.config.JWTTokenProvider;
 import com.nsf.bank.entity.User;
 import com.nsf.bank.repository.UserRepository;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 @Service
 public class JWTUserService implements UserDetailsService {
@@ -34,9 +35,14 @@ public class JWTUserService implements UserDetailsService {
 	  @Autowired
 	  private AuthenticationManager authenticationManager;
 
-	  public String signin(String username, String password) {
+	  public Map signin(String username, String password) throws JSONException {
 	      authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, password));
-	      return jwtTokenProvider.createToken(username, userRepository.findUserWithName(username).get().getRole());
+		  String token = jwtTokenProvider.createToken(username, userRepository.findUserWithName(username).get().getRole());
+		  Optional<User> user = userRepository.findUserWithName(username);
+		  Map response = new HashMap<>();
+		  response.put("token", token);
+		  response.put("user", user);
+	      return response;
 	  }
 
 	  public String signup(User user) {
