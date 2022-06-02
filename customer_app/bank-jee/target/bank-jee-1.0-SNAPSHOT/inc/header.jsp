@@ -11,6 +11,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>BankMe</title>
     <link rel="stylesheet" href="asset/css/reset.css">
+    <link rel="stylesheet" href="https://unpkg.com/swiper@8/swiper-bundle.min.css"/>
     <link rel="stylesheet" href="asset/css/style.css">
 </head>
 <body>
@@ -40,3 +41,7 @@
     </div>
 </header>
 <main>
+    <div class="circle"></div>
+    <div class="circle two"></div>
+    <div class="circle three"></div>
+    <div class="circle four"></div>

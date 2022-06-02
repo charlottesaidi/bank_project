@@ -7,41 +7,38 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ include file="inc/header.jsp" %>
-    <section class="home">
-        <div class="wrap">
-            <div class="home-container">
-                <div class="circle"></div>
-                <div class="circle two"></div>
-                <div class="circle three"></div>
-                <div class="circle four"></div>
-                <div class="content">
-                    <h1 class="content__title">Bank<span>Me</span></h1>
-                    <h2 class="content__subtitle">
-                        POUR COMMENCER, ON VOUS OFFRE 80 €(1)
-                    </h2>
-                    <p class="content__text">
-                        Gagnez du temps, ouvrez en ligne votre premier compte bancaire,
-                        profitez de 80 € offerts(1) et rencontrez plus tard votre conseiller
-                        en agence.
-                    </p>
-                    <a href="" class="button__gray">connexion</a>
-                </div>
-                <div class="card__container">
-                    <div class="card">
-                        <div class="card__box">
-                            <div class="top">
-                                <div class="logo"></div>
-                                <div class="circle_card"></div>
-                            </div>
-                            <div class="bottom">
-                                <p class="name">vannarath quentin</p>
-                                <p class="iban">XXXX XXXX XXXX 4688</p>
-                            </div>
+<section id="home">
+    <div class="wrap">
+        <div class="home-container">
+            <div class="content">
+                <h1 class="content__title">Bank<span>Me</span></h1>
+                <h2 class="content__subtitle">
+                    POUR COMMENCER, ON VOUS OFFRE 80 €(1)
+                </h2>
+                <p class="content__text">
+                    Gagnez du temps, ouvrez en ligne votre premier compte bancaire,
+                    profitez de 80 € offerts(1) et rencontrez plus tard votre conseiller
+                    en agence.
+                </p>
+                <a href="" class="button__gray">connexion</a>
+            </div>
+            <div class="card-container" id="card-home">
+                <div class="card-container__wrap">
+                    <div class="card-container__wrap__top">
+                        <div class="card-container__wrap__top-left"></div>
+                        <div class="card-container__wrap__top-right"></div>
+                    </div>
+                    <div class="card-container__wrap__bottom">
+                        <div class="card-container__wrap__bottom__content">
+                            <p>COMPTE BANCAIRE</p>
+                            <p>2345 5432 8468 4688</p>
                         </div>
+                        <div class="card-container__wrap__bottom__img"></div>
                     </div>
                 </div>
             </div>
         </div>
-    </section>
+    </div>
+</section>
 
 <%@ include file="inc/footer.jsp" %>
