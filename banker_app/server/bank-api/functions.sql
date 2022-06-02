@@ -37,7 +37,9 @@ CREATE TRIGGER `preventRateChange` BEFORE UPDATE ON `account_types`
     BEGIN
         SELECT start_date, end_date INTO @start_date, @end_date FROM changing_rate_dates ORDER BY changing_rate_dates.id_changing_rate_date DESC LIMIT 1;
         SET @today = NOW();
-        SET @error_message = CONCAT('Les taux ne sont changeables que dans la période du ', @start_date, ' au ', @end_date, '.');
+        SET @start = DATE_FORMAT(@start_date, '%d/%m/%Y');
+        SET @end = DATE_FORMAT(@end_date, '%d/%m/%Y');
+        SET @error_message = CONCAT('Les taux ne sont changeables que dans la période du ', @start, ' au ', @end, '.');
         IF @today < @start_date OR @today > @end_date THEN
             signal sqlstate '42000' set MESSAGE_TEXT = @error_message;
         END IF;
