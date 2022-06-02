@@ -76,13 +76,13 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
     @ExceptionHandler(MySQLSyntaxErrorException.class)
     protected ResponseEntity<Object> handleMySQLSyntaxErrorException(MySQLSyntaxErrorException e) {
         String error = e.getMessage();
-        return buildResponseEntity(new ApiError(HttpStatus.BAD_REQUEST, error, e));
+        return buildResponseEntity(new ApiError(HttpStatus.INTERNAL_SERVER_ERROR, error, e));
     }
 
     @ExceptionHandler(UsernameNotFoundException.class)
     protected ResponseEntity<Object> handleUsernameNotFound(UsernameNotFoundException e) {
         String error = e.getMessage();
-        return buildResponseEntity(new ApiError(HttpStatus.BAD_REQUEST, error, e));
+        return buildResponseEntity(new ApiError(HttpStatus.NOT_FOUND, error, e));
     }
 
     @ExceptionHandler(BadCredentialsException.class)
