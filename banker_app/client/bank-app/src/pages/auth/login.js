@@ -1,10 +1,64 @@
-import React from "react";
+import React, {useState} from "react";
 import Link from "next/link";
+import { useRouter } from "next/router";
 
 // layout for page
 import Auth from "@layouts/Auth.js";
 
-export default function Login() {
+export default function Login({ data }) {
+  const router = useRouter();
+  const [formData, setFormData] = useState({
+    username: "",
+    password: "",
+  });
+
+ 
+
+  const { username, password } = formData;
+
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (rgpd === false) {
+      toast.error("Veuillez accepter la collecte des données", {
+        position: "top-center",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+      });
+    } else {
+      captchaRef.current.execute();
+    }
+  };
+  const handleVerificationSuccess = async (token, ekey) => {
+    let data = new FormData();
+    data.append("username", username);
+    data.append("password", password);
+    
+
+    let res = await fetch(
+      "http://localhost:8080/users/",
+      {
+        method: "POST",
+        body: data,
+      }
+    );
+    let q = await res.json();
+    if (q === "ok") {
+      captchaRef.current.resetCaptcha();
+      router.push("/thank-you");
+    }
+  };
+
+
+  console.log(data);
   return (
     <>
       <div className="container mx-auto px-4 h-full">
@@ -91,3 +145,17 @@ export default function Login() {
 }
 
 Login.layout = Auth;
+
+export async function getStaticProps() {
+  const res = await fetch(
+    "http://localhost:8080/users/"
+  );
+  const data = await res.json();
+
+  return {
+    props: {
+      data,
+    },
+    revalidate: 60,
+  };
+}
