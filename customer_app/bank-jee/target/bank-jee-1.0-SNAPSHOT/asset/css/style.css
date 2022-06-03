@@ -14,6 +14,7 @@ body {
 main {
     position: relative;
     overflow: hidden;
+    min-height: 100vh;
 }
 
 .wrap {
@@ -48,6 +49,8 @@ header {
     width: 150px;
     height: 50px;
     background: center / contain no-repeat url("../img/logo.svg");
+    position: relative;
+    z-index: 2000;
 }
 
 .navigation {
@@ -132,7 +135,7 @@ nav ul li a {
     flex-direction: column;
     gap: 20px;
     position: absolute;
-    top: 75px;
+    top: 0;
     left: 50%;
     -webkit-transform: translateX(-50%);
     -ms-transform: translateX(-50%);
@@ -152,7 +155,7 @@ nav ul li a {
 
 .nav.active {
     max-height: 1000px;
-    padding: 20px 0;
+    padding: 80px 0 30px 0;
 }
 
 .burger {
@@ -473,14 +476,18 @@ nav ul li a {
     gap: 50px;
 }
 
-.dashboard-container__accounts__box-title, .dashboard-container__table-title {
+.dashboard-container__accounts__box-title, .dashboard-container__table-title, .transfer-container-title {
     font-size: 1.5rem;
     font-weight: 600;
-    line-height: 48px;
+    line-height: 1.2em;
 }
 
 .dashboard-container__table-title span {
     color: var(--orange);
+}
+
+.swiper-first, .swiper-second {
+    padding: 0 2px !important;
 }
 
 .swiper-pagination {
@@ -516,6 +523,26 @@ nav ul li a {
 
     .grid3 {
         grid-area: grid3;
+    }
+}
+
+@media screen and (min-width: 1200px) {
+    .grid1 {
+        -ms-grid-row: 1;
+        -ms-grid-column: 1;
+        -ms-grid-column-span: 3;
+    }
+
+    .grid2 {
+        -ms-grid-row: 1;
+        -ms-grid-column: 5;
+        -ms-grid-column-span: 3;
+    }
+
+    .grid3 {
+        -ms-grid-row: 3;
+        -ms-grid-column: 1;
+        -ms-grid-column-span: 7;
     }
 }
 
@@ -635,7 +662,12 @@ nav ul li a {
 
 @media screen and (min-width: 1200px) {
     .swiper-third {
-        height: 70px;
+        height: 90px;
+    }
+
+    .swiper-pagination-third {
+        position: absolute;
+        bottom: 0 !important;
     }
 }
 
@@ -671,6 +703,10 @@ nav ul li a {
 @media screen and (min-width: 1200px) {
     .card-container__wrap {
         height: max(120px, 120px + 5vw);
+    }
+
+    .card-container__wrap.dashboard {
+        height: 140px;
     }
 }
 
@@ -732,3 +768,429 @@ nav ul li a {
 }
 
 /* ------ CARD ------ */
+
+/* ------ SETTINGS ------ */
+#settings {
+    position: relative;
+    padding: 100px 0 50px 0;
+}
+
+.settings-container {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    gap: 50px;
+}
+
+.settings-container__content {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    gap: 20px;
+    width: min(768px, 100%);
+}
+
+.settings-container__content-title {
+    font-weight: 600;
+    font-size: 1.5rem;
+    line-height: 1.2em;
+}
+
+.settings-container__content-text {
+    font-weight: 600;
+    font-size: 1rem;
+    line-height: 1.5em;
+}
+
+.settings-container__forms {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    gap: 40px;
+}
+
+.settings-container__forms form {
+    padding: 20px;
+    background: -o-linear-gradient(339.38deg, rgba(255, 255, 255, 0.25) 6.39%, rgba(255, 255, 255, 0) 53.34%);
+    background: linear-gradient(110.62deg, rgba(255, 255, 255, 0.25) 6.39%, rgba(255, 255, 255, 0) 53.34%);
+    mix-blend-mode: normal;
+    -webkit-backdrop-filter: blur(40px);
+    backdrop-filter: blur(40px);
+    border-radius: 32px;
+    border: 1px solid rgba(255, 255, 255, 0.4);
+}
+
+.settings-container__forms-first {
+    display: -ms-grid;
+    display: grid;
+    -ms-grid-columns: 1fr;
+    grid-template-columns: 1fr;
+    -ms-grid-rows: auto;
+    grid-template-rows: auto;
+    gap: 10px;
+    grid-template-areas:
+    "email"
+    "phone"
+    "password"
+    "submit";
+}
+
+.email {
+    -ms-grid-row: 1;
+    -ms-grid-column: 1;
+    grid-area: email;
+}
+
+.phone {
+    -ms-grid-row: 3;
+    -ms-grid-column: 1;
+    grid-area: phone;
+}
+
+.password {
+    -ms-grid-row: 5;
+    -ms-grid-column: 1;
+    grid-area: password;
+}
+
+.submit {
+    -ms-grid-row: 7;
+    -ms-grid-column: 1;
+    grid-area: submit;
+}
+
+@media screen and (min-width: 768px) {
+    .settings-container__forms-first {
+        grid-auto-columns: 1fr;
+        -ms-grid-columns: 1fr 20px 1fr 20px 1fr 20px 1fr;
+        grid-template-columns: 1fr 1fr 1fr 1fr;
+        gap: 20px;
+        -ms-grid-rows: auto 20px auto 20px auto;
+        grid-template-areas:
+    "email email phone phone"
+    "password password password password"
+    "submit . . .";
+    }
+
+    .email {
+        -ms-grid-row: 1;
+        -ms-grid-column: 1;
+        -ms-grid-column-span: 3;
+    }
+
+    .phone {
+        -ms-grid-row: 1;
+        -ms-grid-column: 5;
+        -ms-grid-column-span: 3;
+    }
+
+    .password {
+        -ms-grid-row: 3;
+        -ms-grid-column: 1;
+        -ms-grid-column-span: 7;
+    }
+
+    .submit {
+        -ms-grid-row: 5;
+        -ms-grid-column: 1;
+    }
+
+}
+
+.settings-container__forms-second {
+    display: -ms-grid;
+    display: grid;
+    -ms-grid-columns: 1fr;
+    grid-template-columns: 1fr;
+    -ms-grid-rows: auto;
+    grid-template-rows: auto;
+    gap: 10px;
+    grid-template-areas:
+    "name"
+    "surname"
+    "town"
+    "address"
+    "modify";
+}
+
+.name {
+    -ms-grid-row: 1;
+    -ms-grid-column: 1;
+    grid-area: name;
+}
+
+.surname {
+    -ms-grid-row: 3;
+    -ms-grid-column: 1;
+    grid-area: surname;
+}
+
+.town {
+    -ms-grid-row: 5;
+    -ms-grid-column: 1;
+    grid-area: town;
+}
+
+.address {
+    -ms-grid-row: 7;
+    -ms-grid-column: 1;
+    grid-area: address;
+}
+
+.modify {
+    -ms-grid-row: 9;
+    -ms-grid-column: 1;
+    grid-area: modify;
+}
+
+@media screen and (min-width: 768px) {
+    .settings-container__forms-second {
+        grid-auto-columns: 1fr;
+        -ms-grid-columns: 1fr 20px 1fr 20px 1fr 20px 1fr;
+        grid-template-columns: 1fr 1fr 1fr 1fr;
+        gap: 20px;
+        -ms-grid-rows: auto 20px auto 20px auto;
+        grid-template-areas:
+    "name name surname surname"
+    "town town address address"
+    "modify modify . .";
+    }
+
+    .name {
+        -ms-grid-row: 1;
+        -ms-grid-column: 1;
+        -ms-grid-column-span: 3;
+    }
+
+    .surname {
+        -ms-grid-row: 1;
+        -ms-grid-column: 5;
+        -ms-grid-column-span: 3;
+    }
+
+    .town {
+        -ms-grid-row: 3;
+        -ms-grid-column: 1;
+        -ms-grid-column-span: 3;
+    }
+
+    .address {
+        -ms-grid-row: 3;
+        -ms-grid-column: 5;
+        -ms-grid-column-span: 3;
+    }
+
+    .modify {
+        -ms-grid-row: 5;
+        -ms-grid-column: 1;
+        -ms-grid-column-span: 3;
+    }
+}
+
+.settings-container__forms form input, .transfer-container form input {
+    background-color: transparent;
+    border: none;
+    border-bottom: 1px solid gray;
+    color: #fff;
+    height: 30px;
+    outline: none;
+}
+
+.settings-container__forms form input::-webkit-input-placeholder, .transfer-container form input::-webkit-input-placeholder {
+    color: #fff;
+}
+
+.settings-container__forms form input::-moz-placeholder, .transfer-container form input::-moz-input-placeholder {
+    color: #fff;
+}
+
+.settings-container__forms form input:-ms-input-placeholder, .transfer-container form input::-ms-input-placeholder {
+    color: #fff;
+}
+
+.settings-container__forms form input::-ms-input-placeholder, .transfer-container form input::-ms-input-placeholder {
+    color: #fff;
+}
+
+.settings-container__forms form input::placeholder, .transfer-container form input::placeholder {
+    color: #fff;
+}
+
+.submit-form {
+    font-size: .7rem;
+    height: auto !important;
+}
+
+@media screen and (min-width: 1180px) {
+    #settings {
+        padding: 0;
+        min-height: 100vh;
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: flex;
+        -webkit-box-align: center;
+        -ms-flex-align: center;
+        align-items: center;
+    }
+
+    .settings-container__forms {
+        -webkit-box-orient: horizontal;
+        -webkit-box-direction: normal;
+        -ms-flex-direction: row;
+        flex-direction: row;
+    }
+}
+
+/* ------ SETTINGS ------ */
+/* ------ LOGIN ------ */
+.settings-container__forms-login {
+    display: grid;
+    grid-auto-columns: 1fr;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr 1fr;
+    gap: 20px;
+    grid-template-areas:
+    "user user user user"
+    "password password password password"
+    "sign . . .";
+}
+
+.user {
+    grid-area: user;
+}
+
+.password {
+    grid-area: password;
+}
+
+.sign {
+    grid-area: sign;
+}
+
+/* ------ LOGIN ------ */
+/* ------ TRANSFER ------ */
+#transfer {
+    position: relative;
+    padding: 100px 0 50px 0;
+}
+
+.transfer-container form {
+    display: flex;
+    flex-direction: column;
+    gap: 50px;
+}
+
+.transfer-container form select {
+    background-color: var(--white);
+    color: #000;
+    height: 30px;
+    border: none;
+    border-radius: 5px;
+    width: 100%;
+}
+
+.transfer-container__from, .transfer-container__to, .transfer-container__info {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 30px;
+}
+
+.transfer-container__split-first, .transfer-container__split-second {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.add__accounts {
+    text-align: center;
+    padding: 10px 20px;
+    background: linear-gradient(117.71deg, rgba(255, 255, 255, 0.4) 26.61%, rgba(255, 255, 255, 0.1) 71.85%);
+    backdrop-filter: blur(40px);
+    border-radius: 50px;
+}
+
+.transfer-container__form {
+    display: grid;
+    grid-auto-columns: 1fr;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    grid-template-rows: auto;
+    gap: 10px;
+    grid-template-areas:
+    "money money money money"
+    "choice choice choice choice"
+    "send . . .";
+}
+
+.money {
+    grid-area: money;
+}
+
+.choice {
+    grid-area: choice;
+}
+
+.send {
+    grid-area: send;
+}
+
+@media screen and (min-width: 1024px) {
+    #transfer {
+        min-height: 100vh;
+        padding: 0;
+        display: flex;
+        align-items: center;
+    }
+
+    .transfer-container form {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr 1fr;
+        grid-template-rows: auto;
+        grid-auto-columns: 1fr;
+        gap: 50px;
+        grid-auto-flow: row;
+        grid-template-areas:
+    "transfer-container__from transfer-container__from transfer-container__to transfer-container__to"
+    "transfer-container__info transfer-container__info . .";
+    }
+
+    .transfer-container__from {
+        grid-area: transfer-container__from;
+    }
+
+    .transfer-container__info {
+        grid-area: transfer-container__info;
+    }
+
+    .transfer-container__to {
+        grid-area: transfer-container__to;
+    }
+
+    .transfer-container__split-first {
+        flex-direction: row;
+        gap: 0;
+        justify-content: space-between;
+        align-items: center;
+        width: 100%;
+    }
+
+    .transfer-container__from, .transfer-container__to {
+        gap: 0;
+        height: 120px;
+        justify-content: space-between;
+    }
+}
+
+/* ------ TRANSFER ------ */

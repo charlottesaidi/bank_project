@@ -42,7 +42,7 @@
                             <ul class="dashboard-container__accounts__box-slider swiper-wrapper">
                                 <li class="swiper-slide">
                                     <div class="card-container">
-                                        <div class="card-container__wrap">
+                                        <div class="card-container__wrap dashboard">
                                             <div class="card-container__wrap__top">
                                                 <div class="card-container__wrap__top-left"></div>
                                                 <div class="card-container__wrap__top-right"></div>
@@ -60,7 +60,7 @@
 
                                 <li class="swiper-slide">
                                     <div class="card-container">
-                                        <div class="card-container__wrap">
+                                        <div class="card-container__wrap dashboard">
                                             <div class="card-container__wrap__top">
                                                 <div class="card-container__wrap__top-left"></div>
                                                 <div class="card-container__wrap__top-right"></div>
@@ -78,7 +78,7 @@
 
                                 <li class="swiper-slide">
                                     <div class="card-container">
-                                        <div class="card-container__wrap">
+                                        <div class="card-container__wrap dashboard">
                                             <div class="card-container__wrap__top">
                                                 <div class="card-container__wrap__top-left"></div>
                                                 <div class="card-container__wrap__top-right"></div>
@@ -96,7 +96,7 @@
 
                                 <li class="swiper-slide">
                                     <div class="card-container">
-                                        <div class="card-container__wrap">
+                                        <div class="card-container__wrap dashboard">
                                             <div class="card-container__wrap__top">
                                                 <div class="card-container__wrap__top-left"></div>
                                                 <div class="card-container__wrap__top-right"></div>
@@ -123,7 +123,7 @@
                             <ul class="swiper-wrapper">
                                 <li class="swiper-slide">
                                     <div class="card-container">
-                                        <div class="card-container__wrap">
+                                        <div class="card-container__wrap dashboard">
                                             <div class="card-container__wrap__top">
                                                 <div class="card-container__wrap__top-left"></div>
                                                 <div class="card-container__wrap__top-right"></div>
@@ -140,7 +140,7 @@
                                 </li>
                                 <li class="swiper-slide">
                                     <div class="card-container">
-                                        <div class="card-container__wrap">
+                                        <div class="card-container__wrap dashboard">
                                             <div class="card-container__wrap__top">
                                                 <div class="card-container__wrap__top-left"></div>
                                                 <div class="card-container__wrap__top-right"></div>
@@ -157,7 +157,7 @@
                                 </li>
                                 <li class="swiper-slide">
                                     <div class="card-container">
-                                        <div class="card-container__wrap">
+                                        <div class="card-container__wrap dashboard">
                                             <div class="card-container__wrap__top">
                                                 <div class="card-container__wrap__top-left"></div>
                                                 <div class="card-container__wrap__top-right"></div>
@@ -174,7 +174,7 @@
                                 </li>
                                 <li class="swiper-slide">
                                     <div class="card-container">
-                                        <div class="card-container__wrap">
+                                        <div class="card-container__wrap dashboard">
                                             <div class="card-container__wrap__top">
                                                 <div class="card-container__wrap__top-left"></div>
                                                 <div class="card-container__wrap__top-right"></div>
