@@ -476,10 +476,10 @@ nav ul li a {
     gap: 50px;
 }
 
-.dashboard-container__accounts__box-title, .dashboard-container__table-title {
+.dashboard-container__accounts__box-title, .dashboard-container__table-title, .transfer-container-title {
     font-size: 1.5rem;
     font-weight: 600;
-    line-height: 48px;
+    line-height: 1.2em;
 }
 
 .dashboard-container__table-title span {
@@ -999,7 +999,7 @@ nav ul li a {
     }
 }
 
-.settings-container__forms form input {
+.settings-container__forms form input, .transfer-container form input {
     background-color: transparent;
     border: none;
     border-bottom: 1px solid gray;
@@ -1008,23 +1008,23 @@ nav ul li a {
     outline: none;
 }
 
-.settings-container__forms form input::-webkit-input-placeholder {
+.settings-container__forms form input::-webkit-input-placeholder, .transfer-container form input::-webkit-input-placeholder {
     color: #fff;
 }
 
-.settings-container__forms form input::-moz-placeholder {
+.settings-container__forms form input::-moz-placeholder, .transfer-container form input::-moz-input-placeholder {
     color: #fff;
 }
 
-.settings-container__forms form input:-ms-input-placeholder {
+.settings-container__forms form input:-ms-input-placeholder, .transfer-container form input::-ms-input-placeholder {
     color: #fff;
 }
 
-.settings-container__forms form input::-ms-input-placeholder {
+.settings-container__forms form input::-ms-input-placeholder, .transfer-container form input::-ms-input-placeholder {
     color: #fff;
 }
 
-.settings-container__forms form input::placeholder {
+.settings-container__forms form input::placeholder, .transfer-container form input::placeholder {
     color: #fff;
 }
 
@@ -1053,26 +1053,144 @@ nav ul li a {
     }
 }
 
-
 /* ------ SETTINGS ------ */
 /* ------ LOGIN ------ */
-
-
 .settings-container__forms-login {
-
     display: grid;
     grid-auto-columns: 1fr;
     grid-template-columns: 1fr 1fr 1fr 1fr;
     grid-template-rows: 1fr 1fr 1fr;
-    gap: 0px 0px;
+    gap: 20px;
     grid-template-areas:
     "user user user user"
     "password password password password"
     "sign . . .";
-
-
 }
-.user { grid-area: user; }
-.password { grid-area: password; }
-.sign { grid-area: sign; }
+
+.user {
+    grid-area: user;
+}
+
+.password {
+    grid-area: password;
+}
+
+.sign {
+    grid-area: sign;
+}
+
 /* ------ LOGIN ------ */
+/* ------ TRANSFER ------ */
+#transfer {
+    position: relative;
+    padding: 100px 0 50px 0;
+}
+
+.transfer-container form {
+    display: flex;
+    flex-direction: column;
+    gap: 50px;
+}
+
+.transfer-container form select {
+    background-color: var(--white);
+    color: #000;
+    height: 30px;
+    border: none;
+    border-radius: 5px;
+    width: 100%;
+}
+
+.transfer-container__from, .transfer-container__to, .transfer-container__info {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 30px;
+}
+
+.transfer-container__split-first, .transfer-container__split-second {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.add__accounts {
+    text-align: center;
+    padding: 10px 20px;
+    background: linear-gradient(117.71deg, rgba(255, 255, 255, 0.4) 26.61%, rgba(255, 255, 255, 0.1) 71.85%);
+    backdrop-filter: blur(40px);
+    border-radius: 50px;
+}
+
+.transfer-container__form {
+    display: grid;
+    grid-auto-columns: 1fr;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    grid-template-rows: auto;
+    gap: 10px;
+    grid-template-areas:
+    "money money money money"
+    "choice choice choice choice"
+    "send . . .";
+}
+
+.money {
+    grid-area: money;
+}
+
+.choice {
+    grid-area: choice;
+}
+
+.send {
+    grid-area: send;
+}
+
+@media screen and (min-width: 1024px) {
+    #transfer {
+        min-height: 100vh;
+        padding: 0;
+        display: flex;
+        align-items: center;
+    }
+
+    .transfer-container form {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr 1fr;
+        grid-template-rows: auto;
+        grid-auto-columns: 1fr;
+        gap: 50px;
+        grid-auto-flow: row;
+        grid-template-areas:
+    "transfer-container__from transfer-container__from transfer-container__to transfer-container__to"
+    "transfer-container__info transfer-container__info . .";
+    }
+
+    .transfer-container__from {
+        grid-area: transfer-container__from;
+    }
+
+    .transfer-container__info {
+        grid-area: transfer-container__info;
+    }
+
+    .transfer-container__to {
+        grid-area: transfer-container__to;
+    }
+
+    .transfer-container__split-first {
+        flex-direction: row;
+        gap: 0;
+        justify-content: space-between;
+        align-items: center;
+        width: 100%;
+    }
+
+    .transfer-container__from, .transfer-container__to {
+        gap: 0;
+        height: 120px;
+        justify-content: space-between;
+    }
+}
+
+/* ------ TRANSFER ------ */
