@@ -91,20 +91,29 @@ public class LoadDatabase {
         userRoles.add(Role.ROLE_USER);
         customer.setRole(userRoles);
 
-        User existingCustomer = userRepository.findUserWithEmail("customer@example.fr");
-        User existingBanker = userRepository.findUserWithEmail("banker@example.fr");
-        User existingDirector = userRepository.findUserWithEmail("director@example.fr");
+        User existingUserCustomer = userRepository.findUserWithEmail("customer@example.fr");
+        User existingUserBanker = userRepository.findUserWithEmail("banker@example.fr");
+        User existingUserDirector = userRepository.findUserWithEmail("director@example.fr");
         int count = 0;
 
-        if(existingBanker == null) {
+        if(existingUserBanker == null) {
             userBanker.setHashid(hashidService.generateHashId());
             banker.setUsername(userBanker.getHashid());
             userRepository.save(banker);
             userBanker.setUser(banker);
             bankerRepository.save(userBanker);
             count++;
+        } else {
+            Banker bankerAlreadyExist = bankerRepository.findBankerByAccountNumber(existingUserBanker.getUsername());
+            if(bankerAlreadyExist == null) {
+                userBanker.setHashid(hashidService.generateHashId());
+                userBanker.setUser(existingUserBanker);
+                bankerRepository.save(userBanker);
+            } else {
+                userBanker = bankerAlreadyExist;
+            }
         }
-        if(existingCustomer == null) {
+        if(existingUserCustomer == null) {
             userCustomer.setBanker(userBanker);
             userCustomer.setHashid(hashidService.generateHashId());
             customer.setUsername(userCustomer.getHashid());
@@ -117,14 +126,36 @@ public class LoadDatabase {
             userCustomer.setDocument_type(documents);
             customerRepository.save(userCustomer);
             count++;
+        } else {
+            Customer customerAlreadyExists = customerRepository.findCustomerByAccountNumber(existingUserCustomer.getUsername());
+            if(customerAlreadyExists == null) {
+                userCustomer.setBanker(userBanker);
+                userCustomer.setUser(existingUserCustomer);
+                userCustomer.setHashid(hashidService.generateHashId());
+                List<String> documents = new ArrayList<>();
+                documents.add("attestation_domicile");
+                documents.add("piece_id");
+                documents.add("avis_impots");
+                userCustomer.setDocument_type(documents);
+                customerRepository.save(userCustomer);
+            } else {
+                userCustomer = customerAlreadyExists;
+            }
         }
-        if(existingDirector == null) {
+        if(existingUserDirector == null) {
             userDirector.setHashid(hashidService.generateHashId());
             director.setUsername(userDirector.getHashid());
             userRepository.save(director);
             userDirector.setUser(director);
             bankerRepository.save(userDirector);
             count++;
+        } else {
+            Banker directorAlreadyExist = bankerRepository.findBankerByAccountNumber(existingUserDirector.getUsername());
+            if(directorAlreadyExist == null) {
+                userDirector.setHashid(hashidService.generateHashId());
+                userDirector.setUser(existingUserDirector);
+                bankerRepository.save(userDirector);
+            }
         }
         int finalCount = count;
 
