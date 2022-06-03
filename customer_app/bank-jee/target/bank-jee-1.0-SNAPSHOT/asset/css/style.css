@@ -1055,3 +1055,24 @@ nav ul li a {
 
 
 /* ------ SETTINGS ------ */
+/* ------ LOGIN ------ */
+
+
+.settings-container__forms-login {
+
+    display: grid;
+    grid-auto-columns: 1fr;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr 1fr;
+    gap: 0px 0px;
+    grid-template-areas:
+    "user user user user"
+    "password password password password"
+    "sign . . .";
+
+
+}
+.user { grid-area: user; }
+.password { grid-area: password; }
+.sign { grid-area: sign; }
+/* ------ LOGIN ------ */
