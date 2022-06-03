@@ -7,5 +7,7 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
+</main>
+    <script type="text/javascript" src="asset/js/main.js"></script>
     </body>
 </html>
