@@ -89,6 +89,11 @@ public class CustomerController {
         Customer customer = customerRepository.getOne(id);
         User userDetails = customerDetails.getUser();
 
+        if(!customerDetails.getDocument_type().isEmpty()) {
+            List<String> documents = customer.getDocument_type();
+            customerDetails.getDocument_type().forEach(doc -> documents.add(doc));
+        }
+
         User user = userService.updateUserDetails(userDetails, customer.getUser());
 
         if(userDetails.getPassword() != null) {
