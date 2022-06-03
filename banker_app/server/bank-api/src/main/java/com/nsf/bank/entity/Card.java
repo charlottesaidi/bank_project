@@ -6,7 +6,6 @@ import org.springframework.data.annotation.LastModifiedDate;
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import java.util.Date;
-import java.util.List;
 
 @Entity
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
@@ -26,7 +25,7 @@ public class Card {
 
     private Date validity_date;
 
-    private int cvc;
+    private String cvc;
 
     @CreatedDate
     private Date created_at;
@@ -36,7 +35,7 @@ public class Card {
 
     public Card() {}
 
-    public Card(int id, String number, Date validity_date, int cvc, Account account, Date created_at, Date updated_at) {
+    public Card(int id, String number, Date validity_date, String cvc, Account account, Date created_at, Date updated_at) {
         this.id = id;
         this.number = number;
         this.validity_date = validity_date;
@@ -74,11 +73,14 @@ public class Card {
         this.validity_date = validity_date;
     }
 
-    public int getCvc() {
+    public String getCvc() {
+        if(cvc.length() < 3) {
+            cvc = "0"+cvc;
+        }
         return cvc;
     }
 
-    public void setCvc(int cvc) {
+    public void setCvc(String cvc) {
         this.cvc = cvc;
     }
 

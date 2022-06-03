@@ -173,7 +173,7 @@ public class LoadDatabase {
         int count = 0;
 
         AccountType ccp = createAccountType("cpt_courant", 0);
-        AccountType ldd = createAccountType("livret_developpent_durable", (float) 0.6);
+        AccountType ldd = createAccountType("livret_developpement_durable", (float) 0.6);
         AccountType livret = createAccountType("livret_a", (float) 0.3);
 
         AccountType existingCcp = accountTypeRepository.findAccountTypeWithName(ccp.getName());
