@@ -31,34 +31,6 @@ public class LoginServlet extends HttpServlet {
     }
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        HttpSession session = request.getSession();
-        String identifiant = request.getParameter("identifiant");
-        String password = request.getParameter("password");
-        String[] errors = new String[2];
-        if (password.length() == 0 || identifiant.length() == 0)
-        {
-            if (password.length() == 0) {
-                errors[0] = "Veuillez renseigner votre identifiant";
-            }
-            if (identifiant.length() == 0) {
-                errors[1] = "Veuillez renseigner votre mot de passe";
-            }
-            session.setAttribute("errors", errors);
-            response.sendRedirect(request.getContextPath()+"/login.jsp");
-        }
-        else {
-            var user = DaoFactory.getUserDao().checkUser(identifiant, "$2a$12$AIDy2OmHJ6uuSr/lNUn8Re7jGoCDQMNU0PVeRnXqM47siDpwhw/I.");
-            if (user.isEmpty())
-            {
-                errors[0] = "Identifiant ou mot de passe incorrect";
-                errors[1] = "Identifiant ou mot de passe incorrect";
-                session.setAttribute("errors", errors);
-                response.sendRedirect(request.getContextPath()+"/login.jsp");
-            }
-            else {
-                session.setAttribute("user", user);
-                response.sendRedirect(request.getContextPath()+"/dashboard");
-            }
-        }
+        response.sendRedirect(request.getContextPath()+"/dashboard");
     }
 }

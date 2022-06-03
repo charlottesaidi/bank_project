@@ -13,6 +13,7 @@
     <link rel="stylesheet" href="asset/css/reset.css">
 <%--    style css--%>
     <link rel="stylesheet" href="asset/css/style.css">
+    <script src="asset/js/main.js"></script>
 </head>
 <body>
     <%--navigation--%>

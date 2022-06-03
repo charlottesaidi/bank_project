@@ -32,4 +32,8 @@ public class CustomerDao {
         Query query = em.createQuery("SELECT c FROM Customer AS c");// le nom de la classe
         return query.getResultList();
     }
+    public List<Customer> findById(Integer id) {
+        Query query = em.createQuery("SELECT c FROM Customer AS c WHERE c.user = "+id);// le nom de la classe
+        return query.getResultList();
+    }
 }

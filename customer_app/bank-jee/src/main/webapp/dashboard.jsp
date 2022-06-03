@@ -18,15 +18,19 @@
 <%--        </tr>--%>
 <%--    </c:forEach>--%>
 <%--    <p>${user.hashid}</p>--%>
-    <c:if test="${ !empty user[0].username }">
-        <p>Vous êtes ${ user[0].username } !</p>
+    <c:if test="${ !empty user.username }">
+        <p>Vous êtes ${ user.username } !</p>
     </c:if>
 
     <c:if test="${ !empty accounts[0] }">
         <p>Vous êtes ${ accounts[0].balance } !</p>
     </c:if>
-    <c:if test="${ !empty transactions[0] }">
-        <p>Transaction : ${ transactions[0].amount } euros !</p>
+    <c:if test="${ !empty transactions }">
+        <c:forEach items="${transactions}" var="t">
+        <tr>
+            <td>Vous avez ${t.amount} euros !</td>
+        </tr>
+        </c:forEach>
     </c:if>
 </head>
 <body>

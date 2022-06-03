@@ -14,7 +14,7 @@ public class AccountDao {
     }
 
     public List<Account> getAll(Integer userid){
-        Query query = em.createQuery("SELECT a FROM Account AS a");
+        Query query = em.createQuery("SELECT a FROM Account AS a WHERE a.customer.id = "+userid);
         return query.getResultList();
     }
 }

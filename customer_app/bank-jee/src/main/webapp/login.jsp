@@ -12,19 +12,16 @@
     <h1>Connexion</h1>
 
     <%--Formulaire--%>
-    <form method="post" action="login">
+    <form class="customer-login-form" method="post" action="login">
         <%--Identifiant--%>
         <div>
-            <input type="text" name="identifiant" placeholder="Identifiant">
-            <c:if test="${ !empty errors[0] }">
-                <p>${ errors[0] }</p>
-            </c:if>
+            <input class="customer-login-identifiant" type="text" name="identifiant" placeholder="Identifiant">
+            <span class="error customer-login-identifiant-error"></span>
+
         <%--Mot de passe--%>
         <div>
-            <input type="password" name="password" placeholder="Votre Mot de passe">
-            <c:if test="${ !empty errors[1] }">
-                <p>${ errors[1] }</p>
-            </c:if>
+            <input class="customer-login-password" type="password" name="password" placeholder="Votre Mot de passe">
+            <span class="error customer-login-password-error"></span>
         </div>
         <%--Boutton envoyer--%>
         <div>
