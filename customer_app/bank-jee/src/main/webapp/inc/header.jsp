@@ -8,26 +8,41 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>BankMe</title>
-<%--    reset css--%>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="asset/css/reset.css">
-<%--    style css--%>
+    <link rel="stylesheet" href="https://unpkg.com/swiper@8/swiper-bundle.min.css"/>
     <link rel="stylesheet" href="asset/css/style.css">
 </head>
 <body>
-    <%--navigation--%>
-    <header>
-        <a href="index.jsp" class="logo"></a>
-        <div class="navigation">
-            <nav>
-                <ul>
-                    <li><a href="dashboard.jsp">Accueil</a></li>
-                    <li><a href="login.jsp">Connexion</a></li>
-                </ul>
+<%--navigation--%>
+<header>
+    <div class="wrap">
+        <div class="header-container">
+            <a href="index.jsp" class="logo"></a>
+            <nav class="navigation">
+                <div class="nav">
+                    <div>
+                        <ul>
+                            <li><a href="dashboard.jsp">Accueil</a></li>
+                            <li><a href="login.jsp">Connexion</a></li>
+                        </ul>
+                    </div>
+                    <div class="circlelogos">
+                        <a href="transfert.jsp" class="transfert"></a>
+                        <a href="settings.jsp" class="settings"></a>
+                    </div>
+                </div>
+                <div class="burger">
+                    <span></span>
+                </div>
             </nav>
-            <div class="circlelogos">
-                <a href="transfert.jsp" class="transfert"></a>
-                <a href="settings.jsp" class="settings"></a>
-            </div>
         </div>
-    </header>
+    </div>
+</header>
+<main>
+    <div class="circle"></div>
+    <div class="circle two"></div>
+    <div class="circle three"></div>
+    <div class="circle four"></div>

@@ -12,6 +12,11 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+
+import java.util.Arrays;
 
 @Configuration
 @EnableWebSecurity
@@ -25,7 +30,7 @@ public class SecurityConfigJWT extends WebSecurityConfigurerAdapter {
 	protected void configure(HttpSecurity http) throws Exception{
 		http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 
-		http.csrf()
+		http.cors().and().csrf()
 		.disable()
 		.authorizeRequests()
 		.antMatchers("/users/signin").permitAll()	// public, obligatoire à définir en premier
@@ -35,6 +40,21 @@ public class SecurityConfigJWT extends WebSecurityConfigurerAdapter {
 		.anyRequest().permitAll();	// si dans l'url je n'ai pas api, c'est public
 		
 		http.apply(new JXTTokenFilterConfiguration(jwtTokenProvider));
+	}
+
+	@Bean
+	public CorsConfigurationSource corsConfigurationSource() {
+		final CorsConfiguration config = new CorsConfiguration();
+
+		config.setAllowedOrigins(Arrays.asList("http://localhost:3000"));
+		config.setAllowedMethods(Arrays.asList("GET", "POST", "OPTIONS", "DELETE", "PUT", "PATCH"));
+		config.setAllowCredentials(true);
+		config.setAllowedHeaders(Arrays.asList("Authorization", "Cache-Control", "Content-Type"));
+
+		final UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+		source.registerCorsConfiguration("/**", config);
+
+		return source;
 	}
 
   	@Bean

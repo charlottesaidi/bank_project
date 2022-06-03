@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.HttpClientErrorException;
 
 import java.util.List;
+import java.util.Locale;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -61,7 +62,7 @@ public class AccountController {
     public ResponseEntity create(@PathVariable(value="customerId") int customerId, @RequestBody Account account) {
         Customer customer = customerRepository.getOne(customerId);
 
-        account.setHashid(hashidService.generateHashId());
+        account.setHashid(hashidService.generateAccountHashid(account.getAccount_type().getName()));
         account.setCustomer(customer);
 
         Card card = account.getCard();
@@ -76,6 +77,8 @@ public class AccountController {
 
         if (existingAccountType != null) {
             account.setAccount_type(existingAccountType);
+        } else {
+            throw HttpClientErrorException.create(HttpStatus.NOT_FOUND, "Ce type de compte n'existe pas", null, null, null);
         }
 
         card.setAccount(account);
@@ -114,7 +117,13 @@ public class AccountController {
         }
 
         account.setOverdraft(accountDetails.getOverdraft());
-        account.getAccount_type().setRate(accountDetails.getAccount_type().getRate());
+
+        String name = account.getAccount_type().getName().toLowerCase(Locale.ROOT);
+        if(name != null && name.contains("courant")) {
+            return ResponseEntity.badRequest().body("Les comptes courants doivent avoir un taux à 0");
+        } else {
+            account.getAccount_type().setRate(accountDetails.getAccount_type().getRate());
+        }
 
         accountRepository.save(account);
         return ResponseEntity.ok().body(account);

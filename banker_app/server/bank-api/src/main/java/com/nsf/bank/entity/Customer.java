@@ -1,11 +1,9 @@
 package com.nsf.bank.entity;
 
-import org.hibernate.annotations.CreationTimestamp;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
 import java.util.Date;
 import java.util.List;
 
@@ -31,8 +29,8 @@ public class Customer {
 
     private String hashid;
 
-    @NotBlank(message="Ce champ est obligatoire")
-    private String document_type;
+    @ElementCollection
+    private List<String> document_type;
 
     private Date document_date;
 
@@ -44,7 +42,7 @@ public class Customer {
 
     public Customer() {}
 
-    public Customer(int id, User user, Banker banker, String hashid, String document_type, Date document_date, Date created_at, Date updated_at) {
+    public Customer(int id, User user, Banker banker, String hashid, List<String> document_type, Date document_date, Date created_at, Date updated_at) {
         super();
         this.id = id;
         this.user = user;
@@ -88,11 +86,11 @@ public class Customer {
         this.hashid = hashid;
     }
 
-    public String getDocument_type() {
+    public List<String> getDocument_type() {
         return document_type;
     }
 
-    public void setDocument_type(String document_type) {
+    public void setDocument_type(List<String> document_type) {
         this.document_type = document_type;
     }
 
