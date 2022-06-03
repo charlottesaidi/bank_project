@@ -58,7 +58,7 @@ const swiperThird = new Swiper(".swiper-third", {
             spaceBetween: 60,
         },
         1200: {
-            slidesPerView: 5,
+            slidesPerView: 4,
             spaceBetween: 60,
         },
     },

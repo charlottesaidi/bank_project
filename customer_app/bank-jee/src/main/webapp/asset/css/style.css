@@ -483,6 +483,10 @@ nav ul li a {
     color: var(--orange);
 }
 
+.swiper-first, .swiper-second {
+    padding: 0 2px !important;
+}
+
 .swiper-pagination {
     position: inherit;
     margin-top: 20px;
@@ -635,7 +639,11 @@ nav ul li a {
 
 @media screen and (min-width: 1200px) {
     .swiper-third {
-        height: 70px;
+        height: 90px;
+    }
+    .swiper-pagination-third {
+        position: absolute;
+        bottom: 0 !important;
     }
 }
 
@@ -671,6 +679,9 @@ nav ul li a {
 @media screen and (min-width: 1200px) {
     .card-container__wrap {
         height: max(120px, 120px + 5vw);
+    }
+    .card-container__wrap.dashboard {
+        height: 140px;
     }
 }
 
