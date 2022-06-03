@@ -118,14 +118,7 @@ public class AccountController {
             }
         }
 
-        account.setOverdraft(accountDetails.getOverdraft());
-
-        String name = account.getAccount_type().getName().toLowerCase(Locale.ROOT);
-        if(name != null && name.contains("courant")) {
-            return ResponseEntity.badRequest().body("Les comptes courants doivent avoir un taux à 0");
-        } else {
-            account.getAccount_type().setRate(accountDetails.getAccount_type().getRate());
-        }
+        account.setOverdraft(-accountDetails.getOverdraft());
 
         accountRepository.save(account);
         return ResponseEntity.ok().body(account);
