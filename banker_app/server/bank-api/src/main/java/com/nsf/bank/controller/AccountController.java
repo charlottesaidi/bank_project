@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.HttpClientErrorException;
 
+import javax.validation.ConstraintViolationException;
 import java.util.List;
 import java.util.Locale;
 import java.util.stream.Collectors;
@@ -60,7 +61,8 @@ public class AccountController {
 
     @PostMapping("/create/{customerId}")
     public ResponseEntity create(@PathVariable(value="customerId") int customerId, @RequestBody Account account) {
-        Customer customer = customerRepository.getOne(customerId);
+        Customer customer = customerRepository.findById(customerId)
+                .orElseThrow(() -> new HttpClientErrorException(HttpStatus.NOT_FOUND, "Le client n'existe pas"));
 
         account.setHashid(hashidService.generateAccountHashid(account.getAccount_type().getName()));
         account.setCustomer(customer);
@@ -69,7 +71,7 @@ public class AccountController {
         Card existingCard = cardRepository.findBy(card.getNumber());
 
         if(null != existingCard) {
-            return ResponseEntity.internalServerError().body("Une carte bancaire est déjà enregistrée avec ce numéro");
+            return ResponseEntity.badRequest().body("Une carte bancaire est déjà enregistrée avec ce numéro");
         }
         account.getCard().setNumber(card.getNumber());
 
