@@ -111,8 +111,13 @@ public class AccountController {
             account.setOverdraft(-accountDetails.getOverdraft());
         }
         if(accountDetails.getBalance() != 0) {
-            account.setBalance(accountDetails.getBalance());
-            account.getAccount_balance().setBalance(account.getBalance());
+            List<Transaction> accountTransactions = transactionRepository.findAllByIdDebitAndIdCredit(account.getId());
+            if(accountTransactions.isEmpty()) {
+                account.setBalance(accountDetails.getBalance());
+                account.getAccount_balance().setBalance(account.getBalance());
+            } else {
+                return ResponseEntity.badRequest().body("Le solde de ce compte n'est plus modifiable. Des transactions ont déjà été affectuées.");
+            }
         }
         if(accountDetails.getAccount_type() != null) {
             AccountType existingAccountType = accountTypeRepository.findAccountTypeWithName(accountDetails.getAccount_type().getName());
@@ -135,12 +140,7 @@ public class AccountController {
 
     @GetMapping("/{id}/transactions")
     public ResponseEntity getTransactions(@PathVariable(value = "id") Integer id) {
-        // Récupérer toutes les transactions liées à ce compte (débits ET crédits de compte)
-        List<Transaction> debits = transactionRepository.findAllByIdDebit(id);
-        List<Transaction> credits = transactionRepository.findAllByIdCredit(id);
-        // Merge les deux listes de transactions en une seule
-        List<Transaction> transactions = Stream.concat(debits.stream(), credits.stream())
-                .collect(Collectors.toList());
+        List<Transaction> transactions = transactionRepository.findAllByIdDebitAndIdCredit(id);
 
         return ResponseEntity.ok().body(transactions);
     }
