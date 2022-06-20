@@ -67,7 +67,7 @@ export default function Login() {
                       }`}
                       placeholder="Identifiant"
                     />
-                    <span className="invalid-feedback">
+                    <span className="invalid-feedback text-red-600 text-xs">
                       {errors.username?.message}
                     </span>
                   </div>
@@ -88,7 +88,7 @@ export default function Login() {
                       }`}
                       placeholder="Mot de passe"
                     />
-                    <span className="invalid-feedback">
+                    <span className="invalid-feedback text-red-600 text-xs">
                       {errors.password?.message}
                     </span>
                   </div>
