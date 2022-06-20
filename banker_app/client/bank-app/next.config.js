@@ -22,7 +22,7 @@ module.exports = {
     return [
       {
         source: '/',
-        destination: '/admin/dashboard',
+        destination: '/auth/login',
         permanent: true,
       },
     ]
