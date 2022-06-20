@@ -1,10 +1,42 @@
-import React from "react";
-import Link from "next/link";
+// import React from "react";
 
-// layout for page
+// // layout for page
+
+import { useRouter } from "next/router";
+import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import * as Yup from "yup";
+
+import Link from "next/link";
 import Auth from "@layouts/Auth.js";
+import { userService, alertService } from "@services/index";
 
 export default function Login() {
+  const router = useRouter();
+
+  // form validation rules
+  const validationSchema = Yup.object().shape({
+    username: Yup.string().required("Username is required"),
+    password: Yup.string().required("Password is required"),
+  });
+  const formOptions = { resolver: yupResolver(validationSchema) };
+
+  // get functions to build form with useForm() hook
+  const { register, handleSubmit, formState } = useForm(formOptions);
+  const { errors } = formState;
+
+  function onSubmit({ username, password }) {
+    return userService
+      .login(username, password)
+      .then(() => {
+        // get return url from query parameters or default to '/'
+        const returnUrl = router.query.returnUrl || "/admin/dashboard";
+        router.push(returnUrl);
+      })
+      .catch(alertService.error);
+  }
+
+  console.log(errors);
   return (
     <>
       <div className="container mx-auto px-4 h-full">
@@ -20,7 +52,7 @@ export default function Login() {
                 <hr className="mt-6 border-b-1 border-blueGray-300" />
               </div>
               <div className="w-full flex-auto px-4 lg:px-10 py-10 pt-0">
-                <form>
+                <form onSubmit={handleSubmit(onSubmit)}>
                   <div className="relative w-full mb-3">
                     <label
                       className="block uppercase text-blueGray-600 text-xs font-bold mb-2"
@@ -29,10 +61,17 @@ export default function Login() {
                       Identifiant
                     </label>
                     <input
+                      name="username"
                       type="text"
-                      className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+                      {...register("username")}
+                      className={`border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150 ${
+                        errors.username ? "is-invalid" : ""
+                      }`}
                       placeholder="Identifiant"
                     />
+                    <span className="invalid-feedback">
+                      {errors.username?.message}
+                    </span>
                   </div>
 
                   <div className="relative w-full mb-3">
@@ -43,10 +82,17 @@ export default function Login() {
                       Mot de passe
                     </label>
                     <input
+                      name="password"
                       type="password"
-                      className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+                      {...register("password")}
+                      className={`border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150 ${
+                        errors.password ? "is-invalid" : ""
+                      }`}
                       placeholder="Mot de passe"
                     />
+                    <span className="invalid-feedback">
+                      {errors.password?.message}
+                    </span>
                   </div>
                   <div>
                     <label className="inline-flex items-center cursor-pointer">
@@ -63,9 +109,13 @@ export default function Login() {
 
                   <div className="text-center mt-6">
                     <button
+                      disabled={formState.isSubmitting}
                       className="bg-blueGray-800 text-white active:bg-blueGray-600 text-sm font-bold uppercase px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 w-full ease-linear transition-all duration-150"
-                      type="button"
+                      type="submit"
                     >
+                      {formState.isSubmitting && (
+                        <span className="spinner-border spinner-border-sm mr-1"></span>
+                      )}
                       Connexion
                     </button>
                   </div>
