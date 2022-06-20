@@ -15,8 +15,8 @@ export default function Login() {
 
   // form validation rules
   const validationSchema = Yup.object().shape({
-    username: Yup.string().required("Username is required"),
-    password: Yup.string().required("Password is required"),
+    username: Yup.string().required("Identifiant requis"),
+    password: Yup.string().required("Mot de passe requis"),
   });
   const formOptions = { resolver: yupResolver(validationSchema) };
 
@@ -118,17 +118,6 @@ export default function Login() {
                     </button>
                   </div>
                 </form>
-              </div>
-            </div>
-            <div className="flex flex-wrap mt-6 relative">
-              <div className="w-1/2">
-                <a
-                  href="#pablo"
-                  onClick={(e) => e.preventDefault()}
-                  className="text-blueGray-200"
-                >
-                  <small>Mot de passe oublié ?</small>
-                </a>
               </div>
             </div>
           </div>

@@ -9,12 +9,12 @@ import CardProfile from "@components/Cards/CardProfile.js";
 
 import Admin from "@layouts/Admin.js";
 
-export default function Settings() {
+export default function Settings({data}) {
   return (
     <>
       <div className="flex flex-wrap">
         <div className="w-full lg:w-8/12 px-4">
-          <CardSettings />
+          <CardSettings user={data} />
         </div>
         <div className="w-full lg:w-4/12 px-4">
           <CardProfile />
@@ -25,3 +25,18 @@ export default function Settings() {
 }
 
 Settings.layout = Admin;
+
+export async function getStaticProps() {
+  const res = await fetch(
+    `http://localhost:8080/users/1`
+  );
+  const data = await res.json();
+  
+  return {
+    props: {
+      data,
+    },
+    revalidate: 60,
+  };
+  
+}
