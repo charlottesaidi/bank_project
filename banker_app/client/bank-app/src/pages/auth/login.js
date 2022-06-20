@@ -35,7 +35,6 @@ export default function Login() {
       .catch(alertService.error);
   }
 
-  console.log(errors);
   return (
     <>
       <div className="container mx-auto px-4 h-full">
