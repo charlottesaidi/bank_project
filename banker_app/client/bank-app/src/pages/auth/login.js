@@ -7,7 +7,6 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as Yup from "yup";
 
-import Link from "next/link";
 import Auth from "@layouts/Auth.js";
 import { userService, alertService } from "@services/index";
 
