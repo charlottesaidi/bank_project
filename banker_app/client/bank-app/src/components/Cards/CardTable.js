@@ -6,6 +6,26 @@ import PropTypes from "prop-types";
 import TableDropdown from "@components/Dropdowns/TableDropdown.js";
 
 export default function CardTable({ color }) {
+  // const [user, setUser] = useState(userService.user);
+  // useEffect(() => {
+    // let user = JSON.parse(localStorage.getItem("user"));
+    //   const token = user.token;
+    //   const bankerId = user.user.id;
+    //   const api = `http://localhost:8080/users/${bankerId}`;
+  //   let user = JSON.parse(localStorage.getItem("user"));
+  //   const token = user.token;
+  //   const bankerId = user.user.id;
+  //   const api = `http://localhost:8080/users/${bankerId}`;
+  //   axios
+  //     .get(api, { headers: { Authorization: `Bearer ${token}` } })
+  //     .then((res) => {
+  //       console.log(res.data);
+  //       setUser(res.data);
+  //     })
+  //     .catch((err) => {
+  //       console.log(err);
+  //     });
+  // }, []);
   return (
     <>
       <div

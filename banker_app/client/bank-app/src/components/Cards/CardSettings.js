@@ -1,9 +1,31 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+
+import axios from "axios";
 
 // components
 
-export default function CardSettings({ user }) {
-  console.log(user);
+import { userService } from "@services/index";
+// components
+
+export default function CardSettings() {
+  const [user, setUser] = useState(userService.user);
+
+  useEffect(() => {
+    let user = JSON.parse(localStorage.getItem("user"));
+    const token = user.token;
+    const bankerId = user.user.id;
+    const api = `http://localhost:8080/users/${bankerId}`;
+    axios
+      .get(api, { headers: { Authorization: `Bearer ${token}` } })
+      .then((res) => {
+        console.log(res.data);
+        setUser(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
+
   return (
     <>
       <div className="relative flex flex-col min-w-0 break-words w-full mb-6 shadow-lg rounded-lg bg-blueGray-100 border-0">
