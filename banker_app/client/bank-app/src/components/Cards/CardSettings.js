@@ -5,7 +5,6 @@ import axios from "axios";
 // components
 
 import { userService } from "@services/index";
-// components
 
 export default function CardSettings() {
   const [user, setUser] = useState(userService.user);
