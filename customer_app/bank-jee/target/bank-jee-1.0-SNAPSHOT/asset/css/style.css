@@ -766,16 +766,6 @@ nav ul li a {
 .card-container__wrap__bottom__content p {
     opacity: 0.4;
 }
-<<<<<<< HEAD
-/* ------ CARD ------ */
-
-/* ---- DASHBOARD --- */
-.connection {
-    font-family: Poppins;
-
-}
-=======
-
 /* ------ CARD ------ */
 
 /* ------ SETTINGS ------ */
@@ -1085,4 +1075,3 @@ nav ul li a {
 .password { grid-area: password; }
 .sign { grid-area: sign; }
 /* ------ LOGIN ------ */
->>>>>>> 82194cd163ba0919d4e6e47ed84649f8be85f48d
