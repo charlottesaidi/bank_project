@@ -21,7 +21,7 @@ public class Account {
     @JoinColumn(name = "id_customer")
     private Customer customer;
 
-    @ManyToOne(cascade = CascadeType.PERSIST)
+    @ManyToOne
     @JoinColumn(name = "id_account_type")
     private AccountType account_type;
 
