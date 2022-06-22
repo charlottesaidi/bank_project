@@ -15,38 +15,37 @@ import Admin from "@layouts/Admin.js";
 
 export default function Settings() {
   const [user, setUser] = useState(userService.user);
-
   const [customer, setCustomer] = useState(userService.user);
+  // const [account, setAccount] = useState(userService.user);
 
   useEffect(() => {
     let user = JSON.parse(localStorage.getItem("user"));
     const token = user.token;
     const bankerId = user.user.id;
-    const api = `http://localhost:8080/users/${bankerId}`;
+    const bankerUsername = user.user.username;
+    const api = `http://localhost:8080/`;
     axios
-      .get(api, { headers: { Authorization: `Bearer ${token}` } })
+      .get(api + `users/${bankerId}`, {
+        headers: { Authorization: `Bearer ${token}` },
+      })
       .then((res) => {
-        // console.log(res.data);
         setUser(res.data);
       })
       .catch((err) => {
         console.log(err);
       });
 
-    let customer = JSON.parse(localStorage.getItem("user"));
-    const access = customer.token;
-    const customerId = customer.user.username;
-
-    const url = `http://localhost:8080/api/bankers/${customerId}/customers`;
     axios
-      .get(url, { headers: { Authorization: `Bearer ${access}` } })
+      .get(api + `api/bankers/${bankerUsername}/customers`, {
+        headers: { Authorization: `Bearer ${token}` },
+      })
       .then((res) => {
-        // console.log(res.data);
         setCustomer(res.data);
       })
       .catch((err) => {
         console.log(err);
       });
+
   }, []);
 
   return (
