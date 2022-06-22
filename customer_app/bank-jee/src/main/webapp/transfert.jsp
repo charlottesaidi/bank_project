@@ -7,6 +7,7 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ include file="inc/header.jsp" %>
+
 <section id="transfer">
     <div class="wrap">
         <div class="transfer-container">
@@ -49,4 +50,8 @@
         </div>
     </div>
 </section>
+
+
+<script src="https://unpkg.com/swiper@8/swiper-bundle.min.js" defer></script>
+<script src="asset/js/dashboard.js" type="text/javascript" defer></script>
 <%@ include file="inc/footer.jsp" %>

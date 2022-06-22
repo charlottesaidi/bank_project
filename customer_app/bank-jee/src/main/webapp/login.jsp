@@ -14,6 +14,7 @@
         <div class="settings-container">
             <div class="settings-container__content">
                 <h1 class="settings-container__content-title">Connexion</h1>
+<%--                TODO: Dégager le Lorem Ipsum--%>
                 <p class="settings-container__content-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
                     do eiusmod tempor incididunt ut labore et dolore magna aliqua. Urna id volutpat lacus laoreet.</p>
             </div>
@@ -32,5 +33,5 @@
             </div>
         </div>
     </div>
-</section
+</section>
 <%@ include file="inc/footer.jsp" %>
