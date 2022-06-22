@@ -786,7 +786,6 @@ nav ul li a {
 .card-container__wrap__bottom__content p {
     opacity: 0.4;
 }
-
 /* ------ CARD ------ */
 
 /* ------ SETTINGS ------ */
@@ -1267,3 +1266,9 @@ nav ul li a {
 }
 
 /* ------ TRANSFER ------ */
+
+.user { grid-area: user; }
+.password { grid-area: password; }
+.sign { grid-area: sign; }
+/* ------ LOGIN ------ */
+
