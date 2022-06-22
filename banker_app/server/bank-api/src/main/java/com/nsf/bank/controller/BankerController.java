@@ -1,6 +1,7 @@
 package com.nsf.bank.controller;
 
 import com.nsf.bank.entity.*;
+import com.nsf.bank.repository.AccountRepository;
 import com.nsf.bank.repository.CustomerRepository;
 import com.nsf.bank.repository.UserRepository;
 import com.nsf.bank.repository.BankerRepository;
@@ -30,6 +31,9 @@ public class BankerController {
 
     @Autowired
     private CustomerRepository customerRepository;
+
+    @Autowired
+    private AccountRepository accountRepository;
 
     @Autowired
     private PasswordEncoder passwordEncoder;
@@ -114,4 +118,19 @@ public class BankerController {
             return ResponseEntity.ok().body(bankerCustomers);
         }
     }
+
+    @GetMapping("/{hashid}/customers/accounts")
+    public ResponseEntity getAllAccounts(@PathVariable(value="hashid") String hashid) {
+        Banker banker = bankerRepository.findBankerByAccountNumber(hashid);
+        if(banker == null) {
+            throw HttpClientErrorException.create(HttpStatus.NOT_FOUND, "Aucun banquier n'existe avec ce numéro", null, null, null);
+        }
+        List<Account> accounts = accountRepository.findAllAccountsByBankerClients(hashid);
+        if(accounts.isEmpty()) {
+            return ResponseEntity.ok().body("Aucun compte bancaire n'a été trouvé");
+        } else {
+            return ResponseEntity.ok().body(accounts);
+        }
+    }
+
 }
