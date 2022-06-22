@@ -66,7 +66,9 @@ public class CustomerController {
     @PostMapping("/create/{bankerId}")
     public ResponseEntity create(@PathVariable(value="bankerId") Integer bankerId, @RequestBody Customer customer) throws MySQLIntegrityConstraintViolationException {
         customer.setHashid(hashidService.generateHashId());
-        customer.setBanker(bankerRepository.getOne(bankerId));
+        Banker banker = bankerRepository.findById(bankerId)
+                .orElseThrow(() -> new HttpClientErrorException(HttpStatus.NOT_FOUND, "Le banquier n'existe pas"));
+        customer.setBanker(banker);
 
         User user = customer.getUser();
         user.setUsername(customer.getHashid());
@@ -92,6 +94,7 @@ public class CustomerController {
         if(!customerDetails.getDocument_type().isEmpty()) {
             List<String> documents = customer.getDocument_type();
             customerDetails.getDocument_type().forEach(doc -> documents.add(doc));
+            customer.setDocument_type(documents);
         }
 
         User user = userService.updateUserDetails(userDetails, customer.getUser());

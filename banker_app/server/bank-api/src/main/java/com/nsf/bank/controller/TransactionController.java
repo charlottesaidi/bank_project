@@ -78,14 +78,14 @@ public class TransactionController {
                     // on met à jour le solde du compte débiteur
                     debitAccount.setBalance(debitAccount.getBalance() - transaction.getAmount());
                     AccountBalance debitBalance = debitAccount.getAccount_balance();
-                    debitBalance.setBalance(debitAccount.getBalance() - transaction.getAmount());
+                    debitBalance.setBalance(debitAccount.getBalance());
                     debitBalance.setAccount(debitAccount);
                     accountBalanceRepository.save(debitBalance);
 
                     // mise à jour du solde du compte crédité
                     creditAccount.setBalance(creditAccount.getBalance() + transaction.getAmount());
                     AccountBalance creditBalance = creditAccount.getAccount_balance();
-                    creditBalance.setBalance(creditAccount.getBalance() + transaction.getAmount());
+                    creditBalance.setBalance(creditAccount.getBalance());
                     creditBalance.setAccount(creditAccount);
                     accountBalanceRepository.save(creditBalance);
 
@@ -102,7 +102,7 @@ public class TransactionController {
                     // on met à jour le solde du compte
                     debitAccount.setBalance(debitAccount.getBalance() - transaction.getAmount());
                     AccountBalance debitBalance = debitAccount.getAccount_balance();
-                    debitBalance.setBalance(debitAccount.getBalance() - transaction.getAmount());
+                    debitBalance.setBalance(debitAccount.getBalance());
                     debitBalance.setAccount(debitAccount);
                     accountBalanceRepository.save(debitBalance);
 
@@ -117,7 +117,7 @@ public class TransactionController {
                 // mise à jour du solde du compte crédité
                 creditAccount.setBalance(creditAccount.getBalance() + transaction.getAmount());
                 AccountBalance creditBalance = creditAccount.getAccount_balance();
-                creditBalance.setBalance(creditAccount.getBalance() + transaction.getAmount());
+                creditBalance.setBalance(creditAccount.getBalance());
                 creditBalance.setAccount(creditAccount);
                 accountBalanceRepository.save(creditBalance);
 
@@ -147,14 +147,14 @@ public class TransactionController {
             // on recrédite le compte débiteur
             debitAccount.setBalance(debitAccount.getBalance() + transaction.getAmount());
             AccountBalance debitBalance = debitAccount.getAccount_balance();
-            debitBalance.setBalance(debitAccount.getBalance() + transaction.getAmount());
+            debitBalance.setBalance(debitAccount.getBalance());
             debitBalance.setAccount(debitAccount);
             accountBalanceRepository.save(debitBalance);
 
             // on annule le crédit de l'autre compte et reset le solde
             creditAccount.setBalance(creditAccount.getBalance() - transaction.getAmount());
             AccountBalance creditBalance = creditAccount.getAccount_balance();
-            creditBalance.setBalance(creditAccount.getBalance() - transaction.getAmount());
+            creditBalance.setBalance(creditAccount.getBalance());
             creditBalance.setAccount(creditAccount);
             accountBalanceRepository.save(creditBalance);
         }
@@ -163,7 +163,7 @@ public class TransactionController {
             // on recrédite le compte
             debitAccount.setBalance(debitAccount.getBalance() + transaction.getAmount());
             AccountBalance debitBalance = debitAccount.getAccount_balance();
-            debitBalance.setBalance(debitAccount.getBalance() + transaction.getAmount());
+            debitBalance.setBalance(debitAccount.getBalance());
             debitBalance.setAccount(debitAccount);
             accountBalanceRepository.save(debitBalance);
         }
@@ -172,7 +172,7 @@ public class TransactionController {
             // on annule le crédit de compte et reset le solde
             creditAccount.setBalance(creditAccount.getBalance() - transaction.getAmount());
             AccountBalance creditBalance = creditAccount.getAccount_balance();
-            creditBalance.setBalance(creditAccount.getBalance() - transaction.getAmount());
+            creditBalance.setBalance(creditAccount.getBalance());
             creditBalance.setAccount(creditAccount);
             accountBalanceRepository.save(creditBalance);
         }

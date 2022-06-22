@@ -15,4 +15,7 @@ public interface TransactionRepository extends JpaRepository<Transaction, Intege
 
     @Query("select t from Transaction t where t.debit.id = ?1")
     List<Transaction> findAllByIdDebit(int idDebit);
+
+    @Query("select t from Transaction t where t.debit.id = ?1 or t.credit.id = ?1")
+    List<Transaction> findAllByIdDebitAndIdCredit(int id);
 }

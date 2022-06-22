@@ -18,6 +18,9 @@ public interface CustomerRepository extends JpaRepository<Customer, Integer> {
     @Query("select c from Customer c where c.banker.id = ?1")
     List<Customer> findAllByIdBanker(int id);
 
+    @Query("select c from Customer c where c.banker.hashid = ?1")
+    List<Customer> findAllByHashIdBanker(String hashid);
+
     @Query("select c from Customer c where c.hashid = ?1")
     Customer findCustomerByAccountNumber(String hashid);
 }

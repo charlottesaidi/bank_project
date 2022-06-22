@@ -1,10 +1,9 @@
 package com.nsf.bank.payroll;
 
+import com.github.javafaker.Faker;
 import com.nsf.bank.entity.*;
-import com.nsf.bank.repository.AccountTypeRepository;
-import com.nsf.bank.repository.CustomerRepository;
-import com.nsf.bank.repository.BankerRepository;
-import com.nsf.bank.repository.UserRepository;
+import com.nsf.bank.repository.*;
+import com.nsf.bank.service.CardService;
 import com.nsf.bank.service.HashidService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.slf4j.Logger;
@@ -37,7 +36,19 @@ public class LoadDatabase {
     private BankerRepository bankerRepository;
 
     @Autowired
+    private CardRepository cardRepository;
+
+    @Autowired
+    private AccountRepository accountRepository;
+
+    @Autowired
+    private AccountBalanceRepository accountBalanceRepository;
+
+    @Autowired
     private HashidService hashidService;
+
+    @Autowired
+    private CardService cardService;
 
     @Autowired
     private PasswordEncoder passwordEncoder;
@@ -54,6 +65,7 @@ public class LoadDatabase {
     }
 
     public User createUser(String email, String password, String firstName, String lastName) throws ParseException {
+        Faker faker = new Faker(new Locale("fr-FR"));
         User user = new User();
         user.setPassword(passwordEncoder.encode(password));
         user.setEmail(email);
@@ -61,9 +73,9 @@ public class LoadDatabase {
         user.setLast_name(lastName);
         user.setBirthdate(new SimpleDateFormat("yyyy-MM-dd").parse("1990-01-01"));
         user.setPhone("0600000000");
-        user.setAddress_street("rue test");
-        user.setAddress_zipcode("76000");
-        user.setAddress_city("Rouen");
+        user.setAddress_street(faker.address().buildingNumber() + " " + faker.address().streetName());
+        user.setAddress_zipcode(faker.address().zipCode());
+        user.setAddress_city(faker.address().city());
         user.setAddress_country("France");
 
         return user;
@@ -113,6 +125,7 @@ public class LoadDatabase {
                 userBanker = bankerAlreadyExist;
             }
         }
+
         if(existingUserCustomer == null) {
             userCustomer.setBanker(userBanker);
             userCustomer.setHashid(hashidService.generateHashId());
@@ -142,6 +155,7 @@ public class LoadDatabase {
                 userCustomer = customerAlreadyExists;
             }
         }
+
         if(existingUserDirector == null) {
             userDirector.setHashid(hashidService.generateHashId());
             director.setUsername(userDirector.getHashid());
@@ -157,9 +171,60 @@ public class LoadDatabase {
                 bankerRepository.save(userDirector);
             }
         }
+
+        createFakeCustomers(userBanker, count);
+
         int finalCount = count;
 
         return finalCount;
+    }
+
+    public void createFakeCustomers(Banker userBanker, int count) throws ParseException {
+        Faker faker = new Faker(new Locale("fr-FR"));
+
+        AccountType accountType = accountTypeRepository.findAccountTypeWithName("CPT_COURANT");
+
+        for (int i = 0; i < 30; i++) {
+            User newUser = createUser(faker.name().username()+"@examplemail.fr", "customerpass", faker.name().firstName(), faker.name().lastName());
+            Customer newUserCustomer = new Customer();
+
+            List<Role> newUserRoles = new ArrayList<>();
+            newUserRoles.add(Role.ROLE_USER);
+            newUser.setRole(newUserRoles);
+
+            newUserCustomer.setBanker(userBanker);
+            newUserCustomer.setHashid(hashidService.generateHashId());
+            newUser.setUsername(newUserCustomer.getHashid());
+            userRepository.save(newUser);
+            newUserCustomer.setUser(newUser);
+            List<String> documents = new ArrayList<>();
+            documents.add("attestation_domicile");
+            documents.add("piece_id");
+            documents.add("avis_impots");
+            newUserCustomer.setDocument_type(documents);
+            customerRepository.save(newUserCustomer);
+
+            Account account = new Account();
+            account.setHashid(hashidService.generateAccountHashid("CPT_COURANT"));
+            account.setBalance(1000+i);
+            account.setOverdraft(100+i);
+            account.setCustomer(newUserCustomer);
+
+            account.setAccount_type(accountType);
+
+            Card card = cardService.createAccountCard(account);
+
+            accountRepository.save(account);
+            cardRepository.save(card);
+
+            AccountBalance accountBalance = new AccountBalance();
+            accountBalance.setBalance(account.getBalance());
+            accountBalance.setAccount(account);
+
+            accountBalanceRepository.save(accountBalance);
+
+            count++;
+        }
     }
 
     public AccountType createAccountType(String type, float rate) {
@@ -173,7 +238,7 @@ public class LoadDatabase {
         int count = 0;
 
         AccountType ccp = createAccountType("cpt_courant", 0);
-        AccountType ldd = createAccountType("livret_developpent_durable", (float) 0.6);
+        AccountType ldd = createAccountType("livret_developpement_durable", (float) 0.6);
         AccountType livret = createAccountType("livret_a", (float) 0.3);
 
         AccountType existingCcp = accountTypeRepository.findAccountTypeWithName(ccp.getName());

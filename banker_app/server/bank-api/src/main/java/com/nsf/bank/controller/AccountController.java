@@ -2,15 +2,17 @@ package com.nsf.bank.controller;
 
 import com.nsf.bank.entity.*;
 import com.nsf.bank.repository.*;
+import com.nsf.bank.service.CardService;
 import com.nsf.bank.service.HashidService;
+import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.HttpClientErrorException;
 
-import java.util.List;
-import java.util.Locale;
+import javax.validation.ConstraintViolationException;
+import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -39,6 +41,9 @@ public class AccountController {
     @Autowired
     private HashidService hashidService;
 
+    @Autowired
+    private CardService cardService;
+
     @RequestMapping("/")
     public ResponseEntity getAll(){
         List<Account> accounts = accountRepository.findAll();
@@ -60,18 +65,18 @@ public class AccountController {
 
     @PostMapping("/create/{customerId}")
     public ResponseEntity create(@PathVariable(value="customerId") int customerId, @RequestBody Account account) {
-        Customer customer = customerRepository.getOne(customerId);
+        Customer customer = customerRepository.findById(customerId)
+                .orElseThrow(() -> new HttpClientErrorException(HttpStatus.NOT_FOUND, "Le client n'existe pas"));
 
         account.setHashid(hashidService.generateAccountHashid(account.getAccount_type().getName()));
         account.setCustomer(customer);
 
-        Card card = account.getCard();
+        Card card = cardService.createAccountCard(account);
         Card existingCard = cardRepository.findBy(card.getNumber());
 
         if(null != existingCard) {
-            return ResponseEntity.internalServerError().body("Une carte bancaire est déjà enregistrée avec ce numéro");
+            return ResponseEntity.badRequest().body("Une carte bancaire est déjà enregistrée avec le numéro " + card.getNumber() + ". Recommencez la requête.");
         }
-        account.getCard().setNumber(card.getNumber());
 
         AccountType existingAccountType = accountTypeRepository.findAccountTypeWithName(account.getAccount_type().getName());
 
@@ -81,8 +86,8 @@ public class AccountController {
             throw HttpClientErrorException.create(HttpStatus.NOT_FOUND, "Ce type de compte n'existe pas", null, null, null);
         }
 
-        card.setAccount(account);
         accountRepository.save(account);
+        cardRepository.save(card);
 
         AccountBalance accountBalance = new AccountBalance();
         accountBalance.setBalance(account.getBalance());
@@ -94,35 +99,33 @@ public class AccountController {
     }
 
     @PutMapping("/update/{id}")
-    public ResponseEntity update(@PathVariable(value="id") int id, @RequestBody Account accountDetails){
+    public ResponseEntity update(@PathVariable(value="id") int id, @RequestBody Account accountDetails, @RequestParam(required = false) Optional<Boolean> updateCard){
         Account account = accountRepository.getOne(id);
-        Card card = account.getCard();
 
-        if(card != null) {
-            if(accountDetails.getCard().getNumber() != null) {
-                card.setNumber(accountDetails.getCard().getNumber());
-            }
-            if(accountDetails.getCard().getCvc() != 0) {
-                card.setCvc(accountDetails.getCard().getCvc());
-
-            }
-            if(accountDetails.getCard().getValidity_date() != null) {
-                card.setValidity_date(accountDetails.getCard().getValidity_date());
-            }
-        } else {
-            if(accountDetails.getCard() != null) {
-                Card newCard = accountDetails.getCard();
-                newCard.setAccount(account);
-            }
+        if(updateCard.isPresent()) {
+            Card card = cardService.updateAccountCardDetails(account);
+            cardRepository.save(card);
         }
 
-        account.setOverdraft(accountDetails.getOverdraft());
-
-        String name = account.getAccount_type().getName().toLowerCase(Locale.ROOT);
-        if(name != null && name.contains("courant")) {
-            return ResponseEntity.badRequest().body("Les comptes courants doivent avoir un taux à 0");
-        } else {
-            account.getAccount_type().setRate(accountDetails.getAccount_type().getRate());
+        if(accountDetails.getOverdraft() != 0) {
+            account.setOverdraft(-accountDetails.getOverdraft());
+        }
+        if(accountDetails.getBalance() != 0) {
+            List<Transaction> accountTransactions = transactionRepository.findAllByIdDebitAndIdCredit(account.getId());
+            if(accountTransactions.isEmpty()) {
+                account.setBalance(accountDetails.getBalance());
+                account.getAccount_balance().setBalance(account.getBalance());
+            } else {
+                return ResponseEntity.badRequest().body("Le solde de ce compte n'est plus modifiable. Des transactions ont déjà été affectuées.");
+            }
+        }
+        if(accountDetails.getAccount_type() != null) {
+            AccountType existingAccountType = accountTypeRepository.findAccountTypeWithName(accountDetails.getAccount_type().getName());
+            if (existingAccountType != null) {
+                account.setAccount_type(existingAccountType);
+            } else {
+                throw HttpClientErrorException.create(HttpStatus.NOT_FOUND, "Ce type de compte n'existe pas", null, null, null);
+            }
         }
 
         accountRepository.save(account);
@@ -137,12 +140,7 @@ public class AccountController {
 
     @GetMapping("/{id}/transactions")
     public ResponseEntity getTransactions(@PathVariable(value = "id") Integer id) {
-        // Récupérer toutes les transactions liées à ce compte (débits ET crédits de compte)
-        List<Transaction> debits = transactionRepository.findAllByIdDebit(id);
-        List<Transaction> credits = transactionRepository.findAllByIdCredit(id);
-        // Merge les deux listes de transactions en une seule
-        List<Transaction> transactions = Stream.concat(debits.stream(), credits.stream())
-                .collect(Collectors.toList());
+        List<Transaction> transactions = transactionRepository.findAllByIdDebitAndIdCredit(id);
 
         return ResponseEntity.ok().body(transactions);
     }

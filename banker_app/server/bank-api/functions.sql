@@ -6,9 +6,9 @@ BEGIN
     SET @today = DAYOFWEEK(NOW());
     SET @current_hour = DATE_FORMAT(NOW(), "%T");
     SET @error_message = 'Vous ne pouvez pas enregistrer de client ou de compte en dehors des jours ouvrés';
-    IF (@today = 6 AND @current_hour > '12:00:00')
-    OR @today = 7
-    OR (@today = 1 AND @current_hour < '12:00:00') THEN
+    IF (@today = 7 AND @current_hour > '12:00:00')
+    OR @today = 1
+    OR (@today = 2 AND @current_hour < '12:00:00') THEN
         signal sqlstate '42000' set MESSAGE_TEXT = @error_message;
     END IF;
 END

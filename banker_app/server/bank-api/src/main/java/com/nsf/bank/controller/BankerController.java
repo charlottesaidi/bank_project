@@ -101,9 +101,13 @@ public class BankerController {
         return ResponseEntity.ok().body("Banquier supprimé");
     }
 
-    @GetMapping("/{id}/customers")
-    public ResponseEntity getCustomers(@PathVariable(value="id") Integer id) {
-        List<Customer> bankerCustomers = customerRepository.findAllByIdBanker(id);
+    @GetMapping("/{hashid}/customers")
+    public ResponseEntity getCustomers(@PathVariable(value="hashid") String hashid) {
+        Banker banker = bankerRepository.findBankerByAccountNumber(hashid);
+        if(banker == null) {
+            throw HttpClientErrorException.create(HttpStatus.NOT_FOUND, "Aucun banquier n'existe avec ce numéro", null, null, null);
+        }
+        List<Customer> bankerCustomers = customerRepository.findAllByHashIdBanker(hashid);
         if(bankerCustomers.isEmpty()) {
             return ResponseEntity.ok().body("Le portefeuille client est vide");
         } else {
