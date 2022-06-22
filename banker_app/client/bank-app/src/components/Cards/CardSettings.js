@@ -1,30 +1,9 @@
-import React, { useEffect, useState } from "react";
-
-import axios from "axios";
+import React from "react";
 
 // components
 
-import { userService } from "@services/index";
-
-export default function CardSettings() {
-  const [user, setUser] = useState(userService.user);
-
-  useEffect(() => {
-    let user = JSON.parse(localStorage.getItem("user"));
-    const token = user.token;
-    const bankerId = user.user.id;
-    const api = `http://localhost:8080/users/${bankerId}`;
-    axios
-      .get(api, { headers: { Authorization: `Bearer ${token}` } })
-      .then((res) => {
-        console.log(res.data);
-        setUser(res.data);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  }, []);
-
+export default function CardSettings({ data }) {
+  // console.log(data);
   return (
     <>
       <div className="relative flex flex-col min-w-0 break-words w-full mb-6 shadow-lg rounded-lg bg-blueGray-100 border-0">
@@ -56,7 +35,7 @@ export default function CardSettings() {
                   <input
                     type="text"
                     className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                    defaultValue={user.username}
+                    defaultValue={data.username}
                   />
                 </div>
               </div>
@@ -71,7 +50,7 @@ export default function CardSettings() {
                   <input
                     type="email"
                     className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                    defaultValue={user.email}
+                    defaultValue={data.email}
                   />
                 </div>
               </div>
@@ -86,7 +65,7 @@ export default function CardSettings() {
                   <input
                     type="text"
                     className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                    defaultValue={user.phone}
+                    defaultValue={data.phone}
                   />
                 </div>
               </div>
@@ -101,7 +80,7 @@ export default function CardSettings() {
                   <input
                     type="text"
                     className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                    defaultValue={user.first_name}
+                    defaultValue={data.first_name}
                   />
                 </div>
               </div>
@@ -116,7 +95,7 @@ export default function CardSettings() {
                   <input
                     type="text"
                     className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                    defaultValue={user.last_name}
+                    defaultValue={data.last_name}
                   />
                 </div>
               </div>
@@ -140,11 +119,11 @@ export default function CardSettings() {
                     type="text"
                     className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
                     defaultValue={
-                      user.address_street +
+                      data.address_street +
                       ", " +
-                      user.address_zipcode +
+                      data.address_zipcode +
                       ", " +
-                      user.address_city
+                      data.address_city
                     }
                   />
                 </div>
@@ -160,7 +139,7 @@ export default function CardSettings() {
                   <input
                     type="email"
                     className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                    defaultValue={user.address_city}
+                    defaultValue={data.address_city}
                   />
                 </div>
               </div>
@@ -175,7 +154,7 @@ export default function CardSettings() {
                   <input
                     type="text"
                     className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                    defaultValue={user.address_country}
+                    defaultValue={data.address_country}
                   />
                 </div>
               </div>
@@ -190,7 +169,7 @@ export default function CardSettings() {
                   <input
                     type="text"
                     className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                    defaultValue={user.address_zipcode}
+                    defaultValue={data.address_zipcode}
                   />
                 </div>
               </div>
