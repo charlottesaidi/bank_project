@@ -3,7 +3,6 @@ import "@styles/reset.css";
 import "@styles/globals.css";
 import "@styles/tailwind.css";
 import "@styles/general.css";
-// import Layout from "@components/Layout";
 import Head from "next/head";
 
 export default function MyApp({ Component, pageProps }) {

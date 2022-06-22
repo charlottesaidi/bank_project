@@ -1,11 +1,33 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 
+import axios from "axios";
+
+// components
+
+import { userService } from "@services/index";
 // components
 
 import TableDropdown from "@components/Dropdowns/TableDropdown.js";
 
 export default function CardTable({ color }) {
+  const [customer, setUser] = useState(userService.user);
+  useEffect(() => {
+    let customer = JSON.parse(localStorage.getItem("user"));
+    const access = customer.token;
+    console.log(access);
+    const customerId = customer.user.id;
+    const url = `http://localhost:8080/api/bankers/${customerId}/customers`;
+    axios
+      .get(url, { headers: { Authorization: `Bearer ${access}` } })
+      .then((res) => {
+        console.log(res.data);
+        setUser(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
   return (
     <>
       <div
@@ -157,7 +179,8 @@ export default function CardTable({ color }) {
                   <TableDropdown />
                 </td>
               </tr>
-              <tr>
+
+              {/* <tr>
                 <th className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-left flex items-center">
                   <img
                     src="/img/angular.jpg"
@@ -411,7 +434,7 @@ export default function CardTable({ color }) {
                 <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-right">
                   <TableDropdown />
                 </td>
-              </tr>
+              </tr> */}
             </tbody>
           </table>
         </div>
