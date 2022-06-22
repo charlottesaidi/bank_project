@@ -1,33 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import PropTypes from "prop-types";
 
-import axios from "axios";
-
 // components
-
-import { userService } from "@services/index";
-// components
-
 import TableDropdown from "@components/Dropdowns/TableDropdown.js";
 
 export default function CardTable({ color }) {
-  const [customer, setUser] = useState(userService.user);
-  useEffect(() => {
-    let customer = JSON.parse(localStorage.getItem("user"));
-    const access = customer.token;
-    console.log(access);
-    const customerId = customer.user.id;
-    const url = `http://localhost:8080/api/bankers/${customerId}/customers`;
-    axios
-      .get(url, { headers: { Authorization: `Bearer ${access}` } })
-      .then((res) => {
-        console.log(res.data);
-        setUser(res.data);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  }, []);
   return (
     <>
       <div

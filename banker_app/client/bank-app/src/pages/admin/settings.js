@@ -16,6 +16,8 @@ import Admin from "@layouts/Admin.js";
 export default function Settings() {
   const [user, setUser] = useState(userService.user);
 
+  const [customer, setCustomer] = useState(userService.user);
+
   useEffect(() => {
     let user = JSON.parse(localStorage.getItem("user"));
     const token = user.token;
@@ -30,6 +32,21 @@ export default function Settings() {
       .catch((err) => {
         console.log(err);
       });
+
+    let customer = JSON.parse(localStorage.getItem("user"));
+    const access = customer.token;
+    const customerId = customer.user.username;
+
+    const url = `http://localhost:8080/api/bankers/${customerId}/customers`;
+    axios
+      .get(url, { headers: { Authorization: `Bearer ${access}` } })
+      .then((res) => {
+        // console.log(res.data);
+        setCustomer(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   }, []);
 
   return (
@@ -39,7 +56,7 @@ export default function Settings() {
           <CardSettings data={user} />
         </div>
         <div className="w-full lg:w-4/12 px-4">
-          <CardProfile data={user} />
+          <CardProfile clients={customer} data={user} />
         </div>
       </div>
     </>
