@@ -1,64 +1,40 @@
-import React, {useState} from "react";
-import Link from "next/link";
+// import React from "react";
+
+// // layout for page
+
 import { useRouter } from "next/router";
+import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import * as Yup from "yup";
 
-// layout for page
 import Auth from "@layouts/Auth.js";
+import { userService, alertService } from "@services/index";
 
-export default function Login({ data }) {
+export default function Login() {
   const router = useRouter();
-  const [formData, setFormData] = useState({
-    username: "",
-    password: "",
+
+  // form validation rules
+  const validationSchema = Yup.object().shape({
+    username: Yup.string().required("Identifiant requis"),
+    password: Yup.string().required("Mot de passe requis"),
   });
+  const formOptions = { resolver: yupResolver(validationSchema) };
 
- 
+  // get functions to build form with useForm() hook
+  const { register, handleSubmit, formState } = useForm(formOptions);
+  const { errors } = formState;
 
-  const { username, password } = formData;
+  function onSubmit({ username, password }) {
+    return userService
+      .login(username, password)
+      .then(() => {
+        // get return url from query parameters or default to '/'
+        const returnUrl = router.query.returnUrl || "/admin/dashboard";
+        router.push(returnUrl);
+      })
+      .catch(alertService.error);
+  }
 
-  const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
-  };
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    if (rgpd === false) {
-      toast.error("Veuillez accepter la collecte des données", {
-        position: "top-center",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "dark",
-      });
-    } else {
-      captchaRef.current.execute();
-    }
-  };
-  const handleVerificationSuccess = async (token, ekey) => {
-    let data = new FormData();
-    data.append("username", username);
-    data.append("password", password);
-    
-
-    let res = await fetch(
-      "http://localhost:8080/users/",
-      {
-        method: "POST",
-        body: data,
-      }
-    );
-    let q = await res.json();
-    if (q === "ok") {
-      captchaRef.current.resetCaptcha();
-      router.push("/thank-you");
-    }
-  };
-
-
-  console.log(data);
   return (
     <>
       <div className="container mx-auto px-4 h-full">
@@ -74,7 +50,7 @@ export default function Login({ data }) {
                 <hr className="mt-6 border-b-1 border-blueGray-300" />
               </div>
               <div className="w-full flex-auto px-4 lg:px-10 py-10 pt-0">
-                <form>
+                <form onSubmit={handleSubmit(onSubmit)}>
                   <div className="relative w-full mb-3">
                     <label
                       className="block uppercase text-blueGray-600 text-xs font-bold mb-2"
@@ -83,10 +59,17 @@ export default function Login({ data }) {
                       Identifiant
                     </label>
                     <input
+                      name="username"
                       type="text"
-                      className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+                      {...register("username")}
+                      className={`border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150 ${
+                        errors.username ? "is-invalid" : ""
+                      }`}
                       placeholder="Identifiant"
                     />
+                    <span className="invalid-feedback text-red-600 text-xs">
+                      {errors.username?.message}
+                    </span>
                   </div>
 
                   <div className="relative w-full mb-3">
@@ -97,10 +80,17 @@ export default function Login({ data }) {
                       Mot de passe
                     </label>
                     <input
+                      name="password"
                       type="password"
-                      className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+                      {...register("password")}
+                      className={`border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150 ${
+                        errors.password ? "is-invalid" : ""
+                      }`}
                       placeholder="Mot de passe"
                     />
+                    <span className="invalid-feedback text-red-600 text-xs">
+                      {errors.password?.message}
+                    </span>
                   </div>
                   <div>
                     <label className="inline-flex items-center cursor-pointer">
@@ -117,24 +107,17 @@ export default function Login({ data }) {
 
                   <div className="text-center mt-6">
                     <button
+                      disabled={formState.isSubmitting}
                       className="bg-blueGray-800 text-white active:bg-blueGray-600 text-sm font-bold uppercase px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 w-full ease-linear transition-all duration-150"
-                      type="button"
+                      type="submit"
                     >
+                      {formState.isSubmitting && (
+                        <span className="spinner-border spinner-border-sm mr-1"></span>
+                      )}
                       Connexion
                     </button>
                   </div>
                 </form>
-              </div>
-            </div>
-            <div className="flex flex-wrap mt-6 relative">
-              <div className="w-1/2">
-                <a
-                  href="#pablo"
-                  onClick={(e) => e.preventDefault()}
-                  className="text-blueGray-200"
-                >
-                  <small>Mot de passe oublié ?</small>
-                </a>
               </div>
             </div>
           </div>
@@ -145,17 +128,3 @@ export default function Login({ data }) {
 }
 
 Login.layout = Auth;
-
-export async function getStaticProps() {
-  const res = await fetch(
-    "http://localhost:8080/users/"
-  );
-  const data = await res.json();
-
-  return {
-    props: {
-      data,
-    },
-    revalidate: 60,
-  };
-}
