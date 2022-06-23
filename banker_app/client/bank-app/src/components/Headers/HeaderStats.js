@@ -1,11 +1,51 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+
+import axios from "axios";
+
+// services
+
+import { userService } from "@services/index";
 
 // components
 
 import CardStats from "@components/Cards/CardStats.js";
 
 export default function HeaderStats() {
-  return (
+  const [user, setUser] = useState(userService.user);
+  const [customer, setCustomer] = useState(userService.user);
+  // const [account, setAccount] = useState(userService.user);
+
+  useEffect(() => {
+    let user = JSON.parse(localStorage.getItem("user"));
+    const token = user.token;
+    const bankerId = user.user.id;
+    const bankerUsername = user.user.username;
+    const api = `http://localhost:8080/`;
+    axios
+      .get(api + `users/${bankerId}`, {
+        headers: { Authorization: `Bearer ${token}` },
+      })
+      .then((res) => {
+        setUser(res.data);
+      })
+      .catch((err) => {
+        console.error(err);
+      });
+
+    axios
+      .get(api + `api/bankers/${bankerUsername}/customers`, {
+        headers: { Authorization: `Bearer ${token}` },
+      })
+      .then((res) => {
+        setCustomer(res.data);
+      })
+      .catch((err) => {
+        console.error(err);
+      });
+
+  }, []);
+console.log(customer); 
+return (
     <>
       {/* Header */}
       <div className="relative bg-blueGray-800 md:pt-32 pb-32 pt-12">
@@ -14,9 +54,9 @@ export default function HeaderStats() {
             {/* Card stats */}
             <div className="flex flex-wrap">
               <div className="w-full lg:w-6/12 xl:w-3/12 px-4">
-                <CardStats
+                <CardStats 
                   statSubtitle="Total € client"
-                  statTitle="350,897"
+                  statTitle= ""
                   statArrow="up"
                   statPercent="3.48"
                   statPercentColor="text-emerald-500"
@@ -26,9 +66,9 @@ export default function HeaderStats() {
                 />
               </div>
               <div className="w-full lg:w-6/12 xl:w-3/12 px-4">
-                <CardStats
+                <CardStats 
                   statSubtitle="Nombre client"
-                  statTitle="2,356"
+                  statTitle={ customer.length }
                   statArrow="down"
                   statPercent="3.48"
                   statPercentColor="text-red-500"
@@ -38,7 +78,7 @@ export default function HeaderStats() {
                 />
               </div>
               <div className="w-full lg:w-6/12 xl:w-3/12 px-4">
-                <CardStats
+                <CardStats 
                   statSubtitle="Livret A"
                   statTitle="924"
                   statArrow="down"
@@ -50,7 +90,7 @@ export default function HeaderStats() {
                 />
               </div>
               <div className="w-full lg:w-6/12 xl:w-3/12 px-4">
-                <CardStats
+                <CardStats 
                   statSubtitle="Compte courant"
                   statTitle="49,65%"
                   statArrow="up"
