@@ -55,12 +55,18 @@ public class LoadDatabase {
 
     @Bean
     CommandLineRunner initDatabase() throws ParseException {
-        int usersCount = createUsers();
-        int accountTypesCount = createAccountTypes();
+        // commenter après le premier lancement de l'application
+//        int usersCount = createUsers();
+//        int accountTypesCount = createAccountTypes();
+//
+//        return args -> {
+//            log.info("Loading fixtures : " + usersCount + " utilisateur.s inséré.s");
+//            log.info("Loading fixtures : " + accountTypesCount + " type.s de compte inséré.s");
+//        };
 
+        // utiliser ça plutôt :
         return args -> {
-            log.info("Loading fixtures : " + usersCount + " utilisateur.s inséré.s");
-            log.info("Loading fixtures : " + accountTypesCount + " type.s de compte inséré.s");
+            log.info("Application running");
         };
     }
 

@@ -86,6 +86,10 @@ public class Customer {
         this.hashid = hashid;
     }
 
+    public List<Account> getAccounts() {
+        return accounts;
+    }
+
     public List<String> getDocument_type() {
         return document_type;
     }

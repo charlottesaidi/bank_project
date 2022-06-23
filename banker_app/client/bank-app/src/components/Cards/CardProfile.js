@@ -1,30 +1,8 @@
-import React, { useEffect, useState } from "react";
-
-import axios from "axios";
+import React from "react";
 
 // components
 
-import { userService } from "@services/index";
-
-export default function CardProfile() {
-  const [user, setUser] = useState(userService.user);
-
-  useEffect(() => {
-    let user = JSON.parse(localStorage.getItem("user"));
-    const token = user.token;
-    const bankerId = user.user.id;
-    const api = `http://localhost:8080/users/${bankerId}`;
-    axios
-      .get(api, { headers: { Authorization: `Bearer ${token}` } })
-      .then((res) => {
-        console.log(res.data);
-        setUser(res.data);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  }, []);
-  console.log(user)  ;
+export default function CardProfile({ clients, data }) {
   return (
     <>
       <div className="relative flex flex-col min-w-0 break-words bg-white w-full mb-6 shadow-xl rounded-lg mt-16">
@@ -35,7 +13,7 @@ export default function CardProfile() {
                 <img
                   alt="..."
                   src="/img/bank_logo.png"
-                  className="shadow-xl h-auto align-middle border-none absolute -m-16 -ml-20 lg:-ml-16 max-w-150-px"
+                  className="h-auto align-middle border-none absolute -m-16 -ml-20 lg:-ml-16 max-w-150-px"
                 />
               </div>
             </div>
@@ -43,7 +21,7 @@ export default function CardProfile() {
               <div className="flex justify-center py-4 lg:pt-4 pt-8">
                 <div className="mr-4 p-3 text-center">
                   <span className="text-xl font-bold block uppercase tracking-wide text-blueGray-600">
-                    22
+                    {clients.length}
                   </span>
                   <span className="text-sm text-blueGray-400">Clients</span>
                 </div>
@@ -64,24 +42,26 @@ export default function CardProfile() {
           </div>
           <div className="text-center mt-12">
             <h3 className="text-xl font-semibold leading-normal mb-2 text-blueGray-700 mb-2">
-            { user.first_name + " "+ user.last_name }
+              {data.first_name + " " + data.last_name}
             </h3>
             <div className="text-sm leading-normal mt-0 mb-2 text-blueGray-400 font-bold uppercase">
               <i className="fas fa-map-marker-alt mr-2 text-lg text-blueGray-400"></i>{" "}
-              { user.address_street + ", " + user.address_zipcode + " "+ user.address_city }
+              {data.address_street +
+                ", " +
+                data.address_zipcode +
+                " " +
+                data.address_city}
             </div>
-            <div className="mb-2 text-blueGray-600 mt-10">
+            {/* <div className="mb-2 text-blueGray-600 mt-10">
               <i className="fas fa-briefcase mr-2 text-lg text-blueGray-400"></i>
               Solution Manager - Creative Tim Officer
             </div>
             <div className="mb-2 text-blueGray-600">
               <i className="fas fa-university mr-2 text-lg text-blueGray-400"></i>
               University of Computer Science
-            </div>
+            </div> */}
           </div>
-          <div className="mt-10 py-10 border-t border-blueGray-200 text-center">
-          
-          </div>
+          <div className="mt-10 py-10 border-t border-blueGray-200 text-center"></div>
         </div>
       </div>
     </>
