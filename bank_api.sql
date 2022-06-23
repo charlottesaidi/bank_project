@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1
--- Généré le : jeu. 23 juin 2022 à 11:10
+-- Généré le : jeu. 23 juin 2022 à 11:29
 -- Version du serveur :  10.4.18-MariaDB
 -- Version de PHP : 8.0.3
 
@@ -20,6 +20,7 @@ SET time_zone = "+00:00";
 --
 -- Base de données : `bank_api`
 --
+
 CREATE DATABASE IF NOT EXISTS `bank_api` DEFAULT CHARACTER SET latin1 COLLATE latin1_swedish_ci;
 USE `bank_api`;
 
@@ -62,7 +63,7 @@ CREATE TABLE `accounts` (
 --
 
 INSERT INTO `accounts` (`id_account`, `balance`, `created_at`, `hashid`, `overdraft`, `updated_at`, `id_account_type`, `id_customer`) VALUES
-(5, 1800, '2022-06-23 11:09:30', 'CUR6782069', -1000, NULL, NULL, 4),
+(5, 1056.47, '2022-06-23 11:09:30', 'CUR6782069', -1000, '2022-06-23 11:23:44', NULL, 4),
 (12, 2019, '2022-06-23 11:09:31', 'CUR5712703', -1000, NULL, NULL, 11),
 (17, 2869, '2022-06-23 11:09:31', 'CUR7737706', -1000, NULL, NULL, 16),
 (22, 2749, '2022-06-23 11:09:32', 'CUR7775431', -1000, NULL, NULL, 21),
@@ -113,7 +114,7 @@ CREATE TABLE `account_balances` (
 --
 
 INSERT INTO `account_balances` (`id_account_balance`, `balance`, `created_at`, `updated_at`, `id_account`) VALUES
-(7, 1800, '2022-06-23 11:09:30', NULL, 5),
+(7, 1056.47, '2022-06-23 11:09:30', '2022-06-23 11:23:44', 5),
 (14, 2019, '2022-06-23 11:09:31', NULL, 12),
 (19, 2869, '2022-06-23 11:09:31', NULL, 17),
 (24, 2749, '2022-06-23 11:09:32', NULL, 22),
@@ -167,6 +168,23 @@ INSERT INTO `account_types` (`id_account_type`, `created_at`, `name`, `rate`, `u
 (160, '2022-06-23 11:09:52', 'CPT_COURANT', 0, NULL),
 (161, '2022-06-23 11:09:52', 'LIVRET_DEVELOPPEMENT_DURABLE', 0.6, NULL),
 (162, '2022-06-23 11:09:52', 'LIVRET_A', 0.3, NULL);
+
+--
+-- Déclencheurs `account_types`
+--
+DELIMITER $$
+CREATE TRIGGER `preventRateChange` BEFORE UPDATE ON `account_types` FOR EACH ROW BEGIN
+        SELECT start_date, end_date INTO @start_date, @end_date FROM changing_rate_dates ORDER BY changing_rate_dates.id_changing_rate_date DESC LIMIT 1;
+        SET @today = NOW();
+        SET @start = DATE_FORMAT(@start_date, '%d/%m/%Y');
+        SET @end = DATE_FORMAT(@end_date, '%d/%m/%Y');
+        SET @error_message = CONCAT('Les taux ne sont changeables que dans la période du ', @start, ' au ', @end, '.');
+        IF @today < @start_date OR @today > @end_date THEN
+            signal sqlstate '42000' set MESSAGE_TEXT = @error_message;
+        END IF;
+END
+$$
+DELIMITER ;
 
 -- --------------------------------------------------------
 
@@ -255,6 +273,13 @@ CREATE TABLE `changing_rate_dates` (
   `start_date` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Déchargement des données de la table `changing_rate_dates`
+--
+
+INSERT INTO `changing_rate_dates` (`id_changing_rate_date`, `end_date`, `start_date`) VALUES
+(163, '2022-12-06 01:00:00', '2022-12-01 01:00:00');
+
 -- --------------------------------------------------------
 
 --
@@ -307,6 +332,16 @@ INSERT INTO `customers` (`id_customer`, `created_at`, `document_date`, `hashid`,
 (146, '2022-06-23 11:09:50', NULL, '7206869272', NULL, 2, 145),
 (151, '2022-06-23 11:09:51', NULL, '7475829026', NULL, 2, 150),
 (156, '2022-06-23 11:09:52', NULL, '0611895656', NULL, 2, 155);
+
+--
+-- Déclencheurs `customers`
+--
+DELIMITER $$
+CREATE TRIGGER `preventClientRegistrationOnWE` BEFORE INSERT ON `customers` FOR EACH ROW BEGIN
+        CALL throwExceptionIfWeekend();
+END
+$$
+DELIMITER ;
 
 -- --------------------------------------------------------
 
@@ -416,6 +451,99 @@ INSERT INTO `customer_document_type` (`customer_id_customer`, `document_type`) V
 (151, 'avis_impots'),
 (156, 'attestation_domicile'),
 (156, 'piece_id'),
+(156, 'avis_impots'),
+(4, 'attestation_domicile'),
+(4, 'piece_id'),
+(4, 'avis_impots'),
+(11, 'attestation_domicile'),
+(11, 'piece_id'),
+(11, 'avis_impots'),
+(16, 'attestation_domicile'),
+(16, 'piece_id'),
+(16, 'avis_impots'),
+(21, 'attestation_domicile'),
+(21, 'piece_id'),
+(21, 'avis_impots'),
+(26, 'attestation_domicile'),
+(26, 'piece_id'),
+(26, 'avis_impots'),
+(31, 'attestation_domicile'),
+(31, 'piece_id'),
+(31, 'avis_impots'),
+(36, 'attestation_domicile'),
+(36, 'piece_id'),
+(36, 'avis_impots'),
+(41, 'attestation_domicile'),
+(41, 'piece_id'),
+(41, 'avis_impots'),
+(46, 'attestation_domicile'),
+(46, 'piece_id'),
+(46, 'avis_impots'),
+(51, 'attestation_domicile'),
+(51, 'piece_id'),
+(51, 'avis_impots'),
+(56, 'attestation_domicile'),
+(56, 'piece_id'),
+(56, 'avis_impots'),
+(61, 'attestation_domicile'),
+(61, 'piece_id'),
+(61, 'avis_impots'),
+(66, 'attestation_domicile'),
+(66, 'piece_id'),
+(66, 'avis_impots'),
+(71, 'attestation_domicile'),
+(71, 'piece_id'),
+(71, 'avis_impots'),
+(76, 'attestation_domicile'),
+(76, 'piece_id'),
+(76, 'avis_impots'),
+(81, 'attestation_domicile'),
+(81, 'piece_id'),
+(81, 'avis_impots'),
+(86, 'attestation_domicile'),
+(86, 'piece_id'),
+(86, 'avis_impots'),
+(91, 'attestation_domicile'),
+(91, 'piece_id'),
+(91, 'avis_impots'),
+(96, 'attestation_domicile'),
+(96, 'piece_id'),
+(96, 'avis_impots'),
+(101, 'attestation_domicile'),
+(101, 'piece_id'),
+(101, 'avis_impots'),
+(106, 'attestation_domicile'),
+(106, 'piece_id'),
+(106, 'avis_impots'),
+(111, 'attestation_domicile'),
+(111, 'piece_id'),
+(111, 'avis_impots'),
+(116, 'attestation_domicile'),
+(116, 'piece_id'),
+(116, 'avis_impots'),
+(121, 'attestation_domicile'),
+(121, 'piece_id'),
+(121, 'avis_impots'),
+(126, 'attestation_domicile'),
+(126, 'piece_id'),
+(126, 'avis_impots'),
+(131, 'attestation_domicile'),
+(131, 'piece_id'),
+(131, 'avis_impots'),
+(136, 'attestation_domicile'),
+(136, 'piece_id'),
+(136, 'avis_impots'),
+(141, 'attestation_domicile'),
+(141, 'piece_id'),
+(141, 'avis_impots'),
+(146, 'attestation_domicile'),
+(146, 'piece_id'),
+(146, 'avis_impots'),
+(151, 'attestation_domicile'),
+(151, 'piece_id'),
+(151, 'avis_impots'),
+(156, 'attestation_domicile'),
+(156, 'piece_id'),
 (156, 'avis_impots');
 
 -- --------------------------------------------------------
@@ -433,7 +561,8 @@ CREATE TABLE `hibernate_sequence` (
 --
 
 INSERT INTO `hibernate_sequence` (`next_val`) VALUES
-(163);
+(167),
+(167);
 
 -- --------------------------------------------------------
 
@@ -451,6 +580,15 @@ CREATE TABLE `transactions` (
   `id_account_debit` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Déchargement des données de la table `transactions`
+--
+
+INSERT INTO `transactions` (`id_transaction`, `amount`, `created_at`, `label`, `updated_at`, `id_account_credit`, `id_account_debit`) VALUES
+(164, 29.99, '2022-06-23 11:23:44', 'Prélèvement Orange Mobile', NULL, NULL, 5),
+(165, 63.54, '2022-06-23 11:24:24', 'Carrefour Market', NULL, NULL, 5),
+(166, 650, '2022-06-23 11:24:51', 'Virement Loyer', NULL, NULL, 5);
+
 -- --------------------------------------------------------
 
 --
@@ -461,6 +599,15 @@ CREATE TABLE `transaction_description` (
   `transaction_id_transaction` int(11) NOT NULL,
   `description` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Déchargement des données de la table `transaction_description`
+--
+
+INSERT INTO `transaction_description` (`transaction_id_transaction`, `description`) VALUES
+(164, 1),
+(165, 1),
+(166, 1);
 
 -- --------------------------------------------------------
 
@@ -524,6 +671,16 @@ INSERT INTO `users` (`id_user`, `address_city`, `address_country`, `address_stre
 (150, 'Tours', 'France', '4240 Avenue de Seine', '65986', '1990-01-01 00:00:00', '2022-06-23 11:09:51', 'mathis.bertrand@examplemail.fr', 'Kylian', 'Lefevre', '$2a$12$XhbacrjxaGnCQIxHj4mqgubrTOC9wPx1mKR/b/RBPdwnCG.U8TCQC', '0520009607', NULL, '7475829026'),
 (155, 'Argenteuil', 'France', '3 Boulevard Oberkampf', '33479', '1990-01-01 00:00:00', '2022-06-23 11:09:52', 'nathan.brun@examplemail.fr', 'Léa', 'Caron', '$2a$12$dpSu6LZhnpNyMg6aOoYW4.NmG/qSbeB6VCsYY0Ck0GxM4yffKKAaK', '0843745742', NULL, '0611895656');
 
+--
+-- Déclencheurs `users`
+--
+DELIMITER $$
+CREATE TRIGGER `preventUserRegistrationOnWE` BEFORE INSERT ON `users` FOR EACH ROW BEGIN
+        CALL throwExceptionIfWeekend();
+END
+$$
+DELIMITER ;
+
 -- --------------------------------------------------------
 
 --
@@ -540,6 +697,39 @@ CREATE TABLE `user_role` (
 --
 
 INSERT INTO `user_role` (`user_id_user`, `role`) VALUES
+(1, 1),
+(3, 2),
+(8, 0),
+(10, 2),
+(15, 2),
+(20, 2),
+(25, 2),
+(30, 2),
+(35, 2),
+(40, 2),
+(45, 2),
+(50, 2),
+(55, 2),
+(60, 2),
+(65, 2),
+(70, 2),
+(75, 2),
+(80, 2),
+(85, 2),
+(90, 2),
+(95, 2),
+(100, 2),
+(105, 2),
+(110, 2),
+(115, 2),
+(120, 2),
+(125, 2),
+(130, 2),
+(135, 2),
+(140, 2),
+(145, 2),
+(150, 2),
+(155, 2),
 (1, 1),
 (3, 2),
 (8, 0),
