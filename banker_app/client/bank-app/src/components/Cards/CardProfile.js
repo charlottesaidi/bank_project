@@ -3,7 +3,6 @@ import React from "react";
 // components
 
 export default function CardProfile({ clients, data }) {
-  console.log(clients)
   return (
     <>
       <div className="relative flex flex-col min-w-0 break-words bg-white w-full mb-6 shadow-xl rounded-lg mt-16">
@@ -53,14 +52,6 @@ export default function CardProfile({ clients, data }) {
                 " " +
                 data.address_city}
             </div>
-            {/* <div className="mb-2 text-blueGray-600 mt-10">
-              <i className="fas fa-briefcase mr-2 text-lg text-blueGray-400"></i>
-              Solution Manager - Creative Tim Officer
-            </div>
-            <div className="mb-2 text-blueGray-600">
-              <i className="fas fa-university mr-2 text-lg text-blueGray-400"></i>
-              University of Computer Science
-            </div> */}
           </div>
           <div className="mt-10 py-10 border-t border-blueGray-200 text-center"></div>
         </div>

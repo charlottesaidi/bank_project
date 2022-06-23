@@ -42,10 +42,9 @@ export default function HeaderStats() {
       .catch((err) => {
         console.error(err);
       });
-
   }, []);
-// console.log(customer); 
-return (
+  // console.log(customer);
+  return (
     <>
       {/* Header */}
       <div className="relative bg-blueGray-800 md:pt-32 pb-32 pt-12">
@@ -54,9 +53,9 @@ return (
             {/* Card stats */}
             <div className="flex flex-wrap">
               <div className="w-full lg:w-6/12 xl:w-3/12 px-4">
-                <CardStats 
+                <CardStats
                   statSubtitle="Total € client"
-                  statTitle= ""
+                  statTitle="2"
                   statArrow="up"
                   statPercent="3.48"
                   statPercentColor="text-emerald-500"
@@ -66,9 +65,9 @@ return (
                 />
               </div>
               <div className="w-full lg:w-6/12 xl:w-3/12 px-4">
-                <CardStats 
+                <CardStats
                   statSubtitle="Nombre client"
-                  statTitle={ customer.length }
+                  statTitle={customer.length}
                   statArrow="down"
                   statPercent="3.48"
                   statPercentColor="text-red-500"
@@ -78,9 +77,9 @@ return (
                 />
               </div>
               <div className="w-full lg:w-6/12 xl:w-3/12 px-4">
-                <CardStats 
+                <CardStats
                   statSubtitle="Livret A"
-                  statTitle=""
+                  statTitle="3"
                   statArrow="down"
                   statPercent="1.10"
                   statPercentColor="text-orange-500"
@@ -90,7 +89,7 @@ return (
                 />
               </div>
               <div className="w-full lg:w-6/12 xl:w-3/12 px-4">
-                <CardStats 
+                <CardStats
                   statSubtitle="Compte courant"
                   statTitle="49,65%"
                   statArrow="up"

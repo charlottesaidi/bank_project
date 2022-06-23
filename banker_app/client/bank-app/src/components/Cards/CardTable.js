@@ -4,7 +4,6 @@ import PropTypes from "prop-types";
 import Link from "next/link";
 
 // components
-// import TableDropdown from "@components/Dropdowns/TableDropdown.js";
 
 export default function CardTable({ color, props }) {
   return (
