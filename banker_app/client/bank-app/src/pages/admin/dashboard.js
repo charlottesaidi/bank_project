@@ -70,6 +70,7 @@ export default function Dashboard() {
   let last_year_ldd = [];
 
   accounts.forEach((el) => {
+    // ! au refresh on me dit que el.account_type est undefined !
     if(el.account_type?.name == "CPT_COURANT") {
       if(new Date(el.created_at).getFullYear() == new Date().getFullYear()) {
         current_year_ccp.push(el) 
