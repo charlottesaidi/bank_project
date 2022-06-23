@@ -1,34 +1,8 @@
 import React from "react";
 import Chart from "chart.js";
 
-export default function CardBarChart({props}) {
-  let ldd = [];
-  let ccp = [];
-  let la = [];
-
-  let current_year = [];
-  let last_year = [];
-
-  props.forEach((el) => {
-    if(el.account_type?.name == "CPT_COURANT") {
-      ccp.push(el); 
-    }
-    if(el.account_type?.name == "LIVRET_A") {
-      la.push(el); 
-    }
-    if(el.account_type?.name == "LIVRET_DEVELOPPEMENT_DURABLE") {
-      ldd.push(el); 
-    }
-
-    if(new Date(el.created_at).getFullYear() == new Date().getFullYear()) {
-      current_year = [ccp.length, la.length, ldd.length]; 
-    }
-    if(new Date(el.created_at).getFullYear() == new Date().getFullYear() - 1) {
-      last_year = [ccp.length, la.length, ldd.length];  
-    }
-  })
-
-  React.useEffect(() => {
+export default function CardBarChart({current_year, last_year}) {
+    React.useEffect(() => {
     let config = {
       type: "bar",
       data: {

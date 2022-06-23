@@ -20,7 +20,7 @@ import Admin from "@layouts/Admin.js";
 export default function Dashboard() {
   const [customer, setCustomer] = useState(userService.user);
   const [accounts, setAccount] = useState(userService.user);
-  let negative_accounts = [];
+
   // console.log(customer);
   useEffect(() => {
     let user = JSON.parse(localStorage.getItem("user"));
@@ -55,6 +55,45 @@ export default function Dashboard() {
   // }, 0);
 
   // console.log(subTotal);
+
+  // calcul nombre de comptes crées (par type et par année)
+  let current_year_ccp = [];
+  let last_year_ccp = [];
+  let current_year_la = [];
+  let last_year_la = [];
+  let current_year_ldd = [];
+  let last_year_ldd = [];
+
+  accounts.forEach((el) => {
+    if(el.account_type?.name == "CPT_COURANT") {
+      if(new Date(el.created_at).getFullYear() == new Date().getFullYear()) {
+        current_year_ccp.push(el) 
+      }
+      if(new Date(el.created_at).getFullYear() == new Date().getFullYear() - 1) {
+        last_year_ccp.push(el)
+      }
+    }
+    if(el.account_type?.name == "LIVRET_A") {
+      if(new Date(el.created_at).getFullYear() == new Date().getFullYear()) {
+        current_year_la.push(el) 
+      }
+      if(new Date(el.created_at).getFullYear() == new Date().getFullYear() - 1) {
+        last_year_la.push(el)
+      }
+    }
+    if(el.account_type?.name == "LIVRET_DEVELOPPEMENT_DURABLE") {
+      if(new Date(el.created_at).getFullYear() == new Date().getFullYear()) {
+        current_year_ldd.push(el) 
+      }
+      if(new Date(el.created_at).getFullYear() == new Date().getFullYear() - 1) {
+        last_year_ldd.push(el)
+      }
+    }
+  })
+
+  let current_year = [current_year_ccp.length, current_year_la.length, current_year_ldd.length];
+  let last_year = [last_year_ccp.length, last_year_la.length, last_year_ldd.length]
+
   return (
     <>
       <div className="flex flex-wrap">
@@ -62,7 +101,7 @@ export default function Dashboard() {
           <CardLineChart />
         </div>
         <div className="w-full xl:w-4/12 px-4">
-          <CardBarChart props={accounts}/>
+          <CardBarChart current_year={current_year} last_year={last_year}/>
         </div>
       </div>
       <div className="flex flex-wrap mt-4">
