@@ -97,8 +97,11 @@ export default function Dashboard() {
     }
   })
 
-  let current_year = [current_year_ccp.length, current_year_la.length, current_year_ldd.length];
-  let last_year = [last_year_ccp.length, last_year_la.length, last_year_ldd.length]
+  // let current_year = [current_year_ccp.length, current_year_la.length, current_year_ldd.length];
+  // let last_year = [last_year_ccp.length, last_year_la.length, last_year_ldd.length]
+  // ! fake données :
+  let current_year = [31, 16, 8];
+  let last_year = [58, 34, 23]
 
   return (
     <>
