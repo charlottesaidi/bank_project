@@ -3,7 +3,6 @@ import React from "react";
 // components
 
 export default function CardSettings({ data }) {
-  // console.log(data);
   return (
     <>
       <div className="relative flex flex-col min-w-0 break-words w-full mb-6 shadow-lg rounded-lg bg-blueGray-100 border-0">
@@ -12,9 +11,9 @@ export default function CardSettings({ data }) {
             <h6 className="text-blueGray-700 text-xl font-bold">Mon Compte</h6>
             <button
               className="bg-blueGray-700 active:bg-blueGray-600 text-white font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 ease-linear transition-all duration-150"
-              type="button"
+              type="submit"
             >
-              Settings
+              Modifier
             </button>
           </div>
         </div>

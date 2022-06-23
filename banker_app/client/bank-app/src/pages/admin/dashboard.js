@@ -21,7 +21,7 @@ export default function Dashboard() {
   const [customer, setCustomer] = useState(userService.user);
   const [accounts, setAccount] = useState(userService.user);
   let negative_accounts = [];
-  // console.log(customer);
+  console.log(accounts);
   useEffect(() => {
     let user = JSON.parse(localStorage.getItem("user"));
     const token = user.token;

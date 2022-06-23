@@ -44,7 +44,7 @@ export default function HeaderStats() {
       });
 
   }, []);
-console.log(customer); 
+// console.log(customer); 
 return (
     <>
       {/* Header */}
