@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 
 import axios from "axios";
 
-// components
+// services
 
 import { userService } from "@services/index";
 
@@ -32,7 +32,7 @@ export default function Settings() {
         setUser(res.data);
       })
       .catch((err) => {
-        console.log(err);
+        console.error(err);
       });
 
     axios
@@ -43,7 +43,7 @@ export default function Settings() {
         setCustomer(res.data);
       })
       .catch((err) => {
-        console.log(err);
+        console.error(err);
       });
 
   }, []);
