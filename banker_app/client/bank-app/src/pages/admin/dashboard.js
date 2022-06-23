@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import dynamic from 'next/dynamic';
+// import dynamic from 'next/dynamic';
 
 import axios from "axios";
 
@@ -10,13 +10,13 @@ import { userService } from "@services/index";
 // components
 
 import CardLineChart from "@components/Cards/CardLineChart.js";
-// import CardBarChart from "@components/Cards/CardBarChart.js";
+import CardBarChart from "@components/Cards/CardBarChart.js";
 import CardPageVisits from "@components/Cards/CardPageVisits.js";
 import CardSocialTraffic from "@components/Cards/CardSocialTraffic.js";
 
-const CardBarChart = dynamic(() => import('@components/Cards/CardBarChart.js'), {
-  ssr: false,
-})
+// const CardBarChart = dynamic(() => import('@components/Cards/CardBarChart.js'), {
+//   ssr: false,
+// })
 
 // layout for page
 
@@ -44,7 +44,7 @@ export default function Dashboard() {
         console.error(err);
       });
 
-      axios
+    axios
       .get(api + `api/bankers/${bankerUsername}/customers/accounts`, {
         headers: { Authorization: `Bearer ${token}` },
       })
@@ -53,7 +53,7 @@ export default function Dashboard() {
       })
       .catch((err) => {
         console.error(err);
-      });      
+      });
   }, []);
   // const subTotal = customer.reduce((acc, product) => {
   //   return acc + product.price * product.quantity;
@@ -71,37 +71,46 @@ export default function Dashboard() {
 
   accounts.forEach((el) => {
     // ! au refresh on me dit que el.account_type est undefined !
-    if(el.account_type?.name == "CPT_COURANT") {
-      if(new Date(el.created_at).getFullYear() == new Date().getFullYear()) {
-        current_year_ccp.push(el) 
+    if (el.account_type?.name == "CPT_COURANT") {
+      if (new Date(el.created_at).getFullYear() == new Date().getFullYear()) {
+        current_year_ccp.push(el);
       }
-      if(new Date(el.created_at).getFullYear() == new Date().getFullYear() - 1) {
-        last_year_ccp.push(el)
-      }
-    }
-    if(el.account_type?.name == "LIVRET_A") {
-      if(new Date(el.created_at).getFullYear() == new Date().getFullYear()) {
-        current_year_la.push(el) 
-      }
-      if(new Date(el.created_at).getFullYear() == new Date().getFullYear() - 1) {
-        last_year_la.push(el)
+      if (
+        new Date(el.created_at).getFullYear() ==
+        new Date().getFullYear() - 1
+      ) {
+        last_year_ccp.push(el);
       }
     }
-    if(el.account_type?.name == "LIVRET_DEVELOPPEMENT_DURABLE") {
-      if(new Date(el.created_at).getFullYear() == new Date().getFullYear()) {
-        current_year_ldd.push(el) 
+    if (el.account_type?.name == "LIVRET_A") {
+      if (new Date(el.created_at).getFullYear() == new Date().getFullYear()) {
+        current_year_la.push(el);
       }
-      if(new Date(el.created_at).getFullYear() == new Date().getFullYear() - 1) {
-        last_year_ldd.push(el)
+      if (
+        new Date(el.created_at).getFullYear() ==
+        new Date().getFullYear() - 1
+      ) {
+        last_year_la.push(el);
       }
     }
-  })
+    if (el.account_type?.name == "LIVRET_DEVELOPPEMENT_DURABLE") {
+      if (new Date(el.created_at).getFullYear() == new Date().getFullYear()) {
+        current_year_ldd.push(el);
+      }
+      if (
+        new Date(el.created_at).getFullYear() ==
+        new Date().getFullYear() - 1
+      ) {
+        last_year_ldd.push(el);
+      }
+    }
+  });
 
   // let current_year = [current_year_ccp.length, current_year_la.length, current_year_ldd.length];
   // let last_year = [last_year_ccp.length, last_year_la.length, last_year_ldd.length]
   // ! fake données :
   let current_year = [31, 16, 8];
-  let last_year = [58, 34, 23]
+  let last_year = [58, 34, 23];
 
   return (
     <>
@@ -110,7 +119,7 @@ export default function Dashboard() {
           <CardLineChart />
         </div>
         <div className="w-full xl:w-4/12 px-4">
-          <CardBarChart current_year={current_year} last_year={last_year}/>
+          <CardBarChart current_year={current_year} last_year={last_year} />
         </div>
       </div>
       <div className="flex flex-wrap mt-4">
@@ -118,7 +127,7 @@ export default function Dashboard() {
           <CardPageVisits props={customer} />
         </div>
         <div className="w-full xl:w-4/12 px-4">
-          <CardSocialTraffic props={customer}/>
+          <CardSocialTraffic props={customer} />
         </div>
       </div>
     </>
