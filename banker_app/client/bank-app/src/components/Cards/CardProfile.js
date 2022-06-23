@@ -26,6 +26,7 @@ export default function CardProfile({ clients, data }) {
                   <span className="text-sm text-blueGray-400">Clients</span>
                 </div>
                 <div className="mr-4 p-3 text-center">
+                  
                   <span className="text-xl font-bold block uppercase tracking-wide text-blueGray-600">
                     10
                   </span>
