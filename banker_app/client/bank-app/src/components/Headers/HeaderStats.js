@@ -80,7 +80,7 @@ return (
               <div className="w-full lg:w-6/12 xl:w-3/12 px-4">
                 <CardStats 
                   statSubtitle="Livret A"
-                  statTitle="924"
+                  statTitle=""
                   statArrow="down"
                   statPercent="1.10"
                   statPercentColor="text-orange-500"
