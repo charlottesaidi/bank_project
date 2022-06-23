@@ -2,42 +2,56 @@ import React from "react";
 import Chart from "chart.js";
 
 export default function CardBarChart({props}) {
+  let ldd = [];
+  let ccp = [];
+  let la = [];
+
+  let current_year = [];
+  let last_year = [];
+
+  props.forEach((el) => {
+    if(el.account_type?.name == "CPT_COURANT") {
+      ccp.push(el); 
+    }
+    if(el.account_type?.name == "LIVRET_A") {
+      la.push(el); 
+    }
+    if(el.account_type?.name == "LIVRET_DEVELOPPEMENT_DURABLE") {
+      ldd.push(el); 
+    }
+
+    if(new Date(el.created_at).getFullYear() == new Date().getFullYear()) {
+      current_year = [ccp.length, la.length, ldd.length]; 
+    }
+    if(new Date(el.created_at).getFullYear() == new Date().getFullYear() - 1) {
+      last_year = [ccp.length, la.length, ldd.length];  
+    }
+  })
+
   React.useEffect(() => {
     let config = {
       type: "bar",
       data: {
         labels: [
-          "January",
-          "February",
-          "March",
-          "April",
-          "May",
-          "June",
-          "July",
+          "Compte courants",
+          "Livrets A",
+          "Livret Développement Durable",
         ],
         datasets: [
           {
-            label: "CC",
+            label: new Date().getFullYear(),
             backgroundColor: "#ed64a6",
             borderColor: "#ed64a6",
-            data: [30, 78, 56, 34, 100, 45, 13],
+            data: current_year,
             fill: false,
             barThickness: 8,
           },
           {
-            label: "Livrets A",
+            label: new Date().getFullYear() - 1,
             fill: false,
             backgroundColor: "#4c51bf",
             borderColor: "#4c51bf",
-            data: [27, 68, 86, 74, 10, 4, 87],
-            barThickness: 8,
-          },
-          {
-            label: "LDD",
-            fill: false,
-            backgroundColor: "#F97316",
-            borderColor: "#4c51bf",
-            data: [27, 68, 86, 74, 10, 4, 87],
+            data: last_year,
             barThickness: 8,
           },
         ],
