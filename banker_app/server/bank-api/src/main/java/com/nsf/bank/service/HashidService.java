@@ -17,10 +17,10 @@ public class HashidService {
         if(type.contains("CPT_COURANT")) {
             generatedHashid = "CUR"+RandomStringUtils.random(7, false, true);
         }
-        if(type.contains("LDD")) {
+        if(type.contains("DEVELOPPEMENT_DURABLE")) {
             generatedHashid = "LDD"+RandomStringUtils.random(7, false, true);
         }
-        if(type.contains("LIVRET")) {
+        if(type.contains("LIVRET_A")) {
             generatedHashid = "LVA"+RandomStringUtils.random(7, false, true);
         }
 

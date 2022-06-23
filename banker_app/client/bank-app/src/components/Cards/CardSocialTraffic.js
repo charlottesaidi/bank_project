@@ -6,7 +6,7 @@ export default function CardSocialTraffic({props}) {
   let negative_accounts = [];
 
   props.forEach((el) => {
-    if(el.accounts?.[0]?.balance < 0) {
+    if(el.accounts?.[0]?.balance < 0 || el.accounts?.[1]?.balance < 0 || el.accounts?.[2]?.balance < 0) {
       negative_accounts.push(el)
     }
   })
@@ -42,8 +42,11 @@ export default function CardSocialTraffic({props}) {
                 <th className="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
                   Clients
                 </th>
+                <th className="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left min-w-140-px">
+                  Comptes
+                </th>
                 <th className="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
-                  soldes CC
+                  soldes
                 </th>
                 <th className="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left min-w-140-px">
                   Découvert utilisé
@@ -59,20 +62,42 @@ export default function CardSocialTraffic({props}) {
                         {item.user.last_name} {item.user.first_name}
                       </th>
                       <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
-                        {item.accounts[0].balance + " €"}
+                        {Array.from(item.accounts).map((el, index) => (
+                          (
+                            <p key={index}>{el.balance < 0 && el.hashid}</p>
+                          )
+                        )
+                      )}
                       </td>
                       <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
-                        <div className="flex items-center">
-                          <span className="mr-2">{overdraftPercentage(item.accounts[0].balance, item.accounts[0].overdraft) + "%"}</span>
-                          <div className="relative w-full">
-                            <div className="overflow-hidden h-2 text-xs flex rounded bg-red-200">
-                              <div
-                                style={{ width: overdraftPercentage(item.accounts[0].balance, item.accounts[0].overdraft)+"%" }}
-                                className="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-red-500"
-                              ></div>
+                        {Array.from(item.accounts).map((el, index) => (
+                          (
+                            <p key={index}>{el.balance < 0 && el.balance + " €"}</p>
+                          )
+                        )
+                      )}
+                      </td>
+                      <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
+                        {Array.from(item.accounts).map((el, index) => (
+                          (
+                            <div key={index}>
+                              {el.balance < 0 && 
+                                <div className="flex items-center">
+                                  <span className="mr-2">{overdraftPercentage(el.balance, el.overdraft) + "%"}</span>
+                                  <div className="relative w-full">
+                                    <div className="overflow-hidden h-2 text-xs flex rounded bg-red-200">
+                                      <div
+                                        style={{ width: overdraftPercentage(el.balance, el.overdraft)+"%" }}
+                                        className="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-red-500"
+                                      ></div>
+                                    </div>
+                                  </div>
+                                </div>
+                              }
                             </div>
-                          </div>
-                        </div>
+                          )
+                        )
+                      )}
                       </td>
                     </tr>
                   )
