@@ -1,8 +1,10 @@
 import React from "react";
 import PropTypes from "prop-types";
 
+import Link from "next/link";
+
 // components
-import TableDropdown from "@components/Dropdowns/TableDropdown.js";
+// import TableDropdown from "@components/Dropdowns/TableDropdown.js";
 
 export default function CardTable({ color, props }) {
   return (
@@ -92,69 +94,69 @@ export default function CardTable({ color, props }) {
               </tr>
             </thead>
             <tbody>
-              {Array.from(props).map(
-                (item, index) => (
-                  (
-                    <tr key={index}>
-                      <th className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-left flex items-center">
-                        <img
-                          src="/img/bank_logo.png"
-                          className="h-12 w-12 bg-white rounded-full border object-contain p-2"
-                          alt="..."
-                        ></img>{" "}
-                        <span
-                          className={
-                            "ml-3 font-bold " +
-                            +(color === "light"
-                              ? "text-blueGray-600"
-                              : "text-white")
-                          }
-                        >
-                          {item.user.last_name + " " + item.user.first_name}
-                        </span>
-                      </th>
-                      <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
-                        {item.accounts[0]
-                          ? item.accounts[0].balance + " €"
-                          : "0 €"}
-                      </td>
-                      <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
-                        <p>
-                          {item.user.address_street +
-                            ", " +
-                            item.user.address_zipcode +
-                            ", " +
-                            item.user.address_city}
-                        </p>
-                      </td>
-                      <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
-                        <div className="flex">
-                          <p>
-                            <i className="fas fa-envelope text-green-500 mr-2"></i>
-                            {item.user.email}
-                          </p>
+              {Array.from(props).map((item, index) => (
+                console.log(item),
+                <tr key={index}>
+                  <th className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-left flex items-center">
+                    <img
+                      src="/img/bank_logo.png"
+                      className="h-12 w-12 bg-white rounded-full border object-contain p-2"
+                      alt="..."
+                    ></img>{" "}
+                    <span
+                      className={
+                        "ml-3 font-bold " +
+                        +(color === "light"
+                          ? "text-blueGray-600"
+                          : "text-white")
+                      }
+                    >
+                      {item.user.last_name + " " + item.user.first_name}
+                    </span>
+                  </th>
+                  <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
+                    {item.accounts[0] ? item.accounts[0].balance + " €" : "0 €"}
+                  </td>
+                  <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
+                    <p>
+                      {item.user.address_street +
+                        ", " +
+                        item.user.address_zipcode +
+                        ", " +
+                        item.user.address_city}
+                    </p>
+                  </td>
+                  <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
+                    <div className="flex">
+                      <p>
+                        <i className="fas fa-envelope text-green-500 mr-2"></i>
+                        {item.user.email}
+                      </p>
+                    </div>
+                  </td>
+                  <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
+                    <div className="flex items-center">
+                      <span className="mr-2">60%</span>
+                      <div className="relative w-full">
+                        <div className="overflow-hidden h-2 text-xs flex rounded bg-red-200">
+                          <div
+                            style={{ width: "60%" }}
+                            className="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-red-500"
+                          ></div>
                         </div>
-                      </td>
-                      <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
-                        <div className="flex items-center">
-                          <span className="mr-2">60%</span>
-                          <div className="relative w-full">
-                            <div className="overflow-hidden h-2 text-xs flex rounded bg-red-200">
-                              <div
-                                style={{ width: "60%" }}
-                                className="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-red-500"
-                              ></div>
-                            </div>
-                          </div>
-                        </div>
-                      </td>
-                      <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-right">
-                        <TableDropdown />
-                      </td>
-                    </tr>
-                  )
-                )
-              )}
+                      </div>
+                    </div>
+                  </td>
+                  <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-right">
+                    {/* <TableDropdown /> */}
+                    <Link href={`/admin/tables/${item.id}`} passHref>
+                      <a className="singleCustomer shadow-xl">
+                        <i class="fa-solid fa-ellipsis-vertical"></i>
+                      </a>
+                    </Link>
+                  </td>
+                </tr>
+              ))}
             </tbody>
           </table>
         </div>
