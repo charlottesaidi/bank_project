@@ -71,18 +71,18 @@ export default function Dashboard() {
 
   accounts.forEach((el) => {
     // ! au refresh on me dit que el.account_type est undefined !
-    if (el.account_type?.name == "CPT_COURANT") {
+    if (el?.account_type?.name == "CPT_COURANT") {
       if (new Date(el.created_at).getFullYear() == new Date().getFullYear()) {
         current_year_ccp.push(el);
       }
       if (
-        new Date(el.created_at).getFullYear() ==
+        new Date(el?.created_at).getFullYear() ==
         new Date().getFullYear() - 1
       ) {
         last_year_ccp.push(el);
       }
     }
-    if (el.account_type?.name == "LIVRET_A") {
+    if (el?.account_type?.name == "LIVRET_A") {
       if (new Date(el.created_at).getFullYear() == new Date().getFullYear()) {
         current_year_la.push(el);
       }
@@ -93,7 +93,7 @@ export default function Dashboard() {
         last_year_la.push(el);
       }
     }
-    if (el.account_type?.name == "LIVRET_DEVELOPPEMENT_DURABLE") {
+    if (el?.account_type?.name == "LIVRET_DEVELOPPEMENT_DURABLE") {
       if (new Date(el.created_at).getFullYear() == new Date().getFullYear()) {
         current_year_ldd.push(el);
       }

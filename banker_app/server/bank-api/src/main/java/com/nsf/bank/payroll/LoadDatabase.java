@@ -98,7 +98,7 @@ public class LoadDatabase {
         User banker = createUser(faker.name().username()+"@banker.fr", "bankerpass", faker.name().firstName(), faker.name().lastName());
         Banker userBanker = new Banker();
 
-        User director = createUser(faker.name().username()+"@director.fr", "directorpass", "Director", "Test");
+        User director = createUser(faker.name().username()+"@director.fr", "directorpass", faker.name().firstName(), faker.name().lastName());
         Banker userDirector = new Banker();
 
         List<Role> bankerRoles = new ArrayList<>();
@@ -113,9 +113,9 @@ public class LoadDatabase {
         userRoles.add(Role.ROLE_USER);
         customer.setRole(userRoles);
 
-        User existingUserCustomer = userRepository.findUserWithEmail("customer@example.fr");
-        User existingUserBanker = userRepository.findUserWithEmail("banker@example.fr");
-        User existingUserDirector = userRepository.findUserWithEmail("director@example.fr");
+        User existingUserCustomer = userRepository.findUserWithEmail(customer.getEmail());
+        User existingUserBanker = userRepository.findUserWithEmail(banker.getEmail());
+        User existingUserDirector = userRepository.findUserWithEmail(director.getEmail());
         int count = 0;
 
         if(existingUserBanker == null) {
@@ -203,7 +203,7 @@ public class LoadDatabase {
             }
         }
 
-        createFakeCustomers(userBanker, count);
+//        createFakeCustomers(userBanker, count);
 
         int finalCount = count;
 

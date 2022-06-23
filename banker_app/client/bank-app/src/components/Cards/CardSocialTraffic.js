@@ -6,7 +6,7 @@ export default function CardSocialTraffic({props}) {
   let negative_accounts = [];
 
   props.forEach((el) => {
-    if(el.accounts?.[0]?.balance < 0 || el.accounts?.[1]?.balance < 0 || el.accounts?.[2]?.balance < 0) {
+    if(el?.accounts?.[0]?.balance < 0 || el?.accounts?.[1]?.balance < 0 || el?.accounts?.[2]?.balance < 0) {
       negative_accounts.push(el)
     }
   })
