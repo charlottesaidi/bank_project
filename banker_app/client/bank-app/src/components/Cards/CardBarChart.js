@@ -1,7 +1,7 @@
 import React from "react";
 import Chart from "chart.js";
 
-export default function CardBarChart() {
+export default function CardBarChart({props}) {
   React.useEffect(() => {
     let config = {
       type: "bar",
@@ -17,7 +17,7 @@ export default function CardBarChart() {
         ],
         datasets: [
           {
-            label: new Date().getFullYear(),
+            label: "CC",
             backgroundColor: "#ed64a6",
             borderColor: "#ed64a6",
             data: [30, 78, 56, 34, 100, 45, 13],
@@ -25,9 +25,17 @@ export default function CardBarChart() {
             barThickness: 8,
           },
           {
-            label: new Date().getFullYear() - 1,
+            label: "Livrets A",
             fill: false,
             backgroundColor: "#4c51bf",
+            borderColor: "#4c51bf",
+            data: [27, 68, 86, 74, 10, 4, 87],
+            barThickness: 8,
+          },
+          {
+            label: "LDD",
+            fill: false,
+            backgroundColor: "#F97316",
             borderColor: "#4c51bf",
             data: [27, 68, 86, 74, 10, 4, 87],
             barThickness: 8,

@@ -6,7 +6,6 @@ import Link from "next/link";
 
 
 export default function CardPageVisits({ props }) {
-  // console.log(props);
   return (
     <>
       <div className="relative flex flex-col min-w-0 break-words bg-white w-full mb-6 shadow-lg rounded">
@@ -53,7 +52,7 @@ export default function CardPageVisits({ props }) {
             <tbody>
             {Array.from(props).map(
                 (item, index) => (
-                  (console.log(item),
+                  (
                     <tr key={index}>
                       <th className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-left">
                       {item.user.last_name + " " + item.user.first_name}
