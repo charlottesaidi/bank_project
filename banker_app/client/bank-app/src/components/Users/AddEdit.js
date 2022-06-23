@@ -6,9 +6,9 @@ import * as Yup from "yup";
 import Link from "next/link";
 import { userService, alertService } from "@services/index";
 
-export { AddEdit };
+// export { AddEdit };
 
-function AddEdit(props) {
+export default function AddEdit(props) {
   const user = props?.user;
   const isAddMode = !user;
   const router = useRouter();
