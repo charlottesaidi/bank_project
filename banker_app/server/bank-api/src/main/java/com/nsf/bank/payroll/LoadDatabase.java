@@ -58,18 +58,18 @@ public class LoadDatabase {
     @Bean
     CommandLineRunner initDatabase() throws ParseException {
         // commenter après le premier lancement de l'application
-        int usersCount = createUsers();
-        int accountTypesCount = createAccountTypes();
-
-        return args -> {
-            log.info("Loading fixtures : " + usersCount + " utilisateur.s inséré.s");
-            log.info("Loading fixtures : " + accountTypesCount + " type.s de compte inséré.s");
-        };
+//        int accountTypesCount = createAccountTypes();
+//        int usersCount = createUsers();
+//
+//        return args -> {
+//            log.info("Loading fixtures : " + usersCount + " utilisateur.s inséré.s");
+//            log.info("Loading fixtures : " + accountTypesCount + " type.s de compte inséré.s");
+//        };
 
         // utiliser ça plutôt :
-//        return args -> {
-//            log.info("Application running");
-//        };
+        return args -> {
+            log.info("Application running");
+        };
     }
 
     public User createUser(String email, String password, String firstName, String lastName) throws ParseException {
@@ -90,13 +90,15 @@ public class LoadDatabase {
     }
 
     public int createUsers() throws ParseException {
-        User customer = createUser("customer@example.fr", "customerpass", "Customer", "Test");
+        Faker faker = new Faker(new Locale("fr-FR"));
+
+        User customer = createUser(faker.name().username()+"@customer.fr", "customerpass", faker.name().firstName(), faker.name().lastName());
         Customer userCustomer = new Customer();
 
-        User banker = createUser("banker@example.fr", "bankerpass", "Banker", "Test");
+        User banker = createUser(faker.name().username()+"@banker.fr", "bankerpass", faker.name().firstName(), faker.name().lastName());
         Banker userBanker = new Banker();
 
-        User director = createUser("director@example.fr", "directorpass", "Director", "Test");
+        User director = createUser(faker.name().username()+"@director.fr", "directorpass", "Director", "Test");
         Banker userDirector = new Banker();
 
         List<Role> bankerRoles = new ArrayList<>();

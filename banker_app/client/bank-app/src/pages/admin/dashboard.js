@@ -36,8 +36,8 @@ export default function Dashboard() {
       .catch((err) => {
         console.error(err);
       });
-
   }, []);
+
   return (
     <>
       <div className="flex flex-wrap">
@@ -53,7 +53,7 @@ export default function Dashboard() {
           <CardPageVisits props={customer} />
         </div>
         <div className="w-full xl:w-4/12 px-4">
-          <CardSocialTraffic />
+          <CardSocialTraffic props={customer}/>
         </div>
       </div>
     </>
