@@ -12,7 +12,7 @@ export default function CardPageVisits({ props }) {
           <div className="flex flex-wrap items-center">
             <div className="relative w-full px-4 max-w-full flex-grow flex-1">
               <h3 className="font-semibold text-base text-blueGray-700">
-                Aperçu clients
+                Aperçu Clients
               </h3>
             </div>
             <div className="relative w-full px-4 max-w-full flex-grow flex-1 text-right">
@@ -49,7 +49,6 @@ export default function CardPageVisits({ props }) {
             <tbody>
               {Array.from(props).map(
                 (item, index) => (
-                  // console.log(item),
                   (
                     <tr key={index}>
                       <th className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-left">
