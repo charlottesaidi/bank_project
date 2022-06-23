@@ -19,6 +19,8 @@ import Admin from "@layouts/Admin.js";
 
 export default function Dashboard() {
   const [customer, setCustomer] = useState(userService.user);
+  const [accounts, setAccount] = useState(userService.user);
+  let negative_accounts = [];
   // console.log(customer);
   useEffect(() => {
     let user = JSON.parse(localStorage.getItem("user"));
@@ -36,6 +38,17 @@ export default function Dashboard() {
       .catch((err) => {
         console.error(err);
       });
+
+      axios
+      .get(api + `api/bankers/${bankerUsername}/customers/accounts`, {
+        headers: { Authorization: `Bearer ${token}` },
+      })
+      .then((res) => {
+        setAccount(res.data);
+      })
+      .catch((err) => {
+        console.error(err);
+      });      
   }, []);
   // const subTotal = customer.reduce((acc, product) => {
   //   return acc + product.price * product.quantity;
@@ -49,7 +62,7 @@ export default function Dashboard() {
           <CardLineChart />
         </div>
         <div className="w-full xl:w-4/12 px-4">
-          <CardBarChart />
+          <CardBarChart props={accounts}/>
         </div>
       </div>
       <div className="flex flex-wrap mt-4">
@@ -57,7 +70,7 @@ export default function Dashboard() {
           <CardPageVisits props={customer} />
         </div>
         <div className="w-full xl:w-4/12 px-4">
-          <CardSocialTraffic />
+          <CardSocialTraffic props={customer}/>
         </div>
       </div>
     </>
