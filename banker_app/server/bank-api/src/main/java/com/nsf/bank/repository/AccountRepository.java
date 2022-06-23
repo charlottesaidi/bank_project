@@ -15,4 +15,7 @@ public interface AccountRepository extends JpaRepository<Account, Integer> {
 
     @Query("select a from Account a where a.hashid = ?1")
     Account findAccountByAccountNumber(String hashid);
+
+    @Query("select a from Account a JOIN a.customer c JOIN c.banker b where b.hashid = ?1")
+    List<Account> findAllAccountsByBankerClients(String hashid);
 }
