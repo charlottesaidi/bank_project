@@ -50,6 +50,11 @@ export default function Dashboard() {
         console.error(err);
       });      
   }, []);
+  // const subTotal = customer.reduce((acc, product) => {
+  //   return acc + product.price * product.quantity;
+  // }, 0);
+
+  // console.log(subTotal);
   return (
     <>
       <div className="flex flex-wrap">

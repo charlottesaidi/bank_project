@@ -95,7 +95,6 @@ export default function CardTable({ color, props }) {
             </thead>
             <tbody>
               {Array.from(props).map((item, index) => (
-                console.log(item),
                 <tr key={index}>
                   <th className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-left flex items-center">
                     <img
@@ -149,7 +148,7 @@ export default function CardTable({ color, props }) {
                   </td>
                   <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-right">
                     {/* <TableDropdown /> */}
-                    <Link href={`/admin/tables/${item.id}`} passHref>
+                    <Link href={`/admin/tables/${item.user.username}`} passHref>
                       <a className="singleCustomer shadow-xl">
                         <i class="fa-solid fa-ellipsis-vertical"></i>
                       </a>
