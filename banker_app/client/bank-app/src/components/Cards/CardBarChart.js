@@ -2,7 +2,7 @@ import React from "react";
 import Chart from "chart.js";
 
 export default function CardBarChart({current_year, last_year}) {
-    React.useEffect(() => {
+  React.useEffect(() => {
     let config = {
       type: "bar",
       data: {

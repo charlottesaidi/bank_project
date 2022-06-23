@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import dynamic from 'next/dynamic';
 
 import axios from "axios";
 
@@ -9,9 +10,13 @@ import { userService } from "@services/index";
 // components
 
 import CardLineChart from "@components/Cards/CardLineChart.js";
-import CardBarChart from "@components/Cards/CardBarChart.js";
+// import CardBarChart from "@components/Cards/CardBarChart.js";
 import CardPageVisits from "@components/Cards/CardPageVisits.js";
 import CardSocialTraffic from "@components/Cards/CardSocialTraffic.js";
+
+const CardBarChart = dynamic(() => import('@components/Cards/CardBarChart.js'), {
+  ssr: false,
+})
 
 // layout for page
 
