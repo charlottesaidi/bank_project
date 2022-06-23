@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1
--- Généré le : jeu. 23 juin 2022 à 09:36
+-- Généré le : jeu. 23 juin 2022 à 11:10
 -- Version du serveur :  10.4.18-MariaDB
 -- Version de PHP : 8.0.3
 
@@ -20,6 +20,8 @@ SET time_zone = "+00:00";
 --
 -- Base de données : `bank_api`
 --
+CREATE DATABASE IF NOT EXISTS `bank_api` DEFAULT CHARACTER SET latin1 COLLATE latin1_swedish_ci;
+USE `bank_api`;
 
 DELIMITER $$
 --
@@ -60,39 +62,37 @@ CREATE TABLE `accounts` (
 --
 
 INSERT INTO `accounts` (`id_account`, `balance`, `created_at`, `hashid`, `overdraft`, `updated_at`, `id_account_type`, `id_customer`) VALUES
-(12, 470.01, '2022-06-22 16:56:01', 'CUR1160054', -100, '2022-06-23 09:28:07', 1, 11),
-(17, 1001, '2022-06-22 16:56:02', 'CUR1328201', -101, NULL, 1, 16),
-(22, 1002, '2022-06-22 16:56:03', 'CUR0093252', -102, NULL, 1, 21),
-(27, 1003, '2022-06-22 16:56:04', 'CUR3647177', -103, NULL, 1, 26),
-(32, 1004, '2022-06-22 16:56:05', 'CUR1209472', -104, NULL, 1, 31),
-(37, 1005, '2022-06-22 16:56:05', 'CUR3285617', -105, NULL, 1, 36),
-(42, 1006, '2022-06-22 16:56:06', 'CUR3835414', -106, NULL, 1, 41),
-(47, 1007, '2022-06-22 16:56:07', 'CUR2130033', -107, NULL, 1, 46),
-(52, 1008, '2022-06-22 16:56:08', 'CUR6938924', -108, NULL, 1, 51),
-(57, 1009, '2022-06-22 16:56:08', 'CUR8205006', -109, NULL, 1, 56),
-(62, 1010, '2022-06-22 16:56:09', 'CUR2804230', -110, NULL, 1, 61),
-(67, 1011, '2022-06-22 16:56:10', 'CUR8002779', -111, NULL, 1, 66),
-(72, 1012, '2022-06-22 16:56:11', 'CUR9228673', -112, NULL, 1, 71),
-(77, 1013, '2022-06-22 16:56:11', 'CUR1196704', -113, NULL, 1, 76),
-(82, 1014, '2022-06-22 16:56:12', 'CUR9797189', -114, NULL, 1, 81),
-(87, 1015, '2022-06-22 16:56:13', 'CUR4945492', -115, NULL, 1, 86),
-(92, 1016, '2022-06-22 16:56:14', 'CUR3437958', -116, NULL, 1, 91),
-(97, 1017, '2022-06-22 16:56:14', 'CUR9798302', -117, NULL, 1, 96),
-(102, 1018, '2022-06-22 16:56:15', 'CUR9759333', -118, NULL, 1, 101),
-(107, 1019, '2022-06-22 16:56:16', 'CUR7822284', -119, NULL, 1, 106),
-(112, 1020, '2022-06-22 16:56:17', 'CUR3065226', -120, NULL, 1, 111),
-(117, 1021, '2022-06-22 16:56:17', 'CUR5862063', -121, NULL, 1, 116),
-(122, 1022, '2022-06-22 16:56:19', 'CUR5245611', -122, NULL, 1, 121),
-(127, 1023, '2022-06-22 16:56:19', 'CUR0603811', -123, NULL, 1, 126),
-(132, 1024, '2022-06-22 16:56:21', 'CUR2325081', -124, NULL, 1, 131),
-(137, 1025, '2022-06-22 16:56:22', 'CUR2845002', -125, NULL, 1, 136),
-(142, 1026, '2022-06-22 16:56:22', 'CUR6726365', -126, NULL, 1, 141),
-(147, 1027, '2022-06-22 16:56:23', 'CUR8521474', -127, NULL, 1, 146),
-(152, 1028, '2022-06-22 16:56:24', 'CUR6574219', -128, NULL, 1, 151),
-(157, 1029, '2022-06-22 16:56:25', 'CUR9812341', -129, NULL, 1, 156),
-(160, 2000, '2022-06-23 09:24:54', 'LVA2825058', -100, NULL, 2, 7),
-(163, 1973.66, '2022-06-23 09:25:49', 'LVA4135340', -200, '2022-06-23 09:27:13', 3, 11),
-(166, 800, '2022-06-23 09:26:01', 'LVA1461491', -100, NULL, 3, 16);
+(5, 1800, '2022-06-23 11:09:30', 'CUR6782069', -1000, NULL, NULL, 4),
+(12, 2019, '2022-06-23 11:09:31', 'CUR5712703', -1000, NULL, NULL, 11),
+(17, 2869, '2022-06-23 11:09:31', 'CUR7737706', -1000, NULL, NULL, 16),
+(22, 2749, '2022-06-23 11:09:32', 'CUR7775431', -1000, NULL, NULL, 21),
+(27, 2685, '2022-06-23 11:09:33', 'CUR6852771', -1000, NULL, NULL, 26),
+(32, 2651, '2022-06-23 11:09:34', 'CUR1960598', -1000, NULL, NULL, 31),
+(37, 1288, '2022-06-23 11:09:34', 'CUR1049143', -1000, NULL, NULL, 36),
+(42, 362, '2022-06-23 11:09:35', 'CUR4879683', -1000, NULL, NULL, 41),
+(47, 495, '2022-06-23 11:09:36', 'CUR3311817', -1000, NULL, NULL, 46),
+(52, 2004, '2022-06-23 11:09:37', 'CUR5422414', -1000, NULL, NULL, 51),
+(57, 289, '2022-06-23 11:09:37', 'CUR0020561', -1000, NULL, NULL, 56),
+(62, 1983, '2022-06-23 11:09:38', 'CUR1398919', -1000, NULL, NULL, 61),
+(67, 2739, '2022-06-23 11:09:39', 'CUR7517051', -1000, NULL, NULL, 66),
+(72, 2147, '2022-06-23 11:09:40', 'CUR9952292', -1000, NULL, NULL, 71),
+(77, 1090, '2022-06-23 11:09:40', 'CUR8415931', -1000, NULL, NULL, 76),
+(82, 2607, '2022-06-23 11:09:41', 'CUR1281566', -1000, NULL, NULL, 81),
+(87, 2261, '2022-06-23 11:09:42', 'CUR4762803', -1000, NULL, NULL, 86),
+(92, 2211, '2022-06-23 11:09:42', 'CUR9007175', -1000, NULL, NULL, 91),
+(97, 881, '2022-06-23 11:09:43', 'CUR9150519', -1000, NULL, NULL, 96),
+(102, 1097, '2022-06-23 11:09:44', 'CUR9010024', -1000, NULL, NULL, 101),
+(107, 2040, '2022-06-23 11:09:45', 'CUR8761443', -1000, NULL, NULL, 106),
+(112, 1152, '2022-06-23 11:09:45', 'CUR9709874', -1000, NULL, NULL, 111),
+(117, 2596, '2022-06-23 11:09:46', 'CUR0752934', -1000, NULL, NULL, 116),
+(122, 381, '2022-06-23 11:09:47', 'CUR0671268', -1000, NULL, NULL, 121),
+(127, 2987, '2022-06-23 11:09:47', 'CUR2461194', -1000, NULL, NULL, 126),
+(132, 1137, '2022-06-23 11:09:48', 'CUR6776063', -1000, NULL, NULL, 131),
+(137, 1804, '2022-06-23 11:09:49', 'CUR5651237', -1000, NULL, NULL, 136),
+(142, 805, '2022-06-23 11:09:50', 'CUR7357127', -1000, NULL, NULL, 141),
+(147, 338, '2022-06-23 11:09:50', 'CUR6592684', -1000, NULL, NULL, 146),
+(152, 1732, '2022-06-23 11:09:51', 'CUR7181985', -1000, NULL, NULL, 151),
+(157, 1116, '2022-06-23 11:09:52', 'CUR2244397', -1000, NULL, NULL, 156);
 
 -- --------------------------------------------------------
 
@@ -113,39 +113,37 @@ CREATE TABLE `account_balances` (
 --
 
 INSERT INTO `account_balances` (`id_account_balance`, `balance`, `created_at`, `updated_at`, `id_account`) VALUES
-(14, 470.01, '2022-06-22 16:56:01', '2022-06-23 09:28:07', 12),
-(19, 1001, '2022-06-22 16:56:02', NULL, 17),
-(24, 1002, '2022-06-22 16:56:03', NULL, 22),
-(29, 1003, '2022-06-22 16:56:04', NULL, 27),
-(34, 1004, '2022-06-22 16:56:05', NULL, 32),
-(39, 1005, '2022-06-22 16:56:05', NULL, 37),
-(44, 1006, '2022-06-22 16:56:06', NULL, 42),
-(49, 1007, '2022-06-22 16:56:07', NULL, 47),
-(54, 1008, '2022-06-22 16:56:08', NULL, 52),
-(59, 1009, '2022-06-22 16:56:08', NULL, 57),
-(64, 1010, '2022-06-22 16:56:09', NULL, 62),
-(69, 1011, '2022-06-22 16:56:10', NULL, 67),
-(74, 1012, '2022-06-22 16:56:11', NULL, 72),
-(79, 1013, '2022-06-22 16:56:11', NULL, 77),
-(84, 1014, '2022-06-22 16:56:12', NULL, 82),
-(89, 1015, '2022-06-22 16:56:13', NULL, 87),
-(94, 1016, '2022-06-22 16:56:14', NULL, 92),
-(99, 1017, '2022-06-22 16:56:14', NULL, 97),
-(104, 1018, '2022-06-22 16:56:15', NULL, 102),
-(109, 1019, '2022-06-22 16:56:16', NULL, 107),
-(114, 1020, '2022-06-22 16:56:17', NULL, 112),
-(119, 1021, '2022-06-22 16:56:17', NULL, 117),
-(124, 1022, '2022-06-22 16:56:19', NULL, 122),
-(129, 1023, '2022-06-22 16:56:19', NULL, 127),
-(134, 1024, '2022-06-22 16:56:21', NULL, 132),
-(139, 1025, '2022-06-22 16:56:22', NULL, 137),
-(144, 1026, '2022-06-22 16:56:22', NULL, 142),
-(149, 1027, '2022-06-22 16:56:23', NULL, 147),
-(154, 1028, '2022-06-22 16:56:24', NULL, 152),
-(159, 1029, '2022-06-22 16:56:25', NULL, 157),
-(162, 2000, '2022-06-23 09:24:55', NULL, 160),
-(165, 1973.66, '2022-06-23 09:25:49', '2022-06-23 09:27:13', 163),
-(168, 800, '2022-06-23 09:26:01', NULL, 166);
+(7, 1800, '2022-06-23 11:09:30', NULL, 5),
+(14, 2019, '2022-06-23 11:09:31', NULL, 12),
+(19, 2869, '2022-06-23 11:09:31', NULL, 17),
+(24, 2749, '2022-06-23 11:09:32', NULL, 22),
+(29, 2685, '2022-06-23 11:09:33', NULL, 27),
+(34, 2651, '2022-06-23 11:09:34', NULL, 32),
+(39, 1288, '2022-06-23 11:09:35', NULL, 37),
+(44, 362, '2022-06-23 11:09:35', NULL, 42),
+(49, 495, '2022-06-23 11:09:36', NULL, 47),
+(54, 2004, '2022-06-23 11:09:37', NULL, 52),
+(59, 289, '2022-06-23 11:09:37', NULL, 57),
+(64, 1983, '2022-06-23 11:09:38', NULL, 62),
+(69, 2739, '2022-06-23 11:09:39', NULL, 67),
+(74, 2147, '2022-06-23 11:09:40', NULL, 72),
+(79, 1090, '2022-06-23 11:09:40', NULL, 77),
+(84, 2607, '2022-06-23 11:09:41', NULL, 82),
+(89, 2261, '2022-06-23 11:09:42', NULL, 87),
+(94, 2211, '2022-06-23 11:09:42', NULL, 92),
+(99, 881, '2022-06-23 11:09:43', NULL, 97),
+(104, 1097, '2022-06-23 11:09:44', NULL, 102),
+(109, 2040, '2022-06-23 11:09:45', NULL, 107),
+(114, 1152, '2022-06-23 11:09:45', NULL, 112),
+(119, 2596, '2022-06-23 11:09:46', NULL, 117),
+(124, 381, '2022-06-23 11:09:47', NULL, 122),
+(129, 2987, '2022-06-23 11:09:47', NULL, 127),
+(134, 1137, '2022-06-23 11:09:48', NULL, 132),
+(139, 1804, '2022-06-23 11:09:49', NULL, 137),
+(144, 805, '2022-06-23 11:09:50', NULL, 142),
+(149, 338, '2022-06-23 11:09:50', NULL, 147),
+(154, 1732, '2022-06-23 11:09:51', NULL, 152),
+(159, 1116, '2022-06-23 11:09:52', NULL, 157);
 
 -- --------------------------------------------------------
 
@@ -166,9 +164,9 @@ CREATE TABLE `account_types` (
 --
 
 INSERT INTO `account_types` (`id_account_type`, `created_at`, `name`, `rate`, `updated_at`) VALUES
-(1, '2022-06-22 16:55:57', 'CPT_COURANT', 0, NULL),
-(2, '2022-06-22 16:55:58', 'LIVRET_DEVELOPPEMENT_DURABLE', 0.6, NULL),
-(3, '2022-06-22 16:55:58', 'LIVRET_A', 0.3, NULL);
+(160, '2022-06-23 11:09:52', 'CPT_COURANT', 0, NULL),
+(161, '2022-06-23 11:09:52', 'LIVRET_DEVELOPPEMENT_DURABLE', 0.6, NULL),
+(162, '2022-06-23 11:09:52', 'LIVRET_A', 0.3, NULL);
 
 -- --------------------------------------------------------
 
@@ -189,8 +187,8 @@ CREATE TABLE `bankers` (
 --
 
 INSERT INTO `bankers` (`id_banker`, `created_at`, `hashid`, `updated_at`, `id_user`) VALUES
-(5, '2022-06-22 16:56:00', '4446278241', NULL, 4),
-(9, '2022-06-22 16:56:00', '9891532360', NULL, 8);
+(2, '2022-06-23 11:09:30', '8500617069', NULL, 1),
+(9, '2022-06-23 11:09:30', '7878047917', NULL, 8);
 
 -- --------------------------------------------------------
 
@@ -213,39 +211,37 @@ CREATE TABLE `cards` (
 --
 
 INSERT INTO `cards` (`id_card`, `created_at`, `cvc`, `number`, `updated_at`, `validity_date`, `id_account`) VALUES
-(13, '2022-06-22 16:56:01', '175', '9171001053886704', NULL, '2024-06-22 16:56:01', 12),
-(18, '2022-06-22 16:56:02', '945', '1475988456389239', NULL, '2024-06-22 16:56:02', 17),
-(23, '2022-06-22 16:56:03', '911', '9632023549924917', NULL, '2024-06-22 16:56:03', 22),
-(28, '2022-06-22 16:56:04', '538', '6180258509940084', NULL, '2024-06-22 16:56:04', 27),
-(33, '2022-06-22 16:56:05', '220', '4266427870755417', NULL, '2024-06-22 16:56:05', 32),
-(38, '2022-06-22 16:56:05', '931', '0487611041100330', NULL, '2024-06-22 16:56:05', 37),
-(43, '2022-06-22 16:56:06', '056', '8790599148597175', NULL, '2024-06-22 16:56:06', 42),
-(48, '2022-06-22 16:56:07', '181', '3596108912483800', NULL, '2024-06-22 16:56:07', 47),
-(53, '2022-06-22 16:56:08', '835', '1833732148980269', NULL, '2024-06-22 16:56:08', 52),
-(58, '2022-06-22 16:56:08', '158', '2813835736970609', NULL, '2024-06-22 16:56:08', 57),
-(63, '2022-06-22 16:56:09', '625', '0323642048545317', NULL, '2024-06-22 16:56:09', 62),
-(68, '2022-06-22 16:56:10', '950', '2603188917471429', NULL, '2024-06-22 16:56:10', 67),
-(73, '2022-06-22 16:56:11', '268', '1037190837816016', NULL, '2024-06-22 16:56:11', 72),
-(78, '2022-06-22 16:56:11', '424', '2630287606702155', NULL, '2024-06-22 16:56:11', 77),
-(83, '2022-06-22 16:56:12', '430', '2836369449007787', NULL, '2024-06-22 16:56:12', 82),
-(88, '2022-06-22 16:56:13', '906', '4654364962285415', NULL, '2024-06-22 16:56:13', 87),
-(93, '2022-06-22 16:56:14', '312', '2580420602348936', NULL, '2024-06-22 16:56:14', 92),
-(98, '2022-06-22 16:56:14', '368', '9263768537679164', NULL, '2024-06-22 16:56:14', 97),
-(103, '2022-06-22 16:56:15', '589', '3672727194248670', NULL, '2024-06-22 16:56:15', 102),
-(108, '2022-06-22 16:56:16', '864', '1941931252316469', NULL, '2024-06-22 16:56:16', 107),
-(113, '2022-06-22 16:56:17', '171', '5744625471463741', NULL, '2024-06-22 16:56:17', 112),
-(118, '2022-06-22 16:56:17', '763', '9550677210279786', NULL, '2024-06-22 16:56:17', 117),
-(123, '2022-06-22 16:56:19', '922', '8476610680395807', NULL, '2024-06-22 16:56:19', 122),
-(128, '2022-06-22 16:56:19', '338', '0441980914754555', NULL, '2024-06-22 16:56:19', 127),
-(133, '2022-06-22 16:56:21', '505', '6350751551462517', NULL, '2024-06-22 16:56:21', 132),
-(138, '2022-06-22 16:56:22', '491', '2510950516266723', NULL, '2024-06-22 16:56:22', 137),
-(143, '2022-06-22 16:56:22', '115', '3096921444355365', NULL, '2024-06-22 16:56:22', 142),
-(148, '2022-06-22 16:56:23', '767', '7736540213960687', NULL, '2024-06-22 16:56:23', 147),
-(153, '2022-06-22 16:56:24', '935', '9581349327806246', NULL, '2024-06-22 16:56:24', 152),
-(158, '2022-06-22 16:56:25', '636', '7683756145272444', NULL, '2024-06-22 16:56:25', 157),
-(161, '2022-06-23 09:24:55', '759', '4599088868606515', NULL, '2024-06-23 09:24:54', 160),
-(164, '2022-06-23 09:25:49', '411', '0232744920219655', NULL, '2024-06-23 09:25:49', 163),
-(167, '2022-06-23 09:26:01', '702', '1583750579272303', NULL, '2024-06-23 09:26:01', 166);
+(6, '2022-06-23 11:09:30', '250', '9357677827794656', NULL, '2024-06-23 11:09:30', 5),
+(13, '2022-06-23 11:09:31', '169', '1893954600965933', NULL, '2024-06-23 11:09:31', 12),
+(18, '2022-06-23 11:09:31', '717', '2078941832662461', NULL, '2024-06-23 11:09:31', 17),
+(23, '2022-06-23 11:09:32', '866', '8024436704927348', NULL, '2024-06-23 11:09:32', 22),
+(28, '2022-06-23 11:09:33', '236', '3143136242551145', NULL, '2024-06-23 11:09:33', 27),
+(33, '2022-06-23 11:09:34', '077', '2897027409384676', NULL, '2024-06-23 11:09:34', 32),
+(38, '2022-06-23 11:09:35', '680', '1907980163957913', NULL, '2024-06-23 11:09:34', 37),
+(43, '2022-06-23 11:09:35', '089', '8095406624251924', NULL, '2024-06-23 11:09:35', 42),
+(48, '2022-06-23 11:09:36', '381', '0898385892690888', NULL, '2024-06-23 11:09:36', 47),
+(53, '2022-06-23 11:09:37', '210', '1098176197323550', NULL, '2024-06-23 11:09:37', 52),
+(58, '2022-06-23 11:09:37', '214', '7994825443254783', NULL, '2024-06-23 11:09:37', 57),
+(63, '2022-06-23 11:09:38', '508', '5168776895160126', NULL, '2024-06-23 11:09:38', 62),
+(68, '2022-06-23 11:09:39', '058', '1152614171861725', NULL, '2024-06-23 11:09:39', 67),
+(73, '2022-06-23 11:09:40', '039', '4364039688554568', NULL, '2024-06-23 11:09:40', 72),
+(78, '2022-06-23 11:09:40', '548', '0796160700707307', NULL, '2024-06-23 11:09:40', 77),
+(83, '2022-06-23 11:09:41', '071', '5764610185325727', NULL, '2024-06-23 11:09:41', 82),
+(88, '2022-06-23 11:09:42', '274', '0640283793040611', NULL, '2024-06-23 11:09:42', 87),
+(93, '2022-06-23 11:09:42', '010', '9743023684906000', NULL, '2024-06-23 11:09:42', 92),
+(98, '2022-06-23 11:09:43', '015', '5852084033092992', NULL, '2024-06-23 11:09:43', 97),
+(103, '2022-06-23 11:09:44', '022', '8030167660428752', NULL, '2024-06-23 11:09:44', 102),
+(108, '2022-06-23 11:09:45', '628', '0617056127606327', NULL, '2024-06-23 11:09:45', 107),
+(113, '2022-06-23 11:09:45', '562', '2788387415989864', NULL, '2024-06-23 11:09:45', 112),
+(118, '2022-06-23 11:09:46', '317', '9918826019817547', NULL, '2024-06-23 11:09:46', 117),
+(123, '2022-06-23 11:09:47', '917', '5677167082971706', NULL, '2024-06-23 11:09:47', 122),
+(128, '2022-06-23 11:09:47', '028', '7768437451574765', NULL, '2024-06-23 11:09:47', 127),
+(133, '2022-06-23 11:09:48', '835', '6095099187647372', NULL, '2024-06-23 11:09:48', 132),
+(138, '2022-06-23 11:09:49', '344', '6711198604102325', NULL, '2024-06-23 11:09:49', 137),
+(143, '2022-06-23 11:09:50', '332', '2544486228110229', NULL, '2024-06-23 11:09:50', 142),
+(148, '2022-06-23 11:09:50', '164', '8082747698982495', NULL, '2024-06-23 11:09:50', 147),
+(153, '2022-06-23 11:09:51', '750', '2720216415502171', NULL, '2024-06-23 11:09:51', 152),
+(158, '2022-06-23 11:09:52', '200', '3309226976154603', NULL, '2024-06-23 11:09:52', 157);
 
 -- --------------------------------------------------------
 
@@ -258,13 +254,6 @@ CREATE TABLE `changing_rate_dates` (
   `end_date` datetime DEFAULT NULL,
   `start_date` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Déchargement des données de la table `changing_rate_dates`
---
-
-INSERT INTO `changing_rate_dates` (`id_changing_rate_date`, `end_date`, `start_date`) VALUES
-(173, '2022-12-06 01:00:00', '2022-12-01 01:00:00');
 
 -- --------------------------------------------------------
 
@@ -287,37 +276,37 @@ CREATE TABLE `customers` (
 --
 
 INSERT INTO `customers` (`id_customer`, `created_at`, `document_date`, `hashid`, `updated_at`, `id_banker`, `id_user`) VALUES
-(7, '2022-06-22 16:56:00', NULL, '1461417618', NULL, 5, 6),
-(11, '2022-06-22 16:56:01', NULL, '9832186783', NULL, 5, 10),
-(16, '2022-06-22 16:56:02', NULL, '2814243184', NULL, 5, 15),
-(21, '2022-06-22 16:56:03', NULL, '4202744790', NULL, 5, 20),
-(26, '2022-06-22 16:56:04', NULL, '0460614075', NULL, 5, 25),
-(31, '2022-06-22 16:56:05', NULL, '9637117955', NULL, 5, 30),
-(36, '2022-06-22 16:56:05', NULL, '0356588845', NULL, 5, 35),
-(41, '2022-06-22 16:56:06', NULL, '9892814082', NULL, 5, 40),
-(46, '2022-06-22 16:56:07', NULL, '2880028937', NULL, 5, 45),
-(51, '2022-06-22 16:56:08', NULL, '2356021837', NULL, 5, 50),
-(56, '2022-06-22 16:56:08', NULL, '5035909983', NULL, 5, 55),
-(61, '2022-06-22 16:56:09', NULL, '7558635015', NULL, 5, 60),
-(66, '2022-06-22 16:56:10', NULL, '0041438539', NULL, 5, 65),
-(71, '2022-06-22 16:56:11', NULL, '2932355487', NULL, 5, 70),
-(76, '2022-06-22 16:56:11', NULL, '4169832230', NULL, 5, 75),
-(81, '2022-06-22 16:56:12', NULL, '2171619921', NULL, 5, 80),
-(86, '2022-06-22 16:56:13', NULL, '8905571089', NULL, 5, 85),
-(91, '2022-06-22 16:56:14', NULL, '2130905924', NULL, 5, 90),
-(96, '2022-06-22 16:56:14', NULL, '4184262276', NULL, 5, 95),
-(101, '2022-06-22 16:56:15', NULL, '0848594153', NULL, 5, 100),
-(106, '2022-06-22 16:56:16', NULL, '6449705802', NULL, 5, 105),
-(111, '2022-06-22 16:56:17', NULL, '5822234602', NULL, 5, 110),
-(116, '2022-06-22 16:56:17', NULL, '6652505055', NULL, 5, 115),
-(121, '2022-06-22 16:56:19', NULL, '8527334184', NULL, 5, 120),
-(126, '2022-06-22 16:56:19', NULL, '5358570685', NULL, 5, 125),
-(131, '2022-06-22 16:56:21', NULL, '1680760239', NULL, 5, 130),
-(136, '2022-06-22 16:56:21', NULL, '2190641423', NULL, 5, 135),
-(141, '2022-06-22 16:56:22', NULL, '6370446396', NULL, 5, 140),
-(146, '2022-06-22 16:56:23', NULL, '5396840112', NULL, 5, 145),
-(151, '2022-06-22 16:56:24', NULL, '1542760473', NULL, 5, 150),
-(156, '2022-06-22 16:56:25', NULL, '2868268422', NULL, 5, 155);
+(4, '2022-06-23 11:09:30', NULL, '9755215741', NULL, 2, 3),
+(11, '2022-06-23 11:09:31', NULL, '7625884961', NULL, 2, 10),
+(16, '2022-06-23 11:09:31', NULL, '4640696920', NULL, 2, 15),
+(21, '2022-06-23 11:09:32', NULL, '3970197567', NULL, 2, 20),
+(26, '2022-06-23 11:09:33', NULL, '5138870147', NULL, 2, 25),
+(31, '2022-06-23 11:09:34', NULL, '4512274610', NULL, 2, 30),
+(36, '2022-06-23 11:09:34', NULL, '6265487927', NULL, 2, 35),
+(41, '2022-06-23 11:09:35', NULL, '2086775338', NULL, 2, 40),
+(46, '2022-06-23 11:09:36', NULL, '1980726866', NULL, 2, 45),
+(51, '2022-06-23 11:09:37', NULL, '0139547914', NULL, 2, 50),
+(56, '2022-06-23 11:09:37', NULL, '7516757687', NULL, 2, 55),
+(61, '2022-06-23 11:09:38', NULL, '1187672965', NULL, 2, 60),
+(66, '2022-06-23 11:09:39', NULL, '2534769123', NULL, 2, 65),
+(71, '2022-06-23 11:09:40', NULL, '8456364449', NULL, 2, 70),
+(76, '2022-06-23 11:09:40', NULL, '3976443150', NULL, 2, 75),
+(81, '2022-06-23 11:09:41', NULL, '4483884472', NULL, 2, 80),
+(86, '2022-06-23 11:09:42', NULL, '1303399516', NULL, 2, 85),
+(91, '2022-06-23 11:09:42', NULL, '1662120509', NULL, 2, 90),
+(96, '2022-06-23 11:09:43', NULL, '7769532076', NULL, 2, 95),
+(101, '2022-06-23 11:09:44', NULL, '8524776384', NULL, 2, 100),
+(106, '2022-06-23 11:09:45', NULL, '0419209857', NULL, 2, 105),
+(111, '2022-06-23 11:09:45', NULL, '8282593138', NULL, 2, 110),
+(116, '2022-06-23 11:09:46', NULL, '8365899198', NULL, 2, 115),
+(121, '2022-06-23 11:09:47', NULL, '7653796551', NULL, 2, 120),
+(126, '2022-06-23 11:09:47', NULL, '8105386950', NULL, 2, 125),
+(131, '2022-06-23 11:09:48', NULL, '1925929361', NULL, 2, 130),
+(136, '2022-06-23 11:09:49', NULL, '7335649558', NULL, 2, 135),
+(141, '2022-06-23 11:09:50', NULL, '4799493047', NULL, 2, 140),
+(146, '2022-06-23 11:09:50', NULL, '7206869272', NULL, 2, 145),
+(151, '2022-06-23 11:09:51', NULL, '7475829026', NULL, 2, 150),
+(156, '2022-06-23 11:09:52', NULL, '0611895656', NULL, 2, 155);
 
 -- --------------------------------------------------------
 
@@ -335,9 +324,9 @@ CREATE TABLE `customer_document_type` (
 --
 
 INSERT INTO `customer_document_type` (`customer_id_customer`, `document_type`) VALUES
-(7, 'attestation_domicile'),
-(7, 'piece_id'),
-(7, 'avis_impots'),
+(4, 'attestation_domicile'),
+(4, 'piece_id'),
+(4, 'avis_impots'),
 (11, 'attestation_domicile'),
 (11, 'piece_id'),
 (11, 'avis_impots'),
@@ -444,7 +433,7 @@ CREATE TABLE `hibernate_sequence` (
 --
 
 INSERT INTO `hibernate_sequence` (`next_val`) VALUES
-(174);
+(163);
 
 -- --------------------------------------------------------
 
@@ -462,15 +451,6 @@ CREATE TABLE `transactions` (
   `id_account_debit` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
---
--- Déchargement des données de la table `transactions`
---
-
-INSERT INTO `transactions` (`id_transaction`, `amount`, `created_at`, `label`, `updated_at`, `id_account_credit`, `id_account_debit`) VALUES
-(169, 26.34, '2022-06-23 09:27:13', 'Carrefour Market', NULL, NULL, 163),
-(171, 500, '2022-06-23 09:29:42', 'Epargne', NULL, 163, 12),
-(172, 29.99, '2022-06-23 09:32:10', 'Prélèvement Orange Mobile', NULL, NULL, 12);
-
 -- --------------------------------------------------------
 
 --
@@ -481,15 +461,6 @@ CREATE TABLE `transaction_description` (
   `transaction_id_transaction` int(11) NOT NULL,
   `description` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Déchargement des données de la table `transaction_description`
---
-
-INSERT INTO `transaction_description` (`transaction_id_transaction`, `description`) VALUES
-(169, 1),
-(171, 0),
-(172, 1);
 
 -- --------------------------------------------------------
 
@@ -519,39 +490,39 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id_user`, `address_city`, `address_country`, `address_street`, `address_zipcode`, `birthdate`, `created_at`, `email`, `first_name`, `last_name`, `password`, `phone`, `updated_at`, `username`) VALUES
-(4, 'Perpignan', 'France', '301 Quai de la Paix', '98668', '1990-01-01 00:00:00', '2022-06-22 16:56:00', 'banker@example.fr', 'Banker', 'Test', '$2a$12$4xoKMGAiMKmCzjJxr5uP0eiIRvprGtJf0XHVr1pQLr.UtWCdXdOPS', '0600000000', NULL, '4446278241'),
-(6, 'Béziers', 'France', '998 Avenue de la Pompe', '50682', '1990-01-01 00:00:00', '2022-06-22 16:56:00', 'customer@example.fr', 'Customer', 'Test', '$2a$12$R8UIIIiIUI2FDErcWZa1a.BRiFO6tDXqVeL0pGAcUEhT4/rb5K6r2', '0600000000', NULL, '1461417618'),
-(8, 'Cayenne', 'France', '9 Place des Grands Augustins', '26992', '1990-01-01 00:00:00', '2022-06-22 16:56:00', 'director@example.fr', 'Director', 'Test', '$2a$12$16uCV/vcR48M8vFiQNA6BOFZLVYNUXk1fFyUI0ixk3YQtr4YUgJ8G', '0600000000', NULL, '9891532360'),
-(10, 'Lorient', 'France', '2323 Impasse Monsieur-le-Prince', '31507', '1990-01-01 00:00:00', '2022-06-22 16:56:01', 'léa.carre@examplemail.fr', 'Lucie', 'Prevost', '$2a$12$CuUa3svwSeMHwnfktwlzV.129xpFWriJPS0QvPY6eQvwnWL5inrBW', '0600000000', NULL, '9832186783'),
-(15, 'Drancy', 'France', '6 Impasse de la Pompe', '45722', '1990-01-01 00:00:00', '2022-06-22 16:56:02', 'marie.fabre@examplemail.fr', 'Célia', 'Denis', '$2a$12$qQTvbjja/6phbImzyC2yleIz1zQZ3QHH6X6bFINtgKA8E4FBsGn.y', '0600000000', NULL, '2814243184'),
-(20, 'Montreuil', 'France', '18 Boulevard Monsieur-le-Prince', '26325', '1990-01-01 00:00:00', '2022-06-22 16:56:03', 'alice.guillaume@examplemail.fr', 'Maeva', 'Marty', '$2a$12$slhRAaM2/5q9N8zfgeAOfeROAtvyFkvgFEDhvmyQdm972cTRyFaEe', '0600000000', NULL, '4202744790'),
-(25, 'Argenteuil', 'France', '13 Place Pierre Charron', '83512', '1990-01-01 00:00:00', '2022-06-22 16:56:04', 'lucie.laurent@examplemail.fr', 'Océane', 'Perez', '$2a$12$Nj2717isW..sd3eKiI8QLO04sU71WMsg/upp2weDivSF0k2RRqJ5G', '0600000000', NULL, '0460614075'),
-(30, 'Montreuil', 'France', '0469 Rue de la Pompe', '46651', '1990-01-01 00:00:00', '2022-06-22 16:56:05', 'lilou.dupuy@examplemail.fr', 'Alicia', 'Fernandez', '$2a$12$2c3cTPqt3sUlEgy8kcRApOY.81tteRUMdWyIy.TV7Os12lslTucPm', '0600000000', NULL, '9637117955'),
-(35, 'Les Abymes', 'France', '715 Avenue Saint-Dominique', '35111', '1990-01-01 00:00:00', '2022-06-22 16:56:05', 'sarah.denis@examplemail.fr', 'Jules', 'Muller', '$2a$12$7Y5zic.MNjqnCSh1Ya7myeRJzVVe/e8XL/jCp/QN6Q/jbl0e2KMne', '0600000000', NULL, '0356588845'),
-(40, 'Strasbourg', 'France', '417 Rue de l Abbaye', '08422', '1990-01-01 00:00:00', '2022-06-22 16:56:06', 'mael.marchand@examplemail.fr', 'Marie', 'Lefebvre', '$2a$12$eeY6gv.1vvgURY1C4GA2FeFDLiEAyFK6.DFnof6xG0teOtsj08xvq', '0600000000', NULL, '9892814082'),
-(45, 'Aubervilliers', 'France', '014 Allée, Voie Montorgueil', '49163', '1990-01-01 00:00:00', '2022-06-22 16:56:07', 'lena.cousin@examplemail.fr', 'Adam', 'Guerin', '$2a$12$7UrPNmnHO8Gs66fWtt7s1.vDoGj59.4zKbF8xZ7ReZY7pVj9.DK7y', '0600000000', NULL, '2880028937'),
-(50, 'Reims', 'France', '6515 Impasse Saint-Honoré', '13670', '1990-01-01 00:00:00', '2022-06-22 16:56:08', 'lucas.martinez@examplemail.fr', 'Alexis', 'Boyer', '$2a$12$9igS5sARTP.zwPHkjHc.Ue7u4jLvNdisjpaOUCkGzmDsEdrb4f4S.', '0600000000', NULL, '2356021837'),
-(55, 'Créteil', 'France', '0 Quai de la Huchette', '26493', '1990-01-01 00:00:00', '2022-06-22 16:56:08', 'noémie.marie@examplemail.fr', 'Noah', 'Carre', '$2a$12$J3Ijb3jWRpZj3THabfpjvuqPRs5P08WeTcTc0ifAHgclu8ikdSN1i', '0600000000', NULL, '5035909983'),
-(60, 'Montauban', 'France', '1994 Impasse de la Harpe', '71480', '1990-01-01 00:00:00', '2022-06-22 16:56:09', 'arthur.faure@examplemail.fr', 'Lilou', 'Jacquet', '$2a$12$G2XBKMsPVyf6edzMGEXVk./A0YXcByIW7hnVkdVSQt.AJ3Bw5JxWm', '0600000000', NULL, '7558635015'),
-(65, 'Saint-Étienne', 'France', '78 Place de Provence', '29826', '1990-01-01 00:00:00', '2022-06-22 16:56:10', 'baptiste.denis@examplemail.fr', 'Jules', 'Da silva', '$2a$12$njRx/Ql8eQSUS3qLyWCcv.HsPm0gb.yVVv4AFK.zK45sI6Pz/hw9a', '0600000000', NULL, '0041438539'),
-(70, 'Issy-les-Moulineaux', 'France', '97 Boulevard Monsieur-le-Prince', '61832', '1990-01-01 00:00:00', '2022-06-22 16:56:11', 'ambre.perrin@examplemail.fr', 'Juliette', 'Le roux', '$2a$12$c/PN1D9Yi3WLgjuZZ24CA.I1P8l2HniDZotwmQem93PJhYgFSsTra', '0600000000', NULL, '2932355487'),
-(75, 'Cholet', 'France', '737 Place Joubert', '70909', '1990-01-01 00:00:00', '2022-06-22 16:56:11', 'alice.muller@examplemail.fr', 'Tom', 'Julien', '$2a$12$DPjZw/c9OXRdhKCBIv3rBe2pbUTgPXSW.Kh8HPQgm7n8S8LVtmw7i', '0600000000', NULL, '4169832230'),
-(80, 'Poitiers', 'France', '2568 Impasse des Panoramas', '16309', '1990-01-01 00:00:00', '2022-06-22 16:56:12', 'jules.remy@examplemail.fr', 'Mathéo', 'Lopez', '$2a$12$Q0i.PmlwVYm9YIxfDwkSoe7fOH7YVG4MuPYoMpTKKQ6cs6mkfK4Iu', '0600000000', NULL, '2171619921'),
-(85, 'Saint-Maur-des-Fossés', 'France', '5 Boulevard d Orsel', '06537', '1990-01-01 00:00:00', '2022-06-22 16:56:13', 'evan.julien@examplemail.fr', 'Alice', 'Leroy', '$2a$12$qA3A/uQQpxdsr1T7IIdpB.X1b27MwiOJy2XotjQhf5aeXyOtI4Xyq', '0600000000', NULL, '8905571089'),
-(90, 'Montpellier', 'France', '6413 Avenue Oberkampf', '84539', '1990-01-01 00:00:00', '2022-06-22 16:56:14', 'chloé.muller@examplemail.fr', 'Ethan', 'Adam', '$2a$12$xwNvxZmmSN4t4eVMuv0HaOqLtSDvkADVq96F11hZT7pNjpr7dC1hO', '0600000000', NULL, '2130905924'),
-(95, 'Vitry-sur-Seine', 'France', '129 Place Saint-Séverin', '01114', '1990-01-01 00:00:00', '2022-06-22 16:56:14', 'zoe.dumont@examplemail.fr', 'Pauline', 'Prevost', '$2a$12$9nNQWRHbdMfCR0o/sOYwyejj8VJtYbu6oFVvMxGyl5ho2Z/ynTpZi', '0600000000', NULL, '4184262276'),
-(100, 'Calais', 'France', '358 Place Du Sommerard', '70031', '1990-01-01 00:00:00', '2022-06-22 16:56:15', 'mélissa.roussel@examplemail.fr', 'Tom', 'Morin', '$2a$12$UcMueBMme5SpFbURW.PKH.YSSZvbbBIBUDIwBoVGY2m01rZSNKqeW', '0600000000', NULL, '0848594153'),
-(105, 'Metz', 'France', '3 Impasse Joubert', '23782', '1990-01-01 00:00:00', '2022-06-22 16:56:16', 'alice.petit@examplemail.fr', 'Léa', 'Colin', '$2a$12$3C2pEyQuPX7VzvyD6Cj1deokIWQW2q6RzKGGU8k9wYMsu7jVXcGMC', '0600000000', NULL, '6449705802'),
-(110, 'Lille', 'France', '3 Passage des Grands Augustins', '73631', '1990-01-01 00:00:00', '2022-06-22 16:56:17', 'juliette.roger@examplemail.fr', 'Clément', 'Roger', '$2a$12$UU3CpeYN0mA2DDpn.lZRA.nE/kxiF.w7Ko5NIa4wVMWRiKJVZK2ui', '0600000000', NULL, '5822234602'),
-(115, 'Aubervilliers', 'France', '396 Allée, Voie d Orsel', '52794', '1990-01-01 00:00:00', '2022-06-22 16:56:17', 'gabriel.picard@examplemail.fr', 'Axel', 'Durand', '$2a$12$ouabVxSP8wDCQ6dIgDnsYuWZa5T8178xcD4fGeNTNSvMCIwRVh7hS', '0600000000', NULL, '6652505055'),
-(120, 'Angers', 'France', '3726 Passage des Panoramas', '84351', '1990-01-01 00:00:00', '2022-06-22 16:56:19', 'alice.robert@examplemail.fr', 'Chloé', 'Guerin', '$2a$12$wxEbP3.Hqtrx3upnUOJvfOF2568HHTf1mME3Rxb2Q.7Sls8BTR0ki', '0600000000', NULL, '8527334184'),
-(125, 'Lille', 'France', '57 Avenue d Abbeville', '68790', '1990-01-01 00:00:00', '2022-06-22 16:56:19', 'mael.paris@examplemail.fr', 'Romain', 'Joly', '$2a$12$VJpEtZesHwrrFUJVUEKBJuVgzFC7cg8/pKDhgEm81zx4bKC7PD4RW', '0600000000', NULL, '5358570685'),
-(130, 'Aix-en-Provence', 'France', '31 Allée, Voie Oberkampf', '96494', '1990-01-01 00:00:00', '2022-06-22 16:56:21', 'baptiste.mercier@examplemail.fr', 'Kylian', 'Faure', '$2a$12$k8dcDwEfJXraqXuqOP5cgu3HS91x49Wz2QUMutX59JZ4YDsgJ3292', '0600000000', NULL, '1680760239'),
-(135, 'Saint-Nazaire', 'France', '81 Impasse Saint-Séverin', '80283', '1990-01-01 00:00:00', '2022-06-22 16:56:21', 'gabriel.rodriguez@examplemail.fr', 'Célia', 'Perrin', '$2a$12$q0JKrocPnx313tL4bb1AX.CFf1y.QN3UAli7a.Iz3iggh59lXiaTe', '0600000000', NULL, '2190641423'),
-(140, 'Cergy', 'France', '4849 Boulevard d Assas', '75136', '1990-01-01 00:00:00', '2022-06-22 16:56:22', 'gabriel.mercier@examplemail.fr', 'Jade', 'Schneider', '$2a$12$znZeOPgOe9EpL8LGrXC2P.k1YQX1dwVVGLw/8g5.6r/NuePegYv8y', '0600000000', NULL, '6370446396'),
-(145, 'Le Mans', 'France', '8 Avenue Saint-Bernard', '11120', '1990-01-01 00:00:00', '2022-06-22 16:56:23', 'hugo.dumas@examplemail.fr', 'Romain', 'Roger', '$2a$12$cQCMa/8c/cstJ8GAqUbIqOrZaE1wyIhi3BgwKSciYaoQujVwrqRA2', '0600000000', NULL, '5396840112'),
-(150, 'Nanterre', 'France', '91 Boulevard Monsieur-le-Prince', '46435', '1990-01-01 00:00:00', '2022-06-22 16:56:24', 'axel.francois@examplemail.fr', 'Carla', 'Riviere', '$2a$12$2XyF8SxdpbBepratAWrgSuTENARCnaJrt6mW8GjEcAHkpLIczTvwu', '0600000000', NULL, '1542760473'),
-(155, 'Bordeaux', 'France', '2884 Passage de Tilsitt', '81927', '1990-01-01 00:00:00', '2022-06-22 16:56:25', 'raphaël.lopez@examplemail.fr', 'Zoe', 'Lefevre', '$2a$12$ZgpKE4h6axEOYUyT5Ey6Be6I8SifFjvoi8rI53Zdc7SL8TSZ7hRi6', '0600000000', NULL, '2868268422');
+(1, 'Drancy', 'France', '164 Quai Monsieur-le-Prince', '35673', '1990-01-01 00:00:00', '2022-06-23 11:09:29', 'banker@example.fr', 'Banker', 'Test', '$2a$12$gIYOJ732/xTsdfFbyIVVVuOxBSLhAdQxs.s64WqjBUGvl0wKzxMPO', '0864058673', NULL, '8500617069'),
+(3, 'Asnières-sur-Seine', 'France', '635 Place de Vaugirard', '42442', '1990-01-01 00:00:00', '2022-06-23 11:09:30', 'customer@example.fr', 'Customer', 'Test', '$2a$12$k//gJwJC4IQ.YOR39ZJRhOJcBKTmN2QJgjijuqi49B5b0Ux13z7bK', '0543682222', NULL, '9755215741'),
+(8, 'Paris', 'France', '7 Impasse de la Harpe', '79341', '1990-01-01 00:00:00', '2022-06-23 11:09:30', 'director@example.fr', 'Director', 'Test', '$2a$12$qen8Vje66nAHJUOk6aMZcOqtU.36D0HVB7BCVktwW.UCsQqin4FRm', '0248643976', NULL, '7878047917'),
+(10, 'Poitiers', 'France', '04 Quai de Seine', '30100', '1990-01-01 00:00:00', '2022-06-23 11:09:31', 'maëlys.collet@examplemail.fr', 'Antoine', 'Nicolas', '$2a$12$/GkgzU1TbZiNTzvPSHeRMOELg3HspzkvgqaKhYISjqn1J3ue3fCVy', '0652548243', NULL, '7625884961'),
+(15, 'Calais', 'France', '16 Allée, Voie Charlemagne', '54363', '1990-01-01 00:00:00', '2022-06-23 11:09:31', 'paul.simon@examplemail.fr', 'Alice', 'Deschamps', '$2a$12$3btqBtqaQppvfv/5/Wczaujyl/I3.lxKOSvRW9//FbIQUaR0f6xjS', '0991584366', NULL, '4640696920'),
+(20, 'Besançon', 'France', '512 Place de Solférino', '69079', '1990-01-01 00:00:00', '2022-06-23 11:09:32', 'victor.rousseau@examplemail.fr', 'Mael', 'Durand', '$2a$12$4DT8PxO9sAFq93As1ehPBurQ/alObAf1XS6AX6L3xMMWmGUmW0oY6', '0898384282', NULL, '3970197567'),
+(25, 'Clichy', 'France', '7116 Rue de Paris', '85888', '1990-01-01 00:00:00', '2022-06-23 11:09:33', 'lena.fontaine@examplemail.fr', 'Ambre', 'Richard', '$2a$12$WaYUT3KXnEwM/srK6iejPuY9eUM/wkrgUVZ58YqgnwqR484np7pmy', '0529100017', NULL, '5138870147'),
+(30, 'Le Tampon', 'France', '4680 Quai de Nesle', '58847', '1990-01-01 00:00:00', '2022-06-23 11:09:34', 'alicia.fleury@examplemail.fr', 'Tom', 'Morin', '$2a$12$ns7CQTXoba/XPlI8MfUkFO0Lxq3h7meXrqeQ/oH074qd0Sascz.t.', '0687993475', NULL, '4512274610'),
+(35, 'Orléans', 'France', '5812 Passage d\'Argenteuil', '56126', '1990-01-01 00:00:00', '2022-06-23 11:09:34', 'noa.nicolas@examplemail.fr', 'Paul', 'Lemaire', '$2a$12$VMFF7jSPqonGZ1XseD3wK.92zNGnP8VbnuCWkKY/HY9e2BJkNbF6.', '0581853538', NULL, '6265487927'),
+(40, 'Colombes', 'France', '47 Rue Montorgueil', '19860', '1990-01-01 00:00:00', '2022-06-23 11:09:35', 'juliette.guerin@examplemail.fr', 'Célia', 'Meyer', '$2a$12$yi.pW0HGpue9Z2rWtynRAOJlbb7CF/Po4jBgLzzrB/BXTB16KCi6y', '0911227489', NULL, '2086775338'),
+(45, 'Amiens', 'France', '0 Allée, Voie de Seine', '01579', '1990-01-01 00:00:00', '2022-06-23 11:09:36', 'marie.noel@examplemail.fr', 'Victor', 'Denis', '$2a$12$NJd0Tnrl6CkNiKPeR.0t6.ngnwnTncexW6iv8ce/vgv3CRw4JGTqG', '0822295604', NULL, '1980726866'),
+(50, 'Rueil-Malmaison', 'France', '435 Place Dauphine', '63441', '1990-01-01 00:00:00', '2022-06-23 11:09:37', 'victor.denis@examplemail.fr', 'Hugo', 'Philippe', '$2a$12$lYSPBrTl0/a5y23KS2HMZ.hjgwlzFzL2C4b3l1Nryoci.peZiWDiG', '0303484897', NULL, '0139547914'),
+(55, 'Saint-Nazaire', 'France', '6424 Boulevard Saint-Séverin', '53175', '1990-01-01 00:00:00', '2022-06-23 11:09:37', 'baptiste.laine@examplemail.fr', 'Manon', 'Thomas', '$2a$12$ApITrduKAwMqEry2dnwR.uUsLhups6nvPkD1.fwLegNTSb/fVjmRe', '0912979729', NULL, '7516757687'),
+(60, 'Drancy', 'France', '5504 Place des Francs-Bourgeois', '31314', '1990-01-01 00:00:00', '2022-06-23 11:09:38', 'yanis.bonnet@examplemail.fr', 'Benjamin', 'Dupuy', '$2a$12$693csbSSqI/i/e9LU7Z8iO4Y8dKIW8yycBlsT97SahXRNffv95L8q', '0252466343', NULL, '1187672965'),
+(65, 'Dunkerque14', 'France', '2 Rue de Nesle', '31676', '1990-01-01 00:00:00', '2022-06-23 11:09:39', 'célia.barre@examplemail.fr', 'Carla', 'Renard', '$2a$12$rR6usfJrNwMrHTQ50yGdQO45XImNGteliHtMVdibcF6lYL2RsUCYm', '0578434666', NULL, '2534769123'),
+(70, 'Marseille', 'France', '048 Boulevard de la Harpe', '73553', '1990-01-01 00:00:00', '2022-06-23 11:09:40', 'alice.deschamps@examplemail.fr', 'Yanis', 'Nguyen', '$2a$12$b6THu7IkSDK4REWs0z3yve.iJh98yXMkpA.z9bXxmrz1KRzGehbua', '0997668551', NULL, '8456364449'),
+(75, 'Aix-en-Provence', 'France', '6320 Passage de la Ferronnerie', '88751', '1990-01-01 00:00:00', '2022-06-23 11:09:40', 'louis.durand@examplemail.fr', 'Hugo', 'Cousin', '$2a$12$z9e5d0CxG72vQHB821v9OeTfTF4MCb0xOxb5FLMXV.y7bpVPWJHem', '0942128125', NULL, '3976443150'),
+(80, 'Cannes', 'France', '6 Allée, Voie Marcadet', '67941', '1990-01-01 00:00:00', '2022-06-23 11:09:41', 'océane.guyot@examplemail.fr', 'Mael', 'Julien', '$2a$12$iAMHIhsHFED00IfxAY.Wwun.P5Yn2DCXuovvhM84Ze9NzwhOM2t2m', '0861062369', NULL, '4483884472'),
+(85, 'Calais', 'France', '267 Place Joubert', '10120', '1990-01-01 00:00:00', '2022-06-23 11:09:42', 'gabriel.lacroix@examplemail.fr', 'Ethan', 'Dupuis', '$2a$12$fDQnWVrm2z0x15wPeU9GZuMeeKVR/BHP91FNhpd9zFvj7RHMzYgAS', '0452586178', NULL, '1303399516'),
+(90, 'Mulhouse', 'France', '470 Passage de la Pompe', '42367', '1990-01-01 00:00:00', '2022-06-23 11:09:42', 'maeva.meyer@examplemail.fr', 'Ambre', 'Da silva', '$2a$12$Yl59FeA1/nGHLzP9Ch/keuoyvflUHEjPH776K8nfZX.SS7x8YH4Ba', '0455244519', NULL, '1662120509'),
+(95, 'Boulogne-Billancourt', 'France', '895 Quai Dauphine', '89830', '1990-01-01 00:00:00', '2022-06-23 11:09:43', 'anaïs.roche@examplemail.fr', 'Maxime', 'Thomas', '$2a$12$0FYYEXolGaX7pp17kShQf.5ZByw9N0MhD5xKxLxJ/jN.8bBLJnLf6', '0392084135', NULL, '7769532076'),
+(100, 'Tours', 'France', '17 Place de la Huchette', '49535', '1990-01-01 00:00:00', '2022-06-23 11:09:44', 'gabriel.leroy@examplemail.fr', 'Romain', 'Dumas', '$2a$12$nc3bbTIFBSjxkxVhjcSfmOlDaLO9Dh1o21WeeTcB8w3LF19b.LPU.', '0122801247', NULL, '8524776384'),
+(105, 'Issy-les-Moulineaux', 'France', '50 Place Marcadet', '73156', '1990-01-01 00:00:00', '2022-06-23 11:09:45', 'clément.gaillard@examplemail.fr', 'Louis', 'Lopez', '$2a$12$4/WF4jC2r/c/thaAk7j59efAdDkKpxzANNPmr4vZ2ubRFyG7QfaR6', '0254245567', NULL, '0419209857'),
+(110, 'Bordeaux', 'France', '24 Allée, Voie d\'Assas', '62179', '1990-01-01 00:00:00', '2022-06-23 11:09:45', 'camille.thomas@examplemail.fr', 'Antoine', 'Girard', '$2a$12$ZI/qc4r4lRbszs52AaM55.3iqA2bAv/P6wg3p9VJzJzaqLLVGJiFq', '0021705359', NULL, '8282593138'),
+(115, 'Béziers', 'France', '91 Place Joubert', '69349', '1990-01-01 00:00:00', '2022-06-23 11:09:46', 'maxime.remy@examplemail.fr', 'Mathilde', 'Mercier', '$2a$12$/Clove9xOw2gEIkcxw1pkuAmtWKwc/u.kM6SRl4QryGMB7LODHDeq', '0742406764', NULL, '8365899198'),
+(120, 'Saint-Pierre', 'France', '1055 Quai Molière', '78720', '1990-01-01 00:00:00', '2022-06-23 11:09:47', 'gabriel.huet@examplemail.fr', 'Louise', 'Robert', '$2a$12$dsv9y3jpzwP6fRTbnuOG6e5aR00yFTlLD82IsxKhHYhbZVoj5KwCG', '0473413654', NULL, '7653796551'),
+(125, 'Beauvais', 'France', '6844 Place Pastourelle', '99123', '1990-01-01 00:00:00', '2022-06-23 11:09:47', 'clémence.denis@examplemail.fr', 'Hugo', 'Masson', '$2a$12$x/pGPvhLMSa6qsIHG1fljexMRNx.6BMl6XSBpF8RH8bvunkwwCW.q', '0461111618', NULL, '8105386950'),
+(130, 'Avignon', 'France', '831 Impasse Saint-Denis', '43718', '1990-01-01 00:00:00', '2022-06-23 11:09:48', 'maëlle.morel@examplemail.fr', 'Mathis', 'Leclercq', '$2a$12$CErDxWEGI/EvYyleIWcMMe2uz.6j1XnLwjsNjjB.uDt5N719/jA/a', '0426014994', NULL, '1925929361'),
+(135, 'Vitry-sur-Seine', 'France', '54 Allée, Voie Pastourelle', '89852', '1990-01-01 00:00:00', '2022-06-23 11:09:49', 'maëlle.le gall@examplemail.fr', 'Maxime', 'Martin', '$2a$12$WTkM7mjuPxCPp3ZkdZ7BYufFrrNkDkIEgHuU6ZoAsCaFgtvPt43Je', '0341495622', NULL, '7335649558'),
+(140, 'Brest', 'France', '39 Allée, Voie Monsieur-le-Prince', '00613', '1990-01-01 00:00:00', '2022-06-23 11:09:50', 'jules.boyer@examplemail.fr', 'Lucie', 'Dubois', '$2a$12$OUyORUfz5lOQ0.dvcCyzq.vXXdn6Yl2AvbgSO9fb6/Wj3lCrVqBuC', '0128032611', NULL, '4799493047'),
+(145, 'Tourcoing', 'France', '2167 Allée, Voie de la Harpe', '32691', '1990-01-01 00:00:00', '2022-06-23 11:09:50', 'lilou.cousin@examplemail.fr', 'Léa', 'Laine', '$2a$12$RvAHS1H8Jp4iQvxcMxeA9OMmxZHHMNnHewEg1oRunlgm5M1JF71Di', '0637692681', NULL, '7206869272'),
+(150, 'Tours', 'France', '4240 Avenue de Seine', '65986', '1990-01-01 00:00:00', '2022-06-23 11:09:51', 'mathis.bertrand@examplemail.fr', 'Kylian', 'Lefevre', '$2a$12$XhbacrjxaGnCQIxHj4mqgubrTOC9wPx1mKR/b/RBPdwnCG.U8TCQC', '0520009607', NULL, '7475829026'),
+(155, 'Argenteuil', 'France', '3 Boulevard Oberkampf', '33479', '1990-01-01 00:00:00', '2022-06-23 11:09:52', 'nathan.brun@examplemail.fr', 'Léa', 'Caron', '$2a$12$dpSu6LZhnpNyMg6aOoYW4.NmG/qSbeB6VCsYY0Ck0GxM4yffKKAaK', '0843745742', NULL, '0611895656');
 
 -- --------------------------------------------------------
 
@@ -569,8 +540,8 @@ CREATE TABLE `user_role` (
 --
 
 INSERT INTO `user_role` (`user_id_user`, `role`) VALUES
-(4, 1),
-(6, 2),
+(1, 1),
+(3, 2),
 (8, 0),
 (10, 2),
 (15, 2),
@@ -681,8 +652,7 @@ ALTER TABLE `transaction_description`
 --
 ALTER TABLE `users`
   ADD PRIMARY KEY (`id_user`),
-  ADD UNIQUE KEY `UK_6dotkott2kjsp8vw4d0m25fb7` (`email`),
-  ADD UNIQUE KEY `UK6dotkott2kjsp8vw4d0m25fb7` (`email`);
+  ADD UNIQUE KEY `UK_6dotkott2kjsp8vw4d0m25fb7` (`email`);
 
 --
 -- Index pour la table `user_role`

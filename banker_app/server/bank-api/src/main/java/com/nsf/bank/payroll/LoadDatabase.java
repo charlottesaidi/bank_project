@@ -5,6 +5,7 @@ import com.nsf.bank.entity.*;
 import com.nsf.bank.repository.*;
 import com.nsf.bank.service.CardService;
 import com.nsf.bank.service.HashidService;
+import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,6 +19,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+import java.util.Random;
 
 @Configuration
 public class LoadDatabase {
@@ -56,18 +58,18 @@ public class LoadDatabase {
     @Bean
     CommandLineRunner initDatabase() throws ParseException {
         // commenter après le premier lancement de l'application
-//        int accountTypesCount = createAccountTypes();
-//        int usersCount = createUsers();
-//
-//        return args -> {
-//            log.info("Loading fixtures : " + usersCount + " utilisateur.s inséré.s");
-//            log.info("Loading fixtures : " + accountTypesCount + " type.s de compte inséré.s");
-//        };
+        int usersCount = createUsers();
+        int accountTypesCount = createAccountTypes();
+
+        return args -> {
+            log.info("Loading fixtures : " + usersCount + " utilisateur.s inséré.s");
+            log.info("Loading fixtures : " + accountTypesCount + " type.s de compte inséré.s");
+        };
 
         // utiliser ça plutôt :
-        return args -> {
-            log.info("Application running");
-        };
+//        return args -> {
+//            log.info("Application running");
+//        };
     }
 
     public User createUser(String email, String password, String firstName, String lastName) throws ParseException {
@@ -78,7 +80,7 @@ public class LoadDatabase {
         user.setFirst_name(firstName);
         user.setLast_name(lastName);
         user.setBirthdate(new SimpleDateFormat("yyyy-MM-dd").parse("1990-01-01"));
-        user.setPhone("0600000000");
+        user.setPhone("0"+RandomStringUtils.random(9, false, true));
         user.setAddress_street(faker.address().buildingNumber() + " " + faker.address().streetName());
         user.setAddress_zipcode(faker.address().zipCode());
         user.setAddress_city(faker.address().city());
@@ -162,6 +164,27 @@ public class LoadDatabase {
             }
         }
 
+        AccountType accountType = accountTypeRepository.findAccountTypeWithName("CPT_COURANT");
+
+        Account account = new Account();
+        account.setHashid(hashidService.generateAccountHashid("CPT_COURANT"));
+        account.setBalance(1800);
+        account.setOverdraft(1000);
+        account.setCustomer(userCustomer);
+
+        account.setAccount_type(accountType);
+
+        Card card = cardService.createAccountCard(account);
+
+        accountRepository.save(account);
+        cardRepository.save(card);
+
+        AccountBalance accountBalance = new AccountBalance();
+        accountBalance.setBalance(account.getBalance());
+        accountBalance.setAccount(account);
+
+        accountBalanceRepository.save(accountBalance);
+
         if(existingUserDirector == null) {
             userDirector.setHashid(hashidService.generateHashId());
             director.setUsername(userDirector.getHashid());
@@ -187,6 +210,7 @@ public class LoadDatabase {
 
     public void createFakeCustomers(Banker userBanker, int count) throws ParseException {
         Faker faker = new Faker(new Locale("fr-FR"));
+        int maxBalance = 3000;
 
         AccountType accountType = accountTypeRepository.findAccountTypeWithName("CPT_COURANT");
 
@@ -210,10 +234,13 @@ public class LoadDatabase {
             newUserCustomer.setDocument_type(documents);
             customerRepository.save(newUserCustomer);
 
+            Random rand = new Random(); //instance of random class
+            int randBalance = rand.nextInt(maxBalance);
+
             Account account = new Account();
             account.setHashid(hashidService.generateAccountHashid("CPT_COURANT"));
-            account.setBalance(1000+i);
-            account.setOverdraft(100+i);
+            account.setBalance(randBalance);
+            account.setOverdraft(1000);
             account.setCustomer(newUserCustomer);
 
             account.setAccount_type(accountType);
