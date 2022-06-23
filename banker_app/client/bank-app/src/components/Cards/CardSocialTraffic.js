@@ -64,7 +64,7 @@ export default function CardSocialTraffic({props}) {
                       <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
                         {Array.from(item.accounts).map((el, index) => (
                           (
-                            <p>{el.balance < 0 && el.hashid}</p>
+                            <p key={index}>{el.balance < 0 && el.hashid}</p>
                           )
                         )
                       )}
@@ -72,7 +72,7 @@ export default function CardSocialTraffic({props}) {
                       <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
                         {Array.from(item.accounts).map((el, index) => (
                           (
-                            <p>{el.balance < 0 && el.balance + " €"}</p>
+                            <p key={index}>{el.balance < 0 && el.balance + " €"}</p>
                           )
                         )
                       )}
@@ -80,7 +80,7 @@ export default function CardSocialTraffic({props}) {
                       <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
                         {Array.from(item.accounts).map((el, index) => (
                           (
-                            <div>
+                            <div key={index}>
                               {el.balance < 0 && 
                                 <div className="flex items-center">
                                   <span className="mr-2">{overdraftPercentage(el.balance, el.overdraft) + "%"}</span>
