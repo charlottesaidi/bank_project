@@ -203,7 +203,7 @@ public class LoadDatabase {
             }
         }
 
-//        createFakeCustomers(userBanker, count);
+        createFakeCustomers(userBanker, count);
 
         int finalCount = count;
 
