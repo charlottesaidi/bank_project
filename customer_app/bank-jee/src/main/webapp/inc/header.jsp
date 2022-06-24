@@ -26,7 +26,12 @@
                     <div>
                         <ul>
                             <li><a href="dashboard.jsp">Accueil</a></li>
-                            <li><a href="login.jsp">Connexion</a></li>
+                            <c:if test="${ !empty user.username }">
+                                <li><a href="logout">Deconnexion</a></li>
+                            </c:if>
+                            <c:if test="${ empty user.username }">
+                                <li><a href="login.jsp">Login</a></li>
+                            </c:if>
                         </ul>
                     </div>
                     <div class="circlelogos">

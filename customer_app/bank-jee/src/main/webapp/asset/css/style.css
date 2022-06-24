@@ -1272,3 +1272,6 @@ nav ul li a {
 .sign { grid-area: sign; }
 /* ------ LOGIN ------ */
 
+.customer-login-identifiant-error, .customer-login-password-error {
+    color: red;
+}

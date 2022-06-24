@@ -19,15 +19,12 @@
                     do eiusmod tempor incididunt ut labore et dolore magna aliqua. Urna id volutpat lacus laoreet.</p>
             </div>
             <div class="settings-container__forms">
-                <form method="post" action="" class="settings-container__forms-login">
-                    <input type="text" id="user" name="user" class="user" placeholder="identifiant">
-                    <c:if test="${ !empty errors[0] }">
-                        <p>${ errors[0] }</p>
-                    </c:if>
-                    <input type="password" id="pass" name="password" class="password" placeholder="mot de passe">
-                    <c:if test="${ !empty errors[1] }">
-                        <p>${ errors[1] }</p>
-                    </c:if>
+                <form method="post" action="" class="settings-container__forms-login customer-login-form">
+                    <input type="text" id="user" name="user" class="user customer-login-identifiant" placeholder="identifiant">
+                    <span class="customer-login-identifiant-error">${ errors[0] }</span>
+
+                    <input type="password" id="pass" name="password" class="password customer-login-password" placeholder="mot de passe">
+                    <span class="customer-login-password-error">${ errors[1] }</span>
                     <input type="submit" value="connexion" class="sign button__gray submit-form">
                 </form>
             </div>
