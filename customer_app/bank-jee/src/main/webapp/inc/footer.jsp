@@ -9,5 +9,7 @@
 
 </main>
     <script type="text/javascript" src="asset/js/main.js"></script>
+    <script type="text/javascript" src="asset/js/login.js"></script>
+    <script type="text/javascript" src="asset/js/dashboard-ajax.js"></script>
     </body>
 </html>

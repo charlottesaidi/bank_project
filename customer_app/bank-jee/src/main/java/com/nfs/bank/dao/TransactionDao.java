@@ -13,7 +13,8 @@ public class TransactionDao {
     }
 
     public List<Transaction> getAll(Integer accountid){
-        Query query = em.createQuery("SELECT t FROM Transaction AS t");
+        Query query = em.createQuery("SELECT t FROM Transaction AS t WHERE MONTH(t.created_at) = MONTH(CURRENT_DATE()) AND (t.credit.id = :accountid OR t.debit.id = :accountid)");
+        query.setParameter("accountid", accountid);
         return query.getResultList();
     }
 }

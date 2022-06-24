@@ -40,77 +40,29 @@
                     <div class="dashboard-container__accounts__box-slider">
                         <div class="swiper swiper-first">
                             <ul class="dashboard-container__accounts__box-slider swiper-wrapper">
-                                <li class="swiper-slide">
-                                    <div class="card-container">
-                                        <div class="card-container__wrap dashboard">
-                                            <div class="card-container__wrap__top">
-                                                <div class="card-container__wrap__top-left"></div>
-                                                <div class="card-container__wrap__top-right"></div>
-                                            </div>
-                                            <div class="card-container__wrap__bottom">
-                                                <div class="card-container__wrap__bottom__content">
-                                                    <p>COMPTE BANCAIRE</p>
-                                                    <p>2345 5432 8468 4688</p>
-                                                </div>
-                                                <div class="card-container__wrap__bottom__img"></div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </li>
 
-                                <li class="swiper-slide">
-                                    <div class="card-container">
-                                        <div class="card-container__wrap dashboard">
-                                            <div class="card-container__wrap__top">
-                                                <div class="card-container__wrap__top-left"></div>
-                                                <div class="card-container__wrap__top-right"></div>
-                                            </div>
-                                            <div class="card-container__wrap__bottom">
-                                                <div class="card-container__wrap__bottom__content">
-                                                    <p>COMPTE BANCAIRE</p>
-                                                    <p>2345 5432 8468 4688</p>
+                                <c:if test="${ !empty accounts_courrants }">
+                                    <c:forEach items="${accounts_courrants}" var="a">
+                                        <li class="swiper-slide">
+                                            <input class="accountId" type="hidden" value="${a.id}">
+                                            <div class="card-container">
+                                                <div class="card-container__wrap dashboard">
+                                                    <div class="card-container__wrap__top">
+                                                        <div class="card-container__wrap__top-left"></div>
+                                                        <div class="card-container__wrap__top-right"></div>
+                                                    </div>
+                                                    <div class="card-container__wrap__bottom">
+                                                        <div class="card-container__wrap__bottom__content">
+                                                            <p>${a.account_type.name}</p>
+                                                            <p>${a.balance}</p>
+                                                        </div>
+                                                        <div class="card-container__wrap__bottom__img"></div>
+                                                    </div>
                                                 </div>
-                                                <div class="card-container__wrap__bottom__img"></div>
                                             </div>
-                                        </div>
-                                    </div>
-                                </li>
-
-                                <li class="swiper-slide">
-                                    <div class="card-container">
-                                        <div class="card-container__wrap dashboard">
-                                            <div class="card-container__wrap__top">
-                                                <div class="card-container__wrap__top-left"></div>
-                                                <div class="card-container__wrap__top-right"></div>
-                                            </div>
-                                            <div class="card-container__wrap__bottom">
-                                                <div class="card-container__wrap__bottom__content">
-                                                    <p>COMPTE BANCAIRE</p>
-                                                    <p>2345 5432 8468 4688</p>
-                                                </div>
-                                                <div class="card-container__wrap__bottom__img"></div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </li>
-
-                                <li class="swiper-slide">
-                                    <div class="card-container">
-                                        <div class="card-container__wrap dashboard">
-                                            <div class="card-container__wrap__top">
-                                                <div class="card-container__wrap__top-left"></div>
-                                                <div class="card-container__wrap__top-right"></div>
-                                            </div>
-                                            <div class="card-container__wrap__bottom">
-                                                <div class="card-container__wrap__bottom__content">
-                                                    <p>COMPTE BANCAIRE</p>
-                                                    <p>2345 5432 8468 4688</p>
-                                                </div>
-                                                <div class="card-container__wrap__bottom__img"></div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </li>
+                                        </li>
+                                    </c:forEach>
+                                </c:if>
                             </ul>
                             <div class="swiper-pagination swiper-pagination-first"></div>
                         </div>
@@ -121,74 +73,28 @@
                     <div class="dashboard-container__accounts__box-slider">
                         <div class="swiper swiper-second">
                             <ul class="swiper-wrapper">
-                                <li class="swiper-slide">
-                                    <div class="card-container">
-                                        <div class="card-container__wrap dashboard">
-                                            <div class="card-container__wrap__top">
-                                                <div class="card-container__wrap__top-left"></div>
-                                                <div class="card-container__wrap__top-right"></div>
-                                            </div>
-                                            <div class="card-container__wrap__bottom">
-                                                <div class="card-container__wrap__bottom__content">
-                                                    <p>COMPTE BANCAIRE</p>
-                                                    <p>2345 5432 8468 4688</p>
+                                <c:if test="${ !empty accounts_epargnes }">
+                                    <c:forEach items="${accounts_epargnes}" var="a">
+                                        <li class="swiper-slide">
+                                            <input class="accountId" type="hidden" value="${a.id}">
+                                            <div class="card-container">
+                                                <div class="card-container__wrap dashboard">
+                                                    <div class="card-container__wrap__top">
+                                                        <div class="card-container__wrap__top-left"></div>
+                                                        <div class="card-container__wrap__top-right"></div>
+                                                    </div>
+                                                    <div class="card-container__wrap__bottom">
+                                                        <div class="card-container__wrap__bottom__content">
+                                                            <p>${a.account_type.name}</p>
+                                                            <p>${a.balance}</p>
+                                                        </div>
+                                                        <div class="card-container__wrap__bottom__img"></div>
+                                                    </div>
                                                 </div>
-                                                <div class="card-container__wrap__bottom__img"></div>
                                             </div>
-                                        </div>
-                                    </div>
-                                </li>
-                                <li class="swiper-slide">
-                                    <div class="card-container">
-                                        <div class="card-container__wrap dashboard">
-                                            <div class="card-container__wrap__top">
-                                                <div class="card-container__wrap__top-left"></div>
-                                                <div class="card-container__wrap__top-right"></div>
-                                            </div>
-                                            <div class="card-container__wrap__bottom">
-                                                <div class="card-container__wrap__bottom__content">
-                                                    <p>COMPTE BANCAIRE</p>
-                                                    <p>2345 5432 8468 4688</p>
-                                                </div>
-                                                <div class="card-container__wrap__bottom__img"></div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </li>
-                                <li class="swiper-slide">
-                                    <div class="card-container">
-                                        <div class="card-container__wrap dashboard">
-                                            <div class="card-container__wrap__top">
-                                                <div class="card-container__wrap__top-left"></div>
-                                                <div class="card-container__wrap__top-right"></div>
-                                            </div>
-                                            <div class="card-container__wrap__bottom">
-                                                <div class="card-container__wrap__bottom__content">
-                                                    <p>COMPTE BANCAIRE</p>
-                                                    <p>2345 5432 8468 4688</p>
-                                                </div>
-                                                <div class="card-container__wrap__bottom__img"></div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </li>
-                                <li class="swiper-slide">
-                                    <div class="card-container">
-                                        <div class="card-container__wrap dashboard">
-                                            <div class="card-container__wrap__top">
-                                                <div class="card-container__wrap__top-left"></div>
-                                                <div class="card-container__wrap__top-right"></div>
-                                            </div>
-                                            <div class="card-container__wrap__bottom">
-                                                <div class="card-container__wrap__bottom__content">
-                                                    <p>COMPTE BANCAIRE</p>
-                                                    <p>2345 5432 8468 4688</p>
-                                                </div>
-                                                <div class="card-container__wrap__bottom__img"></div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </li>
+                                        </li>
+                                    </c:forEach>
+                                </c:if>
                             </ul>
                             <div class="swiper-pagination swiper-pagination-second"></div>
                         </div>
@@ -197,410 +103,37 @@
                 <div class="dashboard-container__table grid3">
                     <p class="dashboard-container__table-title">Transaction <span>Mai</span></p>
                     <div class="dashboard-container__table__content">
-                        <div class="dashboard-container__table__content__container">
-                            <p class="dashboard-container__table__content-date">13 Mai 2022</p>
-                            <div class="swiper swiper-third">
-                                <ul class="swiper-wrapper">
-                                    <li class="swiper-slide">
-                                        <div class="dashboard-container__table__content__transfer">
-                                            <div class="dashboard-container__table__content__transfer-icon">
-                                                <i class="fa-solid fa-barcode fa-xl"></i>
-                                            </div>
-                                            <div class="dashboard-container__table__content__transfer__container">
-                                                <div class="dashboard-container__table__content__transfer__container-split">
-                                                    <p class="dashboard-container__table__content__transfer__container-top">
-                                                        Starbucks</p>
-                                                    <p class="dashboard-container__table__content__transfer__container-top">
-                                                        -13,50€</p>
-                                                </div>
-                                                <div class="dashboard-container__table__content__transfer__container-split">
-                                                    <p class="dashboard-container__table__content__transfer__container-bottom">
-                                                        13 Mai 2022</p>
-                                                    <p class="dashboard-container__table__content__transfer__container-bottom">
-                                                        07h30</p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </li>
-                                    <li class="swiper-slide">
-                                        <div class="dashboard-container__table__content__transfer">
-                                            <div class="dashboard-container__table__content__transfer-icon">
-                                                <i class="fa-solid fa-barcode fa-xl"></i>
-                                            </div>
-                                            <div class="dashboard-container__table__content__transfer__container">
-                                                <div class="dashboard-container__table__content__transfer__container-split">
-                                                    <p class="dashboard-container__table__content__transfer__container-top">
-                                                        Starbucks</p>
-                                                    <p class="dashboard-container__table__content__transfer__container-top">
-                                                        -13,50€</p>
-                                                </div>
-                                                <div class="dashboard-container__table__content__transfer__container-split">
-                                                    <p class="dashboard-container__table__content__transfer__container-bottom">
-                                                        13 Mai 2022</p>
-                                                    <p class="dashboard-container__table__content__transfer__container-bottom">
-                                                        07h30</p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </li>
-                                    <li class="swiper-slide">
-                                        <div class="dashboard-container__table__content__transfer">
-                                            <div class="dashboard-container__table__content__transfer-icon">
-                                                <i class="fa-solid fa-barcode fa-xl"></i>
-                                            </div>
-                                            <div class="dashboard-container__table__content__transfer__container">
-                                                <div class="dashboard-container__table__content__transfer__container-split">
-                                                    <p class="dashboard-container__table__content__transfer__container-top">
-                                                        Starbucks</p>
-                                                    <p class="dashboard-container__table__content__transfer__container-top">
-                                                        -13,50€</p>
-                                                </div>
-                                                <div class="dashboard-container__table__content__transfer__container-split">
-                                                    <p class="dashboard-container__table__content__transfer__container-bottom">
-                                                        13 Mai 2022</p>
-                                                    <p class="dashboard-container__table__content__transfer__container-bottom">
-                                                        07h30</p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </li>
-                                    <li class="swiper-slide">
-                                        <div class="dashboard-container__table__content__transfer">
-                                            <div class="dashboard-container__table__content__transfer-icon">
-                                                <i class="fa-solid fa-barcode fa-xl"></i>
-                                            </div>
-                                            <div class="dashboard-container__table__content__transfer__container">
-                                                <div class="dashboard-container__table__content__transfer__container-split">
-                                                    <p class="dashboard-container__table__content__transfer__container-top">
-                                                        Starbucks</p>
-                                                    <p class="dashboard-container__table__content__transfer__container-top">
-                                                        -13,50€</p>
-                                                </div>
-                                                <div class="dashboard-container__table__content__transfer__container-split">
-                                                    <p class="dashboard-container__table__content__transfer__container-bottom">
-                                                        13 Mai 2022</p>
-                                                    <p class="dashboard-container__table__content__transfer__container-bottom">
-                                                        07h30</p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </li>
-                                    <li class="swiper-slide">
-                                        <div class="dashboard-container__table__content__transfer">
-                                            <div class="dashboard-container__table__content__transfer-icon">
-                                                <i class="fa-solid fa-barcode fa-xl"></i>
-                                            </div>
-                                            <div class="dashboard-container__table__content__transfer__container">
-                                                <div class="dashboard-container__table__content__transfer__container-split">
-                                                    <p class="dashboard-container__table__content__transfer__container-top">
-                                                        Starbucks</p>
-                                                    <p class="dashboard-container__table__content__transfer__container-top">
-                                                        -13,50€</p>
-                                                </div>
-                                                <div class="dashboard-container__table__content__transfer__container-split">
-                                                    <p class="dashboard-container__table__content__transfer__container-bottom">
-                                                        13 Mai 2022</p>
-                                                    <p class="dashboard-container__table__content__transfer__container-bottom">
-                                                        07h30</p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </li>
-                                    <li class="swiper-slide">
-                                        <div class="dashboard-container__table__content__transfer">
-                                            <div class="dashboard-container__table__content__transfer-icon">
-                                                <i class="fa-solid fa-barcode fa-xl"></i>
-                                            </div>
-                                            <div class="dashboard-container__table__content__transfer__container">
-                                                <div class="dashboard-container__table__content__transfer__container-split">
-                                                    <p class="dashboard-container__table__content__transfer__container-top">
-                                                        Starbucks</p>
-                                                    <p class="dashboard-container__table__content__transfer__container-top">
-                                                        -13,50€</p>
-                                                </div>
-                                                <div class="dashboard-container__table__content__transfer__container-split">
-                                                    <p class="dashboard-container__table__content__transfer__container-bottom">
-                                                        13 Mai 2022</p>
-                                                    <p class="dashboard-container__table__content__transfer__container-bottom">
-                                                        07h30</p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </li>
-                                </ul>
+                        <c:if test="${ !empty transacs }">
+                            <c:forEach items="${transacs}" var="days">
+                            <div class="dashboard-container__table__content__container">
+                                <p class="dashboard-container__table__content-date">13 Mai 2022</p>
+                                <div class="swiper swiper-third">
+                                    <ul class="swiper-wrapper">
+                                        <c:if test="${ !empty days }">
+                                            <c:forEach items="${days}" var="t">
+                                                <li class="swiper-slide">
+                                                    <div class="dashboard-container__table__content__transfer">
+                                                        <div class="dashboard-container__table__content__transfer-icon">
+                                                            <i class="fa-solid fa-barcode fa-xl"></i>
+                                                        </div>
+                                                        <div class="dashboard-container__table__content__transfer__container">
+                                                            <div class="dashboard-container__table__content__transfer__container-split">
+                                                                <p class="dashboard-container__table__content__transfer__container-top">
+                                                                    Starbucks</p>
+                                                                <p class="dashboard-container__table__content__transfer__container-top">
+                                                                    ${t.amount}€</p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </li>
+                                            </c:forEach>
+                                        </c:if>
+                                    </ul>
                                 <div class="swiper-pagination swiper-pagination-third"></div>
                             </div>
                         </div>
-
-                        <div class="dashboard-container__table__content__container">
-                            <p class="dashboard-container__table__content-date">13 Mai 2022</p>
-                            <div class="swiper swiper-third">
-                                <ul class="swiper-wrapper">
-                                    <li class="swiper-slide">
-                                        <div class="dashboard-container__table__content__transfer">
-                                            <div class="dashboard-container__table__content__transfer-icon">
-                                                <i class="fa-solid fa-barcode fa-xl"></i>
-                                            </div>
-                                            <div class="dashboard-container__table__content__transfer__container">
-                                                <div class="dashboard-container__table__content__transfer__container-split">
-                                                    <p class="dashboard-container__table__content__transfer__container-top">
-                                                        Starbucks</p>
-                                                    <p class="dashboard-container__table__content__transfer__container-top">
-                                                        -13,50€</p>
-                                                </div>
-                                                <div class="dashboard-container__table__content__transfer__container-split">
-                                                    <p class="dashboard-container__table__content__transfer__container-bottom">
-                                                        13 Mai 2022</p>
-                                                    <p class="dashboard-container__table__content__transfer__container-bottom">
-                                                        07h30</p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </li>
-                                    <li class="swiper-slide">
-                                        <div class="dashboard-container__table__content__transfer">
-                                            <div class="dashboard-container__table__content__transfer-icon">
-                                                <i class="fa-solid fa-barcode fa-xl"></i>
-                                            </div>
-                                            <div class="dashboard-container__table__content__transfer__container">
-                                                <div class="dashboard-container__table__content__transfer__container-split">
-                                                    <p class="dashboard-container__table__content__transfer__container-top">
-                                                        Starbucks</p>
-                                                    <p class="dashboard-container__table__content__transfer__container-top">
-                                                        -13,50€</p>
-                                                </div>
-                                                <div class="dashboard-container__table__content__transfer__container-split">
-                                                    <p class="dashboard-container__table__content__transfer__container-bottom">
-                                                        13 Mai 2022</p>
-                                                    <p class="dashboard-container__table__content__transfer__container-bottom">
-                                                        07h30</p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </li>
-                                    <li class="swiper-slide">
-                                        <div class="dashboard-container__table__content__transfer">
-                                            <div class="dashboard-container__table__content__transfer-icon">
-                                                <i class="fa-solid fa-barcode fa-xl"></i>
-                                            </div>
-                                            <div class="dashboard-container__table__content__transfer__container">
-                                                <div class="dashboard-container__table__content__transfer__container-split">
-                                                    <p class="dashboard-container__table__content__transfer__container-top">
-                                                        Starbucks</p>
-                                                    <p class="dashboard-container__table__content__transfer__container-top">
-                                                        -13,50€</p>
-                                                </div>
-                                                <div class="dashboard-container__table__content__transfer__container-split">
-                                                    <p class="dashboard-container__table__content__transfer__container-bottom">
-                                                        13 Mai 2022</p>
-                                                    <p class="dashboard-container__table__content__transfer__container-bottom">
-                                                        07h30</p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </li>
-                                    <li class="swiper-slide">
-                                        <div class="dashboard-container__table__content__transfer">
-                                            <div class="dashboard-container__table__content__transfer-icon">
-                                                <i class="fa-solid fa-barcode fa-xl"></i>
-                                            </div>
-                                            <div class="dashboard-container__table__content__transfer__container">
-                                                <div class="dashboard-container__table__content__transfer__container-split">
-                                                    <p class="dashboard-container__table__content__transfer__container-top">
-                                                        Starbucks</p>
-                                                    <p class="dashboard-container__table__content__transfer__container-top">
-                                                        -13,50€</p>
-                                                </div>
-                                                <div class="dashboard-container__table__content__transfer__container-split">
-                                                    <p class="dashboard-container__table__content__transfer__container-bottom">
-                                                        13 Mai 2022</p>
-                                                    <p class="dashboard-container__table__content__transfer__container-bottom">
-                                                        07h30</p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </li>
-                                    <li class="swiper-slide">
-                                        <div class="dashboard-container__table__content__transfer">
-                                            <div class="dashboard-container__table__content__transfer-icon">
-                                                <i class="fa-solid fa-barcode fa-xl"></i>
-                                            </div>
-                                            <div class="dashboard-container__table__content__transfer__container">
-                                                <div class="dashboard-container__table__content__transfer__container-split">
-                                                    <p class="dashboard-container__table__content__transfer__container-top">
-                                                        Starbucks</p>
-                                                    <p class="dashboard-container__table__content__transfer__container-top">
-                                                        -13,50€</p>
-                                                </div>
-                                                <div class="dashboard-container__table__content__transfer__container-split">
-                                                    <p class="dashboard-container__table__content__transfer__container-bottom">
-                                                        13 Mai 2022</p>
-                                                    <p class="dashboard-container__table__content__transfer__container-bottom">
-                                                        07h30</p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </li>
-                                    <li class="swiper-slide">
-                                        <div class="dashboard-container__table__content__transfer">
-                                            <div class="dashboard-container__table__content__transfer-icon">
-                                                <i class="fa-solid fa-barcode fa-xl"></i>
-                                            </div>
-                                            <div class="dashboard-container__table__content__transfer__container">
-                                                <div class="dashboard-container__table__content__transfer__container-split">
-                                                    <p class="dashboard-container__table__content__transfer__container-top">
-                                                        Starbucks</p>
-                                                    <p class="dashboard-container__table__content__transfer__container-top">
-                                                        -13,50€</p>
-                                                </div>
-                                                <div class="dashboard-container__table__content__transfer__container-split">
-                                                    <p class="dashboard-container__table__content__transfer__container-bottom">
-                                                        13 Mai 2022</p>
-                                                    <p class="dashboard-container__table__content__transfer__container-bottom">
-                                                        07h30</p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </li>
-                                </ul>
-                                <div class="swiper-pagination swiper-pagination-third"></div>
-                            </div>
-                        </div>
-
-                        <div class="dashboard-container__table__content__container">
-                            <p class="dashboard-container__table__content-date">13 Mai 2022</p>
-                            <div class="swiper swiper-third">
-                                <ul class="swiper-wrapper">
-                                    <li class="swiper-slide">
-                                        <div class="dashboard-container__table__content__transfer">
-                                            <div class="dashboard-container__table__content__transfer-icon">
-                                                <i class="fa-solid fa-barcode fa-xl"></i>
-                                            </div>
-                                            <div class="dashboard-container__table__content__transfer__container">
-                                                <div class="dashboard-container__table__content__transfer__container-split">
-                                                    <p class="dashboard-container__table__content__transfer__container-top">
-                                                        Starbucks</p>
-                                                    <p class="dashboard-container__table__content__transfer__container-top">
-                                                        -13,50€</p>
-                                                </div>
-                                                <div class="dashboard-container__table__content__transfer__container-split">
-                                                    <p class="dashboard-container__table__content__transfer__container-bottom">
-                                                        13 Mai 2022</p>
-                                                    <p class="dashboard-container__table__content__transfer__container-bottom">
-                                                        07h30</p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </li>
-                                    <li class="swiper-slide">
-                                        <div class="dashboard-container__table__content__transfer">
-                                            <div class="dashboard-container__table__content__transfer-icon">
-                                                <i class="fa-solid fa-barcode fa-xl"></i>
-                                            </div>
-                                            <div class="dashboard-container__table__content__transfer__container">
-                                                <div class="dashboard-container__table__content__transfer__container-split">
-                                                    <p class="dashboard-container__table__content__transfer__container-top">
-                                                        Starbucks</p>
-                                                    <p class="dashboard-container__table__content__transfer__container-top">
-                                                        -13,50€</p>
-                                                </div>
-                                                <div class="dashboard-container__table__content__transfer__container-split">
-                                                    <p class="dashboard-container__table__content__transfer__container-bottom">
-                                                        13 Mai 2022</p>
-                                                    <p class="dashboard-container__table__content__transfer__container-bottom">
-                                                        07h30</p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </li>
-                                    <li class="swiper-slide">
-                                        <div class="dashboard-container__table__content__transfer">
-                                            <div class="dashboard-container__table__content__transfer-icon">
-                                                <i class="fa-solid fa-barcode fa-xl"></i>
-                                            </div>
-                                            <div class="dashboard-container__table__content__transfer__container">
-                                                <div class="dashboard-container__table__content__transfer__container-split">
-                                                    <p class="dashboard-container__table__content__transfer__container-top">
-                                                        Starbucks</p>
-                                                    <p class="dashboard-container__table__content__transfer__container-top">
-                                                        -13,50€</p>
-                                                </div>
-                                                <div class="dashboard-container__table__content__transfer__container-split">
-                                                    <p class="dashboard-container__table__content__transfer__container-bottom">
-                                                        13 Mai 2022</p>
-                                                    <p class="dashboard-container__table__content__transfer__container-bottom">
-                                                        07h30</p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </li>
-                                    <li class="swiper-slide">
-                                        <div class="dashboard-container__table__content__transfer">
-                                            <div class="dashboard-container__table__content__transfer-icon">
-                                                <i class="fa-solid fa-barcode fa-xl"></i>
-                                            </div>
-                                            <div class="dashboard-container__table__content__transfer__container">
-                                                <div class="dashboard-container__table__content__transfer__container-split">
-                                                    <p class="dashboard-container__table__content__transfer__container-top">
-                                                        Starbucks</p>
-                                                    <p class="dashboard-container__table__content__transfer__container-top">
-                                                        -13,50€</p>
-                                                </div>
-                                                <div class="dashboard-container__table__content__transfer__container-split">
-                                                    <p class="dashboard-container__table__content__transfer__container-bottom">
-                                                        13 Mai 2022</p>
-                                                    <p class="dashboard-container__table__content__transfer__container-bottom">
-                                                        07h30</p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </li>
-                                    <li class="swiper-slide">
-                                        <div class="dashboard-container__table__content__transfer">
-                                            <div class="dashboard-container__table__content__transfer-icon">
-                                                <i class="fa-solid fa-barcode fa-xl"></i>
-                                            </div>
-                                            <div class="dashboard-container__table__content__transfer__container">
-                                                <div class="dashboard-container__table__content__transfer__container-split">
-                                                    <p class="dashboard-container__table__content__transfer__container-top">
-                                                        Starbucks</p>
-                                                    <p class="dashboard-container__table__content__transfer__container-top">
-                                                        -13,50€</p>
-                                                </div>
-                                                <div class="dashboard-container__table__content__transfer__container-split">
-                                                    <p class="dashboard-container__table__content__transfer__container-bottom">
-                                                        13 Mai 2022</p>
-                                                    <p class="dashboard-container__table__content__transfer__container-bottom">
-                                                        07h30</p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </li>
-                                    <li class="swiper-slide">
-                                        <div class="dashboard-container__table__content__transfer">
-                                            <div class="dashboard-container__table__content__transfer-icon">
-                                                <i class="fa-solid fa-barcode fa-xl"></i>
-                                            </div>
-                                            <div class="dashboard-container__table__content__transfer__container">
-                                                <div class="dashboard-container__table__content__transfer__container-split">
-                                                    <p class="dashboard-container__table__content__transfer__container-top">
-                                                        Starbucks</p>
-                                                    <p class="dashboard-container__table__content__transfer__container-top">
-                                                        -13,50€</p>
-                                                </div>
-                                                <div class="dashboard-container__table__content__transfer__container-split">
-                                                    <p class="dashboard-container__table__content__transfer__container-bottom">
-                                                        13 Mai 2022</p>
-                                                    <p class="dashboard-container__table__content__transfer__container-bottom">
-                                                        07h30</p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </li>
-                                </ul>
-                                <div class="swiper-pagination swiper-pagination-third"></div>
-                            </div>
-                        </div>
+                        </c:forEach>
+                    </c:if>
 
                     </div>
 
