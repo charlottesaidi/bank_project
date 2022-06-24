@@ -20,7 +20,7 @@ export default function CardLineChart() {
             label: new Date().getFullYear(),
             backgroundColor: "#4c51bf",
             borderColor: "#4c51bf",
-            data: [65, 78, 66, 44, 56, 67, 75],
+            data: [30, 35, 40, 44, 56, 67, 75],
             fill: false,
           },
           {
@@ -28,7 +28,7 @@ export default function CardLineChart() {
             fill: false,
             backgroundColor: "#fff",
             borderColor: "#fff",
-            data: [40, 68, 86, 74, 56, 60, 87],
+            data: [20, 25, 30, 45, 56, 60, 70],
           },
         ],
       },
@@ -115,7 +115,9 @@ export default function CardLineChart() {
               <h6 className="uppercase text-blueGray-100 mb-1 text-xs font-semibold">
                 Vue Générale
               </h6>
-              <h2 className="text-white text-xl font-semibold">Nombres de Clients</h2>
+              <h2 className="text-white text-xl font-semibold">
+                Nombres de Clients
+              </h2>
             </div>
           </div>
         </div>
