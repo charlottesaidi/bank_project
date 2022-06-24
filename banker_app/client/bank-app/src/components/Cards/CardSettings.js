@@ -117,13 +117,7 @@ export default function CardSettings({ data }) {
                   <input
                     type="text"
                     className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                    defaultValue={
-                      data.address_street +
-                      ", " +
-                      data.address_zipcode +
-                      ", " +
-                      data.address_city
-                    }
+                    defaultValue={data.address_street}
                   />
                 </div>
               </div>
